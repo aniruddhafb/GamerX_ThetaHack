@@ -380,7 +380,7 @@ input[type="color"] {
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='white' width='100.25' height='126.657' viewBox='0 0 30.25 56.657'%3e%3cpath id='shape.svg' class='cls-1' d='M248.391%2c576.3L218.17%2c605.258l30.221%2c27.7L226.985%2c604Z' transform='translate(-218.156 -576.312)'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='white' width='100.25' height='126.657' viewBox='0 0 30.25 56.657'%3e%3cpath id='shape.svg' className='cls-1' d='M248.391%2c576.3L218.17%2c605.258l30.221%2c27.7L226.985%2c604Z' transform='translate(-218.156 -576.312)'/%3e%3c/svg%3e");
   width: 30px;
   height: calc(100% + 6px);
   background-size: cover;
@@ -452,7 +452,8 @@ input[type="color"] {
   background-repeat: no-repeat;
   background-size: cover;
   min-width: 157px;
-  min-height: 48px;
+  min-height: 54px;
+  text-decoration: none;
   z-index: 1;
 }
 .tg-border-btn::before {
@@ -9555,7 +9556,7 @@ blockquote p {
   transform: scale(1, 1);
 }
 .footer-logo {
-  margin: 0 0 30px;
+  margin: 0 0 5px;
 }
 .footer-text {
   margin-right: 30px;
