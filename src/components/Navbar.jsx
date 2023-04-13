@@ -20,15 +20,23 @@ const Navbar = () => {
                                     </div>
                                     <div className="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                         <ul className="navigation">
-                                            <li><Link href="about-us.html" style={{ textDecoration: "none" }}>Home</Link></li>
-                                            <li><Link href="about-us.html" style={{ textDecoration: "none" }}>About us</Link></li>
+                                            <li><Link href="/" style={{ textDecoration: "none" }}>Home</Link></li>
+                                            <li><Link href="/about" style={{ textDecoration: "none" }}>About us</Link></li>
                                             <li className="menu-item-has-children"><Link
                                                 href="#" style={{ textDecoration: "none" }}>Other Pages</Link>
                                                 <ul className="sub-menu">
                                                     <li><Link
-                                                        href="tournament.html">Gamers</Link>
+                                                        href="/topGamers">Gamers</Link>
                                                     </li>
-                                                    <li><Link href="tournament-details.html">All NFTs</Link></li>
+                                                    <li><Link href="/topNFTs">All NFTs</Link></li>
+                                                </ul>
+                                                <div className="dropdown-btn"><span className="plus-line"></span></div>
+                                            </li>
+                                            <li className="menu-item-has-children"><Link
+                                                href="#" style={{ textDecoration: "none" }}>Create</Link>
+                                                <ul className="sub-menu">
+                                                    <li><Link href="/uploadVideo">Upload Video</Link>
+                                                    </li>
                                                 </ul>
                                                 <div className="dropdown-btn"><span className="plus-line"></span></div>
                                             </li>
