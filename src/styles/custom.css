@@ -1,3 +1,7 @@
 #HeroMain {
   background-image: url("../../public/slider_bg.jpg");
 }
+
+#pageBG {
+  background-color: #0f161b;
+}
