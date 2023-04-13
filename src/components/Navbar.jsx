@@ -1,6 +1,7 @@
 import React from 'react'
 import gamerXlogo from "../../public/logo.png"
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Navbar = () => {
     return (
@@ -13,21 +14,21 @@ const Navbar = () => {
                             <div className="tgmenu__wrap">
                                 <nav className="tgmenu__nav">
                                     <div className="logo">
-                                        <a href="index.html"><Image
+                                        <Link href="/"><Image
                                             src={gamerXlogo}
-                                            alt="Logo" /></a>
+                                            alt="Logo" /></Link>
                                     </div>
                                     <div className="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                                         <ul className="navigation">
-                                            <li><a href="about-us.html" style={{ textDecoration: "none" }}>Home</a></li>
-                                            <li><a href="about-us.html" style={{ textDecoration: "none" }}>About us</a></li>
-                                            <li className="menu-item-has-children"><a
-                                                href="#" style={{ textDecoration: "none" }}>Other Pages</a>
+                                            <li><Link href="about-us.html" style={{ textDecoration: "none" }}>Home</Link></li>
+                                            <li><Link href="about-us.html" style={{ textDecoration: "none" }}>About us</Link></li>
+                                            <li className="menu-item-has-children"><Link
+                                                href="#" style={{ textDecoration: "none" }}>Other Pages</Link>
                                                 <ul className="sub-menu">
-                                                    <li><a
-                                                        href="tournament.html">Gamers</a>
+                                                    <li><Link
+                                                        href="tournament.html">Gamers</Link>
                                                     </li>
-                                                    <li><a href="tournament-details.html">All NFTs</a></li>
+                                                    <li><Link href="tournament-details.html">All NFTs</Link></li>
                                                 </ul>
                                                 <div className="dropdown-btn"><span className="plus-line"></span></div>
                                             </li>
@@ -36,10 +37,10 @@ const Navbar = () => {
                                     <div className="tgmenu__action d-none d-md-block">
                                         <ul className="list-wrap">
                                             <li className="header-btn">
-                                                <a href="contact.html"
+                                                <Link href="contact.html"
                                                     className="tg-border-btn">
                                                     Connect Wallet
-                                                </a>
+                                                </Link>
                                             </li>
 
                                         </ul>
@@ -52,9 +53,9 @@ const Navbar = () => {
                                 <nav className="tgmobile__menu-box">
                                     <div className="close-btn"><i className="flaticon-swords-in-cross-arrangement"></i></div>
                                     <div className="nav-logo">
-                                        <a href="index.html">
+                                        <Link href="index.html">
                                             <img src="logo.png"
-                                                alt="Logo" /></a>
+                                                alt="Logo" /></Link>
                                     </div>
                                     {/* <div className="tgmobile__search">
                                         <form action="#">
@@ -66,14 +67,14 @@ const Navbar = () => {
                                         {/* popup menu */}
 
                                         <ul className="navigation">
-                                            <li><a href="#">Home</a></li>
-                                            <li><a href="#">ABOUT US</a></li>
+                                            <li><Link href="#">Home</Link></li>
+                                            <li><Link href="#">ABOUT US</Link></li>
                                         </ul>
                                     </div>
                                     <div className="social-links">
                                         <ul className="list-wrap">
-                                            <li><a href="#"><i
-                                                className="fab fa-twitter"></i></a></li>
+                                            <li><Link href="#"><i
+                                                className="fab fa-twitter"></i></Link></li>
                                         </ul>
                                     </div>
                                 </nav>

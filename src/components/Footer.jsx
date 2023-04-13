@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import Link from 'next/link'
 import gamerXlogo from "../../public/logo.png"
 
 
@@ -12,15 +13,15 @@ const Footer = () => {
                         <div className="col-xl-4 col-lg-5 col-md-7">
                             <div className="footer-widget">
                                 <div className="footer-logo logo">
-                                    <a href="#"><Image
-                                        src={gamerXlogo} alt="Logo" /></a>
+                                    <Link href="#"><Image
+                                        src={gamerXlogo} alt="Logo" /></Link>
                                 </div>
                                 <div className="footer-text">
                                     <p className="desc">An ultimate platform for gamers and influencers</p>
                                     <p className="social-title">Grow <span>With Us <i
                                         className="fas fa-angle-double-right"></i></span></p>
                                     <div className="footer-social">
-                                        <a href="#"></a>
+                                        <Link href="#"></Link>
                                     </div>
                                 </div>
                             </div>
@@ -29,9 +30,9 @@ const Footer = () => {
                             <div className="footer-widget widget_nav_menu">
                                 <h4 className="fw-title">Quick Links</h4>
                                 <ul className="list-wrap menu">
-                                    <li><a href="#" style={{ textDecoration: "none" }}>Gamers</a></li>
-                                    <li><a href="#" style={{ textDecoration: "none" }}>All NFTs</a></li>
-                                    <li><a href="#" style={{ textDecoration: "none" }}>Social Network</a></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Gamers</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>All NFTs</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Social Network</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -39,9 +40,9 @@ const Footer = () => {
                             <div className="footer-widget widget_nav_menu">
                                 <h4 className="fw-title">Other</h4>
                                 <ul className="list-wrap menu">
-                                    <li><a href="#" style={{ textDecoration: "none" }}>Setting &amp; Privacy</a></li>
-                                    <li><a href="#" style={{ textDecoration: "none" }}>Help &amp; Support</a></li>
-                                    <li><a href="#" style={{ textDecoration: "none" }}>Live Auctions</a></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Setting &amp; Privacy</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Help &amp; Support</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Live Auctions</Link></li>
                                 </ul>
                             </div>
                         </div> */}

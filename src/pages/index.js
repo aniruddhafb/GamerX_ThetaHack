@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import coin1 from "../../public/slider_shape01.png"
 import coin2 from "../../public/slider_shape02.png"
@@ -27,8 +28,8 @@ export default function Home() {
                     A platform for gamers</p>
                   <div className="slider__btn"
                     style={{ visibility: "visible", animationDelay: "1.2s", animationName: "fadeInUp" }}>
-                    <a href="#"
-                      className="tg-btn-1"><span>Get Started</span></a>
+                    <Link href="#"
+                      className="tg-btn-1"><span>Get Started</span></Link>
                   </div>
                 </div>
               </div>
@@ -52,12 +53,12 @@ export default function Home() {
           <ul className="slider__brand-list list-wrap">
             <li>
               <h2 style={{ fontSize: "15px" }}>Powered By</h2>
-              <a href="#">
+              <Link href="#">
                 <Image
                   src={thetalogo}
                   style={{ height: "30px", width: "160px" }}
                   alt="brand" />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
