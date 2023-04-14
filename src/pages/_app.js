@@ -9,13 +9,12 @@ import "@/styles/custom.css";
 
 //polybasE
 import { Polybase } from "@polybase/client";
-import { ethers } from "ethers";
-
+import { ethers, Wallet } from "ethers";
+import axios from "axios";
 export default function App({ Component, pageProps }) {
   const [signer, set_signer] = useState();
-  const db = new Polybase({
-    defaultNamespace: process.env.NEXT_PUBLIC_NAMESPACE,
-  });
+
+  let wallet = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY);
 
   const connect_wallet = async () => {
     let provider;
@@ -27,13 +26,14 @@ export default function App({ Component, pageProps }) {
       } else {
         provider = new ethers.BrowserProvider(window.ethereum);
         signer = await provider.getSigner();
+        set_signer(signer);
         const signer_address = await signer.getAddress();
-        console.log({ signer_address });
+        const db = polybase();
         const check_user = await db
           .collection("User")
           .where("id", "==", signer_address)
           .get();
-        if (!check_user) {
+        if (check_user.data.length == 0) {
           db.collection("User").create([signer_address]);
         }
       }
@@ -42,74 +42,87 @@ export default function App({ Component, pageProps }) {
     }
   };
 
-  const upload_video = async (e, file) => {
-    e.preventDefault();
+  const upload_video = async (data) => {
+    // try {
+    const res = await axios({
+      url: "https://api.thetavideoapi.com/upload",
+      method: "POST",
+      headers: {
+        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
+        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+      },
+    });
+    console.log(res.data.body.uploads[0].id);
+    console.log(res.data.body.uploads[0]);
+    const signer_address = await signer.getAddress();
 
-    try {
-      const res = await axios({
-        url: "https://api.thetavideoapi.com/upload",
-        method: "POST",
-        headers: {
-          "x-tva-sa-id": "srvacc_sqc1y5hhxz838uune4zh519a3",
-          "x-tva-sa-secret": "hcj34emsvgy9xmtuau31n5ab53624px3",
-        },
-      });
-      console.log(res.data.body.uploads[0].id);
-      console.log(res.data.body.uploads[0]);
+    const res2 = await axios({
+      url: res.data.body.uploads[0].presigned_url,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/octet-stream",
+      },
+      data: data.file,
+    });
 
-      const res2 = await axios({
-        url: res.data.body.uploads[0].presigned_url,
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/octet-stream",
-        },
-        data: file,
-      });
+    console.log(res2);
 
-      console.log(res2);
+    //GET VIDEO ID
+    const res3 = await axios({
+      method: "POST",
+      url: "https://api.thetavideoapi.com/video",
+      headers: {
+        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
+        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        source_upload_id: res.data.body.uploads[0].id,
+        playback_policy: "public",
+      }),
+    });
 
-      //GET VIDEO ID
-      const res3 = await axios({
-        method: "POST",
-        url: "https://api.thetavideoapi.com/video",
-        headers: {
-          "x-tva-sa-id": "srvacc_sqc1y5hhxz838uune4zh519a3",
-          "x-tva-sa-secret": "hcj34emsvgy9xmtuau31n5ab53624px3",
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify({
-          source_upload_id: res.data.body.uploads[0].id,
-          playback_policy: "public",
-        }),
-      });
+    console.log(res3.data.body.videos[0].id);
 
-      console.log(res3.data.body.videos[0].id);
+    //GET VIDEO STATUS
+    const res4 = await axios({
+      url: `https://api.thetavideoapi.com/video/${res3.data.body.videos[0].id}`,
+      method: "GET",
+      headers: {
+        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
+        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+      },
+    });
 
-      //GET VIDEO STATUS
-      const res4 = await axios({
-        url: `https://api.thetavideoapi.com/video/${res3.data.body.videos[0].id}`,
-        method: "GET",
-        headers: {
-          "x-tva-sa-id": "srvacc_sqc1y5hhxz838uune4zh519a3",
-          "x-tva-sa-secret": "hcj34emsvgy9xmtuau31n5ab53624px3",
-        },
-      });
+    console.log(res4.data.body.videos[0].state);
 
-      console.log(res4.data);
+    const db = polybase();
 
-      const res5 = await axios({
-        url: `https://api.thetavideoapi.com/video/srvacc_sqc1y5hhxz838uune4zh519a3/list?page=1&number=100`,
-        method: "GET",
-        headers: {
-          "x-tva-sa-id": "srvacc_sqc1y5hhxz838uune4zh519a3",
-          "x-tva-sa-secret": "hcj34emsvgy9xmtuau31n5ab53624px3",
-        },
-      });
+    const db_res = await db
+      .collection("Video")
+      .create([
+        res3.data.body.videos[0].id,
+        data.title,
+        data.description,
+        db.collection("User").record(signer_address),
+        res4.data.body.videos[0].state,
+      ]);
 
-      console.log(res5.data);
-    } catch (error) {
-      console.log(error.message);
-    }
+    console.log({ db_res });
+
+    const res5 = await axios({
+      url: `https://api.thetavideoapi.com/video/srvacc_1s8av43v0gfimqc6ifjq2wnmb/list?page=1&number=100`,
+      method: "GET",
+      headers: {
+        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
+        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+      },
+    });
+
+    console.log(res5.data);
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
     // videojs("my-player", {
     //   techOrder: ["theta_hlsjs", "html5"],
     //   sources: [
@@ -123,6 +136,20 @@ export default function App({ Component, pageProps }) {
     //     videoId: "video_kegqg8x8pz63rxqv650jzh8az6",
     //   },
     // });
+  };
+
+  const polybase = () => {
+    const db = new Polybase({
+      defaultNamespace: process.env.NEXT_PUBLIC_NAMESPACE,
+      signer: async (data) => {
+        return {
+          h: "eth-personal-sign",
+          sig: await wallet.signMessage(data),
+        };
+      },
+    });
+
+    return db;
   };
 
   useEffect(() => {

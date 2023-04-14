@@ -70,9 +70,12 @@ const Navbar = ({ connect_wallet }) => {
                   <div className="tgmenu__action d-none d-md-block">
                     <ul className="list-wrap">
                       <li className="header-btn">
-                        <div onClick={connect_wallet} className="tg-border-btn">
+                        <button
+                          onClick={connect_wallet}
+                          className="tg-border-btn"
+                        >
                           Connect Wallet
-                        </div>
+                        </button>
                       </li>
                     </ul>
                   </div>
