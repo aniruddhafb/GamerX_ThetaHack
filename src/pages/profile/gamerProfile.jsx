@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import React from 'react'
-import heroLogo from "../../public/favicon.png"
+import heroLogo from "../../../public/favicon.png"
 
 
-const profile = () => {
+const gamerProfile = () => {
     return (
         <div id="pageBG">
             <section className="breadcrumb-area">
@@ -121,4 +121,4 @@ const profile = () => {
     )
 }
 
-export default profile
+export default gamerProfile

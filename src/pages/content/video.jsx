@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import videoImg from "../../public/video.jpg"
+import videoImg from "../../../public/video.jpg"
 
 
 const video = () => {
