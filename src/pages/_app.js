@@ -1,18 +1,21 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
+
 // styles
 import "@/styles/globals.css";
 import "@/styles/tailwind.css";
 import "@/styles/plugins.css";
 import "@/styles/custom.css";
 
-//polybasE
+//polybase
 import { Polybase } from "@polybase/client";
 import { ethers, Wallet } from "ethers";
 import axios from "axios";
+
 export default function App({ Component, pageProps }) {
   const [signer, set_signer] = useState();
+  const [signerAddress, setSignerAddress] = useState();
 
   let wallet = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY);
 
@@ -28,6 +31,7 @@ export default function App({ Component, pageProps }) {
         signer = await provider.getSigner();
         set_signer(signer);
         const signer_address = await signer.getAddress();
+        setSignerAddress(signer_address);
         const db = polybase();
         const check_user = await db
           .collection("User")
@@ -157,7 +161,7 @@ export default function App({ Component, pageProps }) {
   }, []);
   return (
     <>
-      <Navbar connect_wallet={connect_wallet} />
+      <Navbar connect_wallet={connect_wallet} signer={signer} signerAddress={signerAddress} />
       <Component {...pageProps} upload_video={upload_video} />
       <Footer />
     </>

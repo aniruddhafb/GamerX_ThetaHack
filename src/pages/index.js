@@ -17,19 +17,15 @@ export default function Home() {
             <div className="row justify-content-between">
               <div className="col-lg-6">
                 <div className="slider__content">
-                  <h6 className="sub-title wow"
-                    style={{ visibility: "visible", animationDelay: "0.2s", animationName: "fadeInUp" }}>
-                    live gaming</h6>
-                  {/* <h2 className="title wow"
-                    style={{ visibility: "visible", animationDelay: "0.5s", animationName: "fadeInUp" }}>
-                    Platform</h2> */}
-                  <p className="wow"
-                    style={{ visibility: "visible", animationDelay: "0.8s", animationName: "fadeInUp" }}>
+                  <h6 className="sub-title">
+                    Gamerx.Space</h6>
+                  <h2 className="title">
+                    Here Gamers Live!!</h2>
+                  <p style={{ fontSize: "15px" }}>
                     A platform for gamers</p>
-                  <div className="slider__btn"
-                    style={{ visibility: "visible", animationDelay: "1.2s", animationName: "fadeInUp" }}>
+                  <div className="slider__btn">
                     <Link href="#"
-                      className="tg-btn-1"><span>Get Started</span></Link>
+                      className="tg-btn-1" style={{ textDecoration: "none" }}><span>Get Started</span></Link>
                   </div>
                 </div>
               </div>
@@ -51,12 +47,12 @@ export default function Home() {
       <div className="slider__brand-wrap">
         <div className="container custom-container">
           <ul className="slider__brand-list list-wrap">
-            <li>
-              <h2 style={{ fontSize: "15px" }}>Powered By</h2>
+            <li style={{ marginTop: "30px" }}>
+              <h2 style={{ fontSize: "12px" }}>Powered By</h2>
               <Link href="#">
                 <Image
                   src={thetalogo}
-                  style={{ height: "30px", width: "160px" }}
+                  style={{ height: "23px", width: "120px", filter: "invert(1)" }}
                   alt="brand" />
               </Link>
             </li>

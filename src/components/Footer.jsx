@@ -26,13 +26,14 @@ const Footer = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="col-xl-2 col-lg-3 col-md-5 col-sm-6">
+                        <div className="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                             <div className="footer-widget widget_nav_menu">
                                 <h4 className="fw-title">Quick Links</h4>
                                 <ul className="list-wrap menu">
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Gamers</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>All NFTs</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Social Network</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Top Gamers</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Trade NFTs</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Watch Livestreams</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Explore Content</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -40,12 +41,11 @@ const Footer = () => {
                             <div className="footer-widget widget_nav_menu">
                                 <h4 className="fw-title">Other</h4>
                                 <ul className="list-wrap menu">
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Setting &amp; Privacy</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Help &amp; Support</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Live Auctions</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>About Us</Link></li>
+                                    <li><Link href="#" style={{ textDecoration: "none" }}>Help</Link></li>
                                 </ul>
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
