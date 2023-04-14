@@ -65,7 +65,7 @@ const Navbar = ({ connect_wallet, signerAddress }) => {
                     <div className="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                       <ul className="navigation">
                         <li className="menu-item-has-children">
-                          <div className="bg-slate-700 p-[14px] rounded-[50%] cursor-pointer">
+                          <div className="bg-slate-700 p-[14px] rounded-[50%] cursor-pointer border-1 border-green-400">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"

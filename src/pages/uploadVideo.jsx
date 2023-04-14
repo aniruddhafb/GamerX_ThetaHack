@@ -27,34 +27,45 @@ const uploadVideo = ({ upload_video }) => {
                     className="comment-form"
                     action="#"
                   >
-                    <p className="comment-notes">
+                    <p className="comment-notes pb-4">
                       Fill the details and upload your content on gamerX
                     </p>
                     <div className="row">
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 relative">
                         <div className="form-grp">
                           <input name="file" onChange={onChange} type="file" />
                         </div>
+                        <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video File*</span>
                       </div>
-                      <div className="col-sm-6">
+                      <div className="col-sm-6 relative">
+                        <div className="form-grp ">
+                          <input name="thumbnail" onChange={onChange} type="file" />
+                        </div>
+                        <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video Thumbnail*</span>
+                      </div>
+                      <div className="relative mt-4">
                         <div className="form-grp">
                           <input
                             type="text"
                             name="title"
                             onChange={onChange}
-                            placeholder="Video Title *"
+                            placeholder="Give a title to your video"
                           />
                         </div>
+                        <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video Title*</span>
                       </div>
                     </div>
-                    <div className="form-grp">
-                      <textarea
-                        name="description"
-                        onChange={onChange}
-                        placeholder="Video Description *"
-                      ></textarea>
+                    <div className=" relative mt-4">
+                      <div className="form-grp">
+                        <textarea
+                          name="description"
+                          onChange={onChange}
+                          placeholder="Add a description for your video content"
+                        ></textarea>
+                      </div>
+                      <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video Description*</span>
                     </div>
-                    <button type="submit" fdprocessedid="x7by38">
+                    <button type="submit">
                       Upload
                     </button>
                   </form>

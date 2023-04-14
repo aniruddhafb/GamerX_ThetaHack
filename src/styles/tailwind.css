@@ -1089,6 +1089,7 @@ html.show-preloader body {
   display: -webkit-flex;
   display: flex;
   align-items: center;
+  background-image: url("https://themedox.com/demo/mykd/assets/img/bg/breadcrumb_bg01.jpg");
 }
 @media (max-width: 1500px) {
   .breadcrumb-area {

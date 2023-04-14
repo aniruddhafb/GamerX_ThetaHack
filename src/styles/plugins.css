@@ -18262,7 +18262,7 @@ button.swiper-pagination-bullet {
   width: 16px;
   height: 16px;
 }
-.ui-icon,
+/* .ui-icon,
 .ui-widget-content .ui-icon {
   background-image: url();
 }
@@ -18282,7 +18282,7 @@ button.swiper-pagination-bullet {
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
   background-image: url("");
-}
+} */
 .ui-icon-blank {
   background-position: 16px 16px;
 }
