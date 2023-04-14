@@ -50,7 +50,27 @@ const Navbar = () => {
                                                     Connect Wallet
                                                 </Link>
                                             </li>
-
+                                        </ul>
+                                    </div>
+                                    <div className="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
+                                        <ul className="navigation">
+                                            <li className="menu-item-has-children"><Link
+                                                href="#" style={{ textDecoration: "none" }}>Profile</Link>
+                                                <ul className="sub-menu" style={{ overflow: "hidden" }}>
+                                                    <li>
+                                                        <a href="#" class="flex items-center text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                            <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src="https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8d29tYW4lMjBibHVlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=face&w=500&q=200" alt="jane avatar" />
+                                                            <div class="mx-1">
+                                                                <h1 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Jane Doe</h1>
+                                                                <p class="text-sm text-gray-500 dark:text-gray-400">janedoe@exampl.com</p>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li><Link href="/profile">View Profile</Link>
+                                                    </li>
+                                                </ul>
+                                                <div className="dropdown-btn"><span className="plus-line"></span></div>
+                                            </li>
                                         </ul>
                                     </div>
                                 </nav>
