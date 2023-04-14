@@ -32,13 +32,13 @@ const Navbar = ({ connect_wallet, signerAddress }) => {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/topGamers" style={{ textDecoration: "none" }}>
+                        <Link href="/profile/exploreGamers" style={{ textDecoration: "none" }}>
                           Top Gamers
                         </Link>
                       </li>
                       <li>
-                        <Link href="/topNFTs" style={{ textDecoration: "none" }}>
-                          Trade NFTs
+                        <Link href="/nfts/exploreNFTs" style={{ textDecoration: "none" }}>
+                          Explore NFTs
                         </Link>
                       </li>
                       <li className="menu-item-has-children">
@@ -47,10 +47,10 @@ const Navbar = ({ connect_wallet, signerAddress }) => {
                         </Link>
                         <ul className="sub-menu">
                           <li>
-                            <Link href="/topGamers">Watch Live</Link>
+                            <Link href="/content/live/exploreLiveContent">Watch Live</Link>
                           </li>
                           <li>
-                            <Link href="/content/exploreContent">Explore Content</Link>
+                            <Link href="/content/videos/exploreContent">Explore Content</Link>
                           </li>
                         </ul>
                         <div className="dropdown-btn">
@@ -84,7 +84,7 @@ const Navbar = ({ connect_wallet, signerAddress }) => {
                                 <Image className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src={gamerXlogo} alt="jane avatar" />
                                 <div className="mx-1">
                                   <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">0X383...321</h1>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400">Balance : 20 TFUEL</p>
+                                  <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">Balance : 20 TFUEL</p>
                                 </div>
                               </Link>
                             </li>
