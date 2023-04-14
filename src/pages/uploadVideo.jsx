@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-const uploadVideo = () => {
+
+const uploadVideo = ({ upload_video }) => {
   const [data, set_data] = useState({ file: "", title: "", description: "" });
   const onChange = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
     console.log(data);
+  };
+
+  const handle_submit = async (e) => {
+    e.preventDefault();
+    upload_video(data);
   };
 
   return (
@@ -16,7 +22,11 @@ const uploadVideo = () => {
               <div className="blog-post-wrapper">
                 <div className="comment-respond" style={{ marginTop: "30px" }}>
                   <h3 className="comment-reply-title">Upload Video</h3>
-                  <form className="comment-form" action="#">
+                  <form
+                    onSubmit={handle_submit}
+                    className="comment-form"
+                    action="#"
+                  >
                     <p className="comment-notes">
                       Fill the details and upload your content on gamerX
                     </p>
