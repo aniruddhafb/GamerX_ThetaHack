@@ -48,8 +48,8 @@ export default function App({ Component, pageProps }) {
       url: "https://api.thetavideoapi.com/upload",
       method: "POST",
       headers: {
-        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
-        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
       },
     });
     console.log(res.data.body.uploads[0].id);
@@ -72,8 +72,8 @@ export default function App({ Component, pageProps }) {
       method: "POST",
       url: "https://api.thetavideoapi.com/video",
       headers: {
-        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
-        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
         "Content-Type": "application/json",
       },
       data: JSON.stringify({
@@ -89,8 +89,8 @@ export default function App({ Component, pageProps }) {
       url: `https://api.thetavideoapi.com/video/${res3.data.body.videos[0].id}`,
       method: "GET",
       headers: {
-        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
-        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
       },
     });
 
@@ -111,11 +111,11 @@ export default function App({ Component, pageProps }) {
     console.log({ db_res });
 
     const res5 = await axios({
-      url: `https://api.thetavideoapi.com/video/srvacc_1s8av43v0gfimqc6ifjq2wnmb/list?page=1&number=100`,
+      url: `https://api.thetavideoapi.com/video${process.env.NEXT_PUBLIC_THETA_ID}list?page=1&number=100`,
       method: "GET",
       headers: {
-        "x-tva-sa-id": "srvacc_1s8av43v0gfimqc6ifjq2wnmb",
-        "x-tva-sa-secret": "zg4uw9wfcqpigv4x7uac3trm6mcpacqh",
+        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
       },
     });
 
