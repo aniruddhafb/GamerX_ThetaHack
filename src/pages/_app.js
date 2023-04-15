@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { v4 as uuidv4 } from "uuid";
 
 // styles
 import "@/styles/globals.css";
@@ -12,10 +14,13 @@ import "@/styles/custom.css";
 import { Polybase } from "@polybase/client";
 import { ethers, Wallet } from "ethers";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   const [signer, set_signer] = useState();
   const [signerAddress, setSignerAddress] = useState();
+  const storage = new ThirdwebStorage();
+  const router = useRouter();
 
   let wallet = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY);
 
@@ -47,86 +52,90 @@ export default function App({ Component, pageProps }) {
   };
 
   const upload_video = async (data) => {
-    // try {
-    const res = await axios({
-      url: "https://api.thetavideoapi.com/upload",
-      method: "POST",
-      headers: {
-        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
-        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
-      },
-    });
-    console.log(res.data.body.uploads[0].id);
-    console.log(res.data.body.uploads[0]);
-    const signer_address = await signer.getAddress();
+    try {
+      const thumbnail_ipfs = await storage.upload(data.thumbnail);
+      console.log({ thumbnail_ipfs });
+      const res = await axios({
+        url: "https://api.thetavideoapi.com/upload",
+        method: "POST",
+        headers: {
+          "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+          "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
+        },
+      });
+      console.log(res.data.body.uploads[0].id);
+      console.log(res.data.body.uploads[0]);
+      const signer_address = await signer.getAddress();
 
-    const res2 = await axios({
-      url: res.data.body.uploads[0].presigned_url,
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/octet-stream",
-      },
-      data: data.file,
-    });
+      const res2 = await axios({
+        url: res.data.body.uploads[0].presigned_url,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/octet-stream",
+        },
+        data: data.file,
+      });
 
-    console.log(res2);
+      console.log(res2);
 
-    //GET VIDEO ID
-    const res3 = await axios({
-      method: "POST",
-      url: "https://api.thetavideoapi.com/video",
-      headers: {
-        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
-        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({
-        source_upload_id: res.data.body.uploads[0].id,
-        playback_policy: "public",
-      }),
-    });
+      //GET VIDEO ID
+      const res3 = await axios({
+        method: "POST",
+        url: "https://api.thetavideoapi.com/video",
+        headers: {
+          "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+          "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({
+          source_upload_id: res.data.body.uploads[0].id,
+          playback_policy: "public",
+        }),
+      });
 
-    console.log(res3.data.body.videos[0].id);
+      console.log(res3.data.body.videos[0].id);
 
-    //GET VIDEO STATUS
-    const res4 = await axios({
-      url: `https://api.thetavideoapi.com/video/${res3.data.body.videos[0].id}`,
-      method: "GET",
-      headers: {
-        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
-        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
-      },
-    });
+      //GET VIDEO STATUS
+      const res4 = await axios({
+        url: `https://api.thetavideoapi.com/video/${res3.data.body.videos[0].id}`,
+        method: "GET",
+        headers: {
+          "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+          "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
+        },
+      });
 
-    console.log(res4.data.body.videos[0].state);
+      console.log(res4.data.body.videos[0].state);
 
-    const db = polybase();
+      const db = polybase();
 
-    const db_res = await db
-      .collection("Video")
-      .create([
-        res3.data.body.videos[0].id,
-        data.title,
-        data.description,
-        db.collection("User").record(signer_address),
-        res4.data.body.videos[0].state,
-      ]);
+      const db_res = await db
+        .collection("Video")
+        .create([
+          res3.data.body.videos[0].id,
+          data.title,
+          data.description,
+          db.collection("User").record(signer_address),
+          res4.data.body.videos[0].state,
+          thumbnail_ipfs,
+        ]);
 
-    console.log({ db_res });
+      console.log({ db_res });
+      router.push(`/content/videos/${res3.data.body.videos[0].id}`);
 
-    const res5 = await axios({
-      url: `https://api.thetavideoapi.com/video${process.env.NEXT_PUBLIC_THETA_ID}list?page=1&number=100`,
-      method: "GET",
-      headers: {
-        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
-        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
-      },
-    });
+      // const res5 = await axios({
+      //   url: `https://api.thetavideoapi.com/video${process.env.NEXT_PUBLIC_THETA_ID}list?page=1&number=100`,
+      //   method: "GET",
+      //   headers: {
+      //     "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+      //     "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
+      //   },
+      // });
 
-    console.log(res5.data);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
+      // console.log(res5.data);
+    } catch (error) {
+      console.log(error.message);
+    }
     // videojs("my-player", {
     //   techOrder: ["theta_hlsjs", "html5"],
     //   sources: [
@@ -140,6 +149,85 @@ export default function App({ Component, pageProps }) {
     //     videoId: "video_kegqg8x8pz63rxqv650jzh8az6",
     //   },
     // });
+  };
+
+  const update_profile = async (data) => {
+    console.log(data);
+    const ipfs_cover = await storage.upload(data.cover_photo);
+    const ipfs_profile = await storage.upload(data.profile_photo);
+    const signer_address = await signer.getAddress();
+
+    const db = polybase();
+    const res = await db
+      .collection("User")
+      .record(signer_address)
+      .call("update_profile", [
+        data.username,
+        data.bio,
+        data.email,
+        [data.instagram, data.twitter, data.link],
+        ipfs_cover,
+        ipfs_profile,
+      ]);
+    console.log(res.data);
+  };
+
+  const get_user_data = async () => {
+    console.log(signerAddress);
+    const db = polybase();
+    const res = await db.collection("User").record(signerAddress).get();
+    console.log(res.data);
+  };
+
+  const get_video_data = async (id) => {
+    const db = polybase();
+    const res = await db.collection("Video").where("id", "==", id).get();
+    // console.log(res.data[0].data);
+    const res4 = await axios({
+      url: `https://api.thetavideoapi.com/video/${id}`,
+      method: "GET",
+      headers: {
+        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
+      },
+    });
+    let comments = [{ owner: "", comment: "" }];
+    for (const e of res.data[0].data.comments) {
+      const comment = await db.collection("Comment").record(e.id).get();
+      console.log(comment.data.owner.id);
+      const owner = await db
+        .collection("User")
+        .record(comment.data.owner.id)
+        .get();
+      console.log({ owner });
+      comments.push({ owner, comment });
+    }
+    let obj = { ...res.data[0].data, ...res4.data.body.videos[0], comments };
+    // console.log({ obj });
+    return obj;
+  };
+
+  const post_comment = async (video_id, comment) => {
+    console.log(comment, video_id);
+    const db = polybase();
+    const signer_address = await signer.getAddress();
+    const upload_comment = await db
+      .collection("Comment")
+      .create([
+        uuidv4(),
+        comment,
+        Date.now().toString(),
+        db.collection("User").record(signer_address),
+      ]);
+    console.log(upload_comment.data);
+
+    const save_comment = db
+      .collection("Video")
+      .record(video_id)
+      .call("post_comment", [
+        db.collection("Comment").record(upload_comment.data.id),
+      ]);
+    console.log((await save_comment).data);
   };
 
   const polybase = () => {
@@ -161,8 +249,19 @@ export default function App({ Component, pageProps }) {
   }, []);
   return (
     <>
-      <Navbar connect_wallet={connect_wallet} signer={signer} signerAddress={signerAddress} />
-      <Component {...pageProps} upload_video={upload_video} />
+      <Navbar
+        connect_wallet={connect_wallet}
+        signer={signer}
+        signerAddress={signerAddress}
+      />
+      <Component
+        {...pageProps}
+        upload_video={upload_video}
+        get_video_data={get_video_data}
+        post_comment={post_comment}
+        update_profile={update_profile}
+        get_user_data={get_user_data}
+      />
       <Footer />
     </>
   );

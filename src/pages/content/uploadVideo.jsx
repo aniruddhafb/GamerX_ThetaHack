@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const uploadVideo = ({ upload_video }) => {
-  const [data, set_data] = useState({ file: "", title: "", description: "" });
+  const [data, set_data] = useState({
+    file: "",
+    title: "",
+    description: "",
+    thumbnail: "",
+  });
   const onChange = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
     console.log(data);
@@ -35,15 +40,45 @@ const uploadVideo = ({ upload_video }) => {
                     <div className="row">
                       <div className="col-sm-6 relative">
                         <div className="form-grp">
-                          <input name="file" onChange={onChange} type="file" required />
+                          <input
+                            name="file"
+                            onChange={onChange}
+                            type="file"
+                            required
+                          />
                         </div>
-                        <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video File*</span>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Video File*
+                        </span>
                       </div>
                       <div className="col-sm-6 relative">
                         <div className="form-grp ">
-                          <input name="thumbnail" onChange={onChange} type="file" required />
+                          <input
+                            name="thumbnail"
+                            onChange={onChange}
+                            type="file"
+                            required
+                          />
                         </div>
-                        <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video Thumbnail*</span>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Video Thumbnail*
+                        </span>
                       </div>
                       <div className="relative mt-4">
                         <div className="form-grp">
@@ -55,7 +90,17 @@ const uploadVideo = ({ upload_video }) => {
                             required
                           />
                         </div>
-                        <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video Title*</span>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Video Title*
+                        </span>
                       </div>
                     </div>
                     <div className=" relative mt-4">
@@ -66,11 +111,19 @@ const uploadVideo = ({ upload_video }) => {
                           placeholder="Add a description for your video content"
                         ></textarea>
                       </div>
-                      <span style={{ position: "absolute", top: "-30px", color: "white", fontFamily: "berlin_sans_fb_demibold", textTransform: "uppercase" }}>Video Description*</span>
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "-30px",
+                          color: "white",
+                          fontFamily: "berlin_sans_fb_demibold",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Video Description*
+                      </span>
                     </div>
-                    <button type="submit">
-                      Upload
-                    </button>
+                    <button type="submit">Upload</button>
                   </form>
                 </div>
               </div>
