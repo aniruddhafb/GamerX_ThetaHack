@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import videoImg from "../../../../public/video.jpg";
 import axios from "axios";
 import { useRouter } from "next/router";
-
+import moment from "moment/moment";
 const video = ({ get_video_data, post_comment }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -95,34 +95,50 @@ const video = ({ get_video_data, post_comment }) => {
 
               {/* comments  */}
               <div className="comments-wrap">
-                <h4 className="comments-wrap-title">3 Comments</h4>
-                <div className="latest-comments">
-                  <ul className="list-wrap">
-                    <li>
-                      <div className="comments-box">
-                        <div className="comments-avatar">
-                          <Image
-                            src={videoImg}
-                            alt="img"
-                            style={{ height: "120px", width: "auto" }}
-                          />
-                        </div>
-                        <div className="comments-text">
-                          <div className="avatar-name">
-                            <h6 className="name">John William</h6>
-                            <span className="date">September 6, 2023</span>
+                <h4 className="comments-wrap-title">
+                  {data?.comments.length} Comments
+                </h4>
+                {data?.comments.map((e) => {
+                  const d = new Date();
+                  let time;
+                  if (e.comment.data?.date) {
+                    time = `${d.getDate(e.comment.data?.date)}/${
+                      d.getMonth(e.comment.data?.date) + 1
+                    }/${d.getFullYear(e.comment.data?.date)}`;
+                    console.log({ time });
+                  }
+
+                  return (
+                    <div className="latest-comments">
+                      <ul className="list-wrap">
+                        <li>
+                          <div className="comments-box">
+                            <div className="comments-avatar">
+                              <Image
+                                src={e.owner.data?.profile_image.replace(
+                                  "ipfs://",
+                                  "https://gateway.ipfscdn.io/ipfs/"
+                                )}
+                                alt="img"
+                                width={100}
+                                height={100}
+                              />
+                            </div>
+                            <div className="comments-text">
+                              <div className="avatar-name">
+                                <h6 className="name">
+                                  {e.owner.data?.username}
+                                </h6>
+                                <span className="date text-white">{time}</span>
+                              </div>
+                              <p>{e.comment.data?.comment_data}</p>
+                            </div>
                           </div>
-                          <p>
-                            Axcepteur sint occaecat atat non proident, sunt
-                            culpa officia deserunt mollit anim id est labor
-                            umLor emdolor uni enim ad minim veniam quis nostrud
-                            today.
-                          </p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                        </li>
+                      </ul>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* post a comment  */}

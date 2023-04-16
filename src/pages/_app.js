@@ -17,8 +17,10 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
-  const [signer, set_signer] = useState();
+  const [signer, set_signer] = useState("");
   const [signerAddress, setSignerAddress] = useState();
+
+  const [user_data, set_user_data] = useState();
   const storage = new ThirdwebStorage();
   const router = useRouter();
 
@@ -45,6 +47,7 @@ export default function App({ Component, pageProps }) {
         if (check_user.data.length == 0) {
           db.collection("User").create([signer_address]);
         }
+        get_user_data(signer_address);
       }
     } catch (error) {
       console.log({ connect_wallet: error.message });
@@ -172,11 +175,10 @@ export default function App({ Component, pageProps }) {
     console.log(res.data);
   };
 
-  const get_user_data = async () => {
-    console.log(signerAddress);
+  const get_user_data = async (signer_address) => {
     const db = polybase();
-    const res = await db.collection("User").record(signerAddress).get();
-    console.log(res.data);
+    const res = await db.collection("User").record(signer_address).get();
+    set_user_data(res.data);
   };
 
   const get_video_data = async (id) => {
@@ -203,7 +205,7 @@ export default function App({ Component, pageProps }) {
       comments.push({ owner, comment });
     }
     let obj = { ...res.data[0].data, ...res4.data.body.videos[0], comments };
-    // console.log({ obj });
+    console.log({ obj });
     return obj;
   };
 
@@ -261,6 +263,7 @@ export default function App({ Component, pageProps }) {
         post_comment={post_comment}
         update_profile={update_profile}
         get_user_data={get_user_data}
+        user_data={user_data}
       />
       <Footer />
     </>
