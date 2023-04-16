@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { useEffect } from "react";
 
 const exploreLiveContent = () => {
-    return (
-        <div>exploreLiveContent</div>
-    )
-}
+  return <div>explore live video</div>;
+};
 
-export default exploreLiveContent
+export default exploreLiveContent;

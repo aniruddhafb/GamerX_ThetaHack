@@ -209,6 +209,30 @@ export default function App({ Component, pageProps }) {
     return obj;
   };
 
+  const go_live = async (data) => {
+    const db = polybase();
+    const thumbnail_ipfs = await storage.upload(data.thumbnail);
+    const res = await db
+      .collection("LiveStream")
+      .create([
+        uuidv4(),
+        thumbnail_ipfs,
+        data.stream_id,
+        data.title,
+        data.description,
+        db.collection("User").record(signerAddress),
+      ]);
+    console.log(res.data);
+    router.push(`/content/live/${res.data.stream_id}`);
+  };
+
+  const get_liveStream_data = async (stream_id) => {
+    const db = polybase();
+    const res = await db.collection("LiveStream").record(stream_id).get();
+    console.log(res.data);
+    return res.data;
+  };
+
   const post_comment = async (video_id, comment) => {
     console.log(comment, video_id);
     const db = polybase();
@@ -264,6 +288,8 @@ export default function App({ Component, pageProps }) {
         update_profile={update_profile}
         get_user_data={get_user_data}
         user_data={user_data}
+        go_live={go_live}
+        get_liveStream_data={get_liveStream_data}
       />
       <Footer />
     </>

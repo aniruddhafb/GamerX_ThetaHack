@@ -40,9 +40,7 @@ const video = ({ get_video_data, post_comment }) => {
                   {data?.playback_uri ? (
                     <Image src={videoImg} alt="img" />
                   ) : (
-                    <div className="text-white text-2xl">
-                      Error Fetching The Video
-                    </div>
+                    <div className="text-white text-2xl">{data?.state}</div>
                   )}
                 </div>
                 <div className="blog-post-content blog-details-content">
