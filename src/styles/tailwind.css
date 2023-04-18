@@ -2764,21 +2764,6 @@ html.show-preloader body {
   display: flex;
   align-items: flex-end;
   background-color: #121a23;
-  background-image: -moz-linear-gradient(
-    90deg,
-    #0c0e12 0%,
-    rgba(31, 41, 53, 0.36078) 100%
-  );
-  background-image: -webkit-linear-gradient(
-    90deg,
-    #0c0e12 0%,
-    rgba(31, 41, 53, 0.36078) 100%
-  );
-  background-image: -ms-linear-gradient(
-    90deg,
-    #0c0e12 0%,
-    rgba(31, 41, 53, 0.36078) 100%
-  );
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -o-border-radius: 8px;
