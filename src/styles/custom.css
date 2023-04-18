@@ -5,3 +5,14 @@
 #pageBG {
   background-color: #0f161b;
 }
+
+#flexCOL {
+  display: flex;
+  flex-direction: row;
+}
+
+@media only screen and (max-width: 1050px) {
+  #flexCOL {
+    flex-direction: column;
+  }
+}

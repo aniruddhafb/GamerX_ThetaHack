@@ -52,6 +52,7 @@ const video = ({ get_video_data, post_comment }) => {
                       <li>
                         <i className="far fa-calendar-alt"></i> Aug 16, 2023
                       </li>
+                      <li><i className="far fa-comments"></i>{data?.comments.length} comments</li>
                     </ul>
                   </div>
                   <h2 className="title">{data?.name}</h2>
@@ -100,9 +101,8 @@ const video = ({ get_video_data, post_comment }) => {
                   const d = new Date();
                   let time;
                   if (e.comment.data?.date) {
-                    time = `${d.getDate(e.comment.data?.date)}/${
-                      d.getMonth(e.comment.data?.date) + 1
-                    }/${d.getFullYear(e.comment.data?.date)}`;
+                    time = `${d.getDate(e.comment.data?.date)}/${d.getMonth(e.comment.data?.date) + 1
+                      }/${d.getFullYear(e.comment.data?.date)}`;
                     console.log({ time });
                   }
 
@@ -151,7 +151,7 @@ const video = ({ get_video_data, post_comment }) => {
                       spellCheck="false"
                     ></textarea>
                   </div>
-                  <button onClick={do_comment} type="button">
+                  <button onClick={do_comment} type="submit">
                     Post Comment
                   </button>
                 </form>
