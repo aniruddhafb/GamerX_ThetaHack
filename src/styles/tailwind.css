@@ -1598,7 +1598,7 @@ html.show-preloader body {
   top: 0;
   width: 100%;
   z-index: 9;
-  height: auto;
+  height: 100px;
 }
 @media (max-width: 767.98px) {
   .transparent-header {
