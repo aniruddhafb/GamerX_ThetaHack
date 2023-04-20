@@ -1,8 +1,14 @@
 #HeroMain {
   background-image: url("../../public/slider_bg.jpg");
 }
+#videoBack {
+  background-image: url("../../public/videoBack.jpg");
+}
 #gamersBack {
   background-image: url("../../public/team_bg.jpg");
+}
+#roadmapBack {
+  background-image: url("../../public/roadmap.jpg");
 }
 
 #pageBG {
@@ -18,4 +24,66 @@
   #flexCOL {
     flex-direction: column;
   }
+}
+.custom-shape-divider-bottom-1681979696 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1681979696 svg {
+  position: relative;
+  display: block;
+  width: calc(133% + 1.3px);
+  height: 500px;
+}
+
+.custom-shape-divider-bottom-1681979696 .shape-fill {
+  fill: #0c0f14;
+}
+
+.custom-shape-divider-bottom-1681980015 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1681980015 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 42px;
+}
+
+.custom-shape-divider-bottom-1681980015 .shape-fill {
+  fill: #10181f;
+}
+
+.custom-shape-divider-bottom-1681981240 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1681981240 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 90px;
+}
+
+.custom-shape-divider-bottom-1681981240 .shape-fill {
+  fill: #0f161b;
 }
