@@ -6352,9 +6352,9 @@ fieldset:disabled .btn {
 .overflow-auto {
   overflow: auto !important;
 }
-.overflow-hidden {
+/* .overflow-hidden {
   overflow: hidden !important;
-}
+} */
 .overflow-visible {
   overflow: visible !important;
 }

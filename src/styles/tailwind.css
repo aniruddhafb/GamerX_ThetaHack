@@ -1598,7 +1598,7 @@ html.show-preloader body {
   top: 0;
   width: 100%;
   z-index: 9;
-  height: auto;
+  height: 100px;
 }
 @media (max-width: 767.98px) {
   .transparent-header {
@@ -3055,7 +3055,7 @@ html.show-preloader body {
   color: var(--tg-theme-primary);
 }
 .trendingNft__item {
-  /* background-image: url(../img/bg/trendnft_img.png); */
+  background-image: url("../../public/trendnft_img.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -9491,7 +9491,7 @@ blockquote p {
 }
 .footer__top-wrap {
   padding: 80px 0 30px;
-  border-top: 1px solid #151d23;
+  /* border-top: 1px solid #151d23; */
 }
 .footer-widget {
   margin: 0 0 50px;
