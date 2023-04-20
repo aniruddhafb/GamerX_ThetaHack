@@ -64,15 +64,15 @@ const Footer = () => {
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-lg-5 col-md-7">
-                            <div class="footer-widget">
-                                <h4 class="fw-title">Newsletter</h4>
-                                <div class="footer-newsletter">
+                        <div className="col-xl-4 col-lg-5 col-md-7">
+                            <div className="footer-widget">
+                                <h4 className="fw-title">Newsletter</h4>
+                                <div className="footer-newsletter">
                                     <p>Subscribe to our newsletter to get latest updates on GamerX</p>
                                     <form action="#"
-                                        class="footer-newsletter-form">
+                                        className="footer-newsletter-form">
                                         <input type="email" placeholder="Your email address" />
-                                        <button type="submit"><i class="flaticon-paper-plane"></i></button>
+                                        <button type="submit"><i className="flaticon-paper-plane"></i></button>
                                     </form>
                                 </div>
                             </div>
