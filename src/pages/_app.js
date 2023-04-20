@@ -19,6 +19,8 @@ import { useRouter } from "next/router";
 export default function App({ Component, pageProps }) {
   const [signer, set_signer] = useState("");
   const [signerAddress, setSignerAddress] = useState();
+  const [signer_bal, set_signer_bal] = useState(0);
+  const [format_signer_bal, set_format_signer_bal] = useState(0);
 
   const [user_data, set_user_data] = useState();
   const storage = new ThirdwebStorage();
@@ -39,6 +41,14 @@ export default function App({ Component, pageProps }) {
         set_signer(signer);
         const signer_address = await signer.getAddress();
         setSignerAddress(signer_address);
+
+        const user_balance = await signer.getBalance();
+        const signerToStr = ethers.utils.formatEther(user_balance.toString());
+        set_signer_bal(signerToStr);
+
+        const formatBalance = parseFloat(signerToStr).toFixed(2);
+        set_format_signer_bal(formatBalance);
+
         const db = polybase();
         const check_user = await db
           .collection("User")
@@ -279,6 +289,7 @@ export default function App({ Component, pageProps }) {
         connect_wallet={connect_wallet}
         signer={signer}
         signerAddress={signerAddress}
+        signer_bal={format_signer_bal}
       />
       <Component
         {...pageProps}

@@ -3,7 +3,7 @@ import gamerXlogo from "../../public/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 
-const Navbar = ({ connect_wallet, signerAddress }) => {
+const Navbar = ({ connect_wallet, signerAddress, signer_bal }) => {
   return (
     <header>
       <div
@@ -81,10 +81,14 @@ const Navbar = ({ connect_wallet, signerAddress }) => {
                           <ul className="sub-menu" style={{ overflow: "hidden", marginTop: "22px" }}>
                             <li>
                               <Link href="#" className="flex items-center text-sm text-gray-600 transition-colors duration-300 transform ml-[-20px]" style={{ textDecoration: "none" }}>
-                                <Image className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src={gamerXlogo} alt="jane avatar" />
+                                <Image className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9 mb-3" src="../../dislogo.png" alt="jane avatar" height={100} width={100} />
                                 <div className="mx-1">
-                                  <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">0X383...321</h1>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">Balance : 20 TFUEL</p>
+                                  <span className="max-w-[30px] overflow-hidden text-ellipsis" style={{ textTransform: "lowercase" }}>
+                                    {signerAddress.slice(0, 5) +
+                                      "..." +
+                                      signerAddress.slice(38)}
+                                  </span>
+                                  <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">Balance : {signer_bal} TFUEL</p>
                                 </div>
                               </Link>
                             </li>
