@@ -1,17 +1,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import VideoCard from '@/components/cards/videoCard'
 
 import coin1 from "../../public/slider_shape01.png"
 import coin2 from "../../public/slider_shape02.png"
 import coin3 from "../../public/slider_shape03.png"
 import coin4 from "../../public/slider_shape04.png"
-import NFTImage from "../../public/nft_img01.jpg"
-import NFTImage2 from "../../public/nft_avatar01.png"
+
 import teamPNG from "../../public/team02.png"
 import heroLogo from "../../public/favicon.png"
 import thetalogo from "../../public/theta.webp"
 
-import VideoCard from '@/components/cards/videoCard'
 
 export default function Home() {
   return (
@@ -87,7 +86,9 @@ export default function Home() {
                   <Link href="/content/videos" style={{ textDecoration: "none", position: "relative", zIndex: "10" }}>
                     <Image
                       className='w-[100%] h-[200px] rounded-md'
-                      src={NFTImage}
+                      src="../../../nft_img01.jpg"
+                      height={100}
+                      width={100}
                       alt="img" />
                     <div className='absolute top-[30%] right-[46%]'>
                       <i className="flaticon-play text-white text-4xl hover:text-green-500"></i>
@@ -101,7 +102,9 @@ export default function Home() {
                     <div className="avatar-img" style={{ zIndex: "11" }}>
                       <Link href="#">
                         <Image
-                          src={NFTImage2}
+                          src="../../../nft_avatar01.png"
+                          height={100}
+                          width={100}
                           className='h-[30px] w-[30px]'
                           alt="img" />
                       </Link>
@@ -211,6 +214,7 @@ export default function Home() {
             </div>
           </div>
           <div className='flex flex-wrap justify-around align-middle'>
+            {/* loop here  */}
             <div className="trendingNft__item">
               <div className="trendingNft__item-top">
                 <div className="trendingNft__item-avatar">

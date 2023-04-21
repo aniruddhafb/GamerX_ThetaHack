@@ -21,7 +21,7 @@ const topGamers = () => {
                             </div>
                         </aside>
                     </div> */}
-                    <div className="col-xl-9 col-lg-8 col-md-11">
+                    <div>
                         <div className="shop__top-wrap">
                             <div className="row align-items-center">
                                 <div className="col-lg-8 col-sm-6">
