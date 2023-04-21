@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 let socket;
 
 const liveStream = ({ get_liveStream_data }) => {
