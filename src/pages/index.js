@@ -84,7 +84,7 @@ export default function Home() {
             <div className="col-xxl-4 col-xl-5 col-lg-6 col-md-9">
               <div className="nft-item__box" style={{ backgroundColor: "transparent" }}>
                 <div className="nft-item__content">
-                  <Link href="/content/videos" style={{ textDecoration: "none", position: "relative", zIndex: "100" }}>
+                  <Link href="/content/videos" style={{ textDecoration: "none", position: "relative", zIndex: "10" }}>
                     <Image
                       className='w-[100%] h-[200px] rounded-md'
                       src={NFTImage}
@@ -98,7 +98,7 @@ export default function Home() {
                   </Link>
 
                   <div className="nft-item__avatar">
-                    <div className="avatar-img" style={{ zIndex: "101" }}>
+                    <div className="avatar-img" style={{ zIndex: "11" }}>
                       <Link href="#">
                         <Image
                           src={NFTImage2}
@@ -107,7 +107,7 @@ export default function Home() {
                       </Link>
                     </div>
                     <div className="avatar-name">
-                      <h5 className="name" style={{ zIndex: "101" }}>
+                      <h5 className="name" style={{ zIndex: "11" }}>
                         <Link href="#" style={{ textDecoration: "none", fontSize: "15px" }}>
                           Alax Max
                         </Link>
@@ -145,6 +145,7 @@ export default function Home() {
             </div>
           </div>
           <div className="row justify-content-center">
+            {/* loop here  */}
             <div className="col-xl-3 col-lg-4 col-sm-6 wow fadeInUp" >
               <div className="team__item relative">
                 <div>

@@ -7,7 +7,7 @@ const VideoCard = ({ thumbnail, title, creatorName, creatorImage, videoDate, vid
         <div className="col-xxl-4 col-xl-5 col-lg-6 col-md-9">
             <div className="nft-item__box" style={{ backgroundColor: "transparent" }}>
                 <div className="nft-item__content">
-                    <Link href={`/content/videos/${videoID}`} style={{ textDecoration: "none", position: "relative", zIndex: "100" }}>
+                    <Link href={`/content/videos/${videoID}`} style={{ textDecoration: "none", position: "relative", zIndex: "10" }}>
                         <Image
                             className='w-[100%] h-[200px] rounded-md'
                             src={thumbnail}
@@ -21,7 +21,7 @@ const VideoCard = ({ thumbnail, title, creatorName, creatorImage, videoDate, vid
                     </Link>
 
                     <div className="nft-item__avatar">
-                        <div className="avatar-img" style={{ zIndex: "101" }}>
+                        <div className="avatar-img" style={{ zIndex: "11" }}>
                             <Link href="#">
                                 <Image
                                     src={creatorImage}
@@ -30,7 +30,7 @@ const VideoCard = ({ thumbnail, title, creatorName, creatorImage, videoDate, vid
                             </Link>
                         </div>
                         <div className="avatar-name">
-                            <h5 className="name" style={{ zIndex: "101" }}>
+                            <h5 className="name" style={{ zIndex: "11" }}>
                                 <Link href="#" style={{ textDecoration: "none", fontSize: "15px" }}>
                                     {creatorName}
                                 </Link>
