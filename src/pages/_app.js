@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { v4 as uuidv4 } from "uuid";
 
+//firebase
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, set } from "firebase/database";
 // styles
 import "@/styles/globals.css";
 import "@/styles/tailwind.css";
@@ -265,6 +269,25 @@ export default function App({ Component, pageProps }) {
       ]);
     console.log((await save_comment).data);
   };
+
+  const initialize_firebase = async () => {
+    const firebaseConfig = {
+      apiKey: "AIzaSyDMdg49PbtU35j4vAjummF-GdrW6Z4ex2A",
+      authDomain: "gamerx-85d5f.firebaseapp.com",
+      projectId: "gamerx-85d5f",
+      storageBucket: "gamerx-85d5f.appspot.com",
+      messagingSenderId: "45031986007",
+      appId: "1:45031986007:web:bf398bafc9dc8d4f23a412",
+      measurementId: "G-Q06CCYY0T5",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    const database = getDatabase(app);
+  };
+
+
 
   const polybase = () => {
     const db = new Polybase({
