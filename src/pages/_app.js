@@ -287,6 +287,18 @@ export default function App({ Component, pageProps }) {
 
   const create_chat_room = async () => {};
 
+  const test = async () => {
+    const db = polybase();
+    //FOR FETCHING ALL OF THE VIDEOS
+    const res = await db.collection("Video").get();
+
+    //TO FETCH PARTICULAR DATA
+    const res2 = await db
+      .collection("Video")
+      .where("name", "==", "Counter Strike Gameplay")
+      .get();
+  };
+
   const polybase = () => {
     const db = new Polybase({
       defaultNamespace: process.env.NEXT_PUBLIC_NAMESPACE,
