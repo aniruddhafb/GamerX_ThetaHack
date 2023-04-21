@@ -1,15 +1,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import VideoCard from '@/components/cards/videoCard'
 
 import coin1 from "../../public/slider_shape01.png"
 import coin2 from "../../public/slider_shape02.png"
 import coin3 from "../../public/slider_shape03.png"
 import coin4 from "../../public/slider_shape04.png"
-import NFTImage from "../../public/nft_img01.jpg"
-import NFTImage2 from "../../public/nft_avatar01.png"
+
 import teamPNG from "../../public/team02.png"
 import heroLogo from "../../public/favicon.png"
 import thetalogo from "../../public/theta.webp"
+
 
 export default function Home() {
   return (
@@ -82,38 +83,46 @@ export default function Home() {
             <div className="col-xxl-4 col-xl-5 col-lg-6 col-md-9">
               <div className="nft-item__box" style={{ backgroundColor: "transparent" }}>
                 <div className="nft-item__content">
-                  <Link href="/content/videos" style={{ textDecoration: "none" }}>
+                  <Link href="/content/videos" style={{ textDecoration: "none", position: "relative", zIndex: "10" }}>
                     <Image
                       className='w-[100%] h-[200px] rounded-md'
-                      src={NFTImage}
+                      src="../../../nft_img01.jpg"
+                      height={100}
+                      width={100}
                       alt="img" />
+                    <div className='absolute top-[30%] right-[46%]'>
+                      <i className="flaticon-play text-white text-4xl hover:text-green-500"></i>
+                    </div>
                     <h4 className="title mt-4">
-                      wolf gaming
-                      art
+                      wolf gaming is a perfect gameplay and on so..
                     </h4>
                   </Link>
 
                   <div className="nft-item__avatar">
-                    <div className="avatar-img">
+                    <div className="avatar-img" style={{ zIndex: "11" }}>
                       <Link href="#">
                         <Image
-                          src={NFTImage2}
+                          src="../../../nft_avatar01.png"
+                          height={100}
+                          width={100}
                           className='h-[30px] w-[30px]'
                           alt="img" />
                       </Link>
                     </div>
                     <div className="avatar-name">
-                      <h5 className="name">
+                      <h5 className="name" style={{ zIndex: "11" }}>
                         <Link href="#" style={{ textDecoration: "none", fontSize: "15px" }}>
                           Alax Max
                         </Link>
                       </h5>
-                      <span className="designation">Creator</span>
+                      <span className="designation">4/12/2023</span>
+                      <span className="designation">No views</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            {/* <VideoCard /> */}
           </div>
         </div>
 
@@ -139,21 +148,28 @@ export default function Home() {
             </div>
           </div>
           <div className="row justify-content-center">
+            {/* loop here  */}
             <div className="col-xl-3 col-lg-4 col-sm-6 wow fadeInUp" >
-              <div className="team__item">
+              <div className="team__item relative">
+                <div>
+                  <Image
+                    src="../../mask_img02.jpg" height={100} width={100} alt="img" className='absolute top-0 right-0 h-[110px] w-[100%]' />
+                </div>
+
                 <div className="team__thumb">
                   <Link href="#">
                     <Image
-                      src={teamPNG} alt="img" />
+                      src={teamPNG} alt="img" className='ml-7 mt-4 h-[170px] w-[170px]' style={{ zIndex: "10", position: "relative" }} />
                   </Link>
                 </div>
-                <div className="team__content">
+
+                <div className="team__content mt-[-13px] mr-3">
                   <h4 className="name">
                     <Link href="#" style={{ textDecoration: "none" }}>
                       killer
                       master</Link>
                   </h4>
-                  <span className="designation">Blockchain Expert</span>
+                  <span className="designation" style={{ fontSize: "15px" }}>Blockchain Expert</span>
                 </div>
               </div>
             </div>
@@ -198,6 +214,7 @@ export default function Home() {
             </div>
           </div>
           <div className='flex flex-wrap justify-around align-middle'>
+            {/* loop here  */}
             <div className="trendingNft__item">
               <div className="trendingNft__item-top">
                 <div className="trendingNft__item-avatar">

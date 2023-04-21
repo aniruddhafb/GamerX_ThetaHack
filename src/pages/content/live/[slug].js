@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+// import { io } from "socket.io-client";
+let socket;
 
 import {
   addDoc,

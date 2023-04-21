@@ -10,7 +10,7 @@ const Navbar = ({ connect_wallet, signerAddress, signer_bal }) => {
       <div
         id="sticky-header"
         className="tg-header__area transparent-header"
-        style={{ backgroundColor: "#182029" }}
+        style={{ backgroundColor: "#182029", zIndex: "12" }}
       >
         <div className="container custom-container">
           <div className="row">

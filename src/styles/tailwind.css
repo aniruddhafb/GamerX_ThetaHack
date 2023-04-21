@@ -4622,6 +4622,7 @@ html.show-preloader body {
   transition: 0.3s linear;
   overflow: hidden;
   z-index: 1;
+  width: 280px;
 }
 @media (max-width: 767.98px) {
   .team__item {
