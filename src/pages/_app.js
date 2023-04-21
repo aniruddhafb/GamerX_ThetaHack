@@ -60,7 +60,9 @@ export default function App({ Component, pageProps }) {
         const signer_address = await signer.getAddress();
         setSignerAddress(signer_address);
 
-        const user_balance = await signer.getBalance();
+        const balance = await signer.provider.getBalance(signer_address);
+        console.log({ balance: balance.toString() });
+
         const signerToStr = ethers.utils.formatEther(user_balance.toString());
         set_signer_bal(signerToStr);
 
