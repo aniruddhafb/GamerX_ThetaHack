@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 
 //firebase
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set } from "firebase/database";
+import { getFirestore } from "firebase/firestore";
+
 // styles
 import "@/styles/globals.css";
 import "@/styles/tailwind.css";
@@ -19,6 +19,20 @@ import { Polybase } from "@polybase/client";
 import { ethers, Wallet } from "ethers";
 import axios from "axios";
 import { useRouter } from "next/router";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDMdg49PbtU35j4vAjummF-GdrW6Z4ex2A",
+  authDomain: "gamerx-85d5f.firebaseapp.com",
+  projectId: "gamerx-85d5f",
+  storageBucket: "gamerx-85d5f.appspot.com",
+  messagingSenderId: "45031986007",
+  appId: "1:45031986007:web:bf398bafc9dc8d4f23a412",
+  measurementId: "G-Q06CCYY0T5",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default function App({ Component, pageProps }) {
   const [signer, set_signer] = useState("");
@@ -153,7 +167,6 @@ export default function App({ Component, pageProps }) {
     } catch (error) {
       console.log(error.message);
     }
-    // videojs("my-player", {
     //   techOrder: ["theta_hlsjs", "html5"],
     //   sources: [
     //     {
@@ -270,24 +283,7 @@ export default function App({ Component, pageProps }) {
     console.log((await save_comment).data);
   };
 
-  const initialize_firebase = async () => {
-    const firebaseConfig = {
-      apiKey: "AIzaSyDMdg49PbtU35j4vAjummF-GdrW6Z4ex2A",
-      authDomain: "gamerx-85d5f.firebaseapp.com",
-      projectId: "gamerx-85d5f",
-      storageBucket: "gamerx-85d5f.appspot.com",
-      messagingSenderId: "45031986007",
-      appId: "1:45031986007:web:bf398bafc9dc8d4f23a412",
-      measurementId: "G-Q06CCYY0T5",
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-
-    const database = getDatabase(app);
-  };
-
-
+  const create_chat_room = async () => {};
 
   const polybase = () => {
     const db = new Polybase({
@@ -305,6 +301,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     connect_wallet();
+    console.log("render");
   }, []);
   return (
     <>
@@ -324,6 +321,8 @@ export default function App({ Component, pageProps }) {
         user_data={user_data}
         go_live={go_live}
         get_liveStream_data={get_liveStream_data}
+        db={db}
+        signerAddress={signerAddress}
       />
       <Footer />
     </>

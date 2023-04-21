@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { io } from "socket.io-client";
-let socket;
 
-const liveStream = ({ get_liveStream_data }) => {
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  where,
+  orderBy,
+  Timestamp,
+} from "firebase/firestore";
+
+const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
   const router = useRouter();
   const { slug } = router.query;
   const [data, set_data] = useState();
+  const [messages, set_messages] = useState([]);
+  const [new_message, set_message_data] = useState("");
 
+  const messagesRef = collection(db, "messages");
   const stream_video = async () => {
     if (!slug) return;
     const res = await get_liveStream_data(slug);
@@ -15,19 +27,37 @@ const liveStream = ({ get_liveStream_data }) => {
     set_data(res);
   };
 
-  const socket_initializer = async () => {
-    await fetch("/api/socket");
-    socket = io();
-
-    socket.on("newIncomingMessage", (msg) => {
-      console.log(msg);
+  const send_message = async () => {
+    if (new_message.trim() == "") return;
+    // console.log({ new_message, time: serverTimestamp(), signerAddress, slug });
+    await addDoc(messagesRef, {
+      text: new_message,
+      createdAt: serverTimestamp(),
+      user: signerAddress,
+      room: slug,
     });
+
+    set_message_data("");
   };
 
   useEffect(() => {
     if (!slug) return;
     stream_video();
-    socket_initializer();
+
+    const queryMessages = query(
+      messagesRef,
+      where("room", "==", slug),
+      orderBy("createdAt")
+    );
+    const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+      let messages = [];
+      snapshot.forEach((doc) => {
+        messages.push({ ...doc.data(), id: doc.id });
+      });
+      set_messages(messages);
+    });
+
+    return () => unsubscribe();
   }, [slug]);
 
   return (
@@ -185,45 +215,43 @@ const liveStream = ({ get_liveStream_data }) => {
                 <hr className="h-2 bg-white mt-[-20px]" />
                 <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
                   {/* single comment  */}
-                  <div className="flex w-full mt-2 space-x-3 max-w-xs">
-                    <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-                    <div>
-                      <div className="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
-                        <p className="text-sm">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit.
-                        </p>
+                  {messages.map((e, index) => {
+                    return (
+                      <div
+                        key={e.id}
+                        className={`flex w-full mt-2 space-x-3 max-w-xs ${
+                          e.user === signerAddress && "ml-auto justify-end"
+                        }`}
+                      >
+                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+                        <div>
+                          <div
+                            className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
+                              e.user === signerAddress && "bg-green-600"
+                            }`}
+                          >
+                            <p className="text-sm text-black">{e.text}</p>
+                          </div>
+                          <span className="text-xs text-gray-500 leading-none">
+                            2 min ago
+                          </span>
+                        </div>
                       </div>
-                      <span className="text-xs text-gray-500 leading-none">
-                        2 min ago
-                      </span>
-                    </div>
-                  </div>
+                    );
+                  })}
 
                   {/* current user comment  */}
-                  <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-                    <div>
-                      <div className="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
-                        <p className="text-sm">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod.
-                        </p>
-                      </div>
-                      <span className="text-xs text-gray-500 leading-none">
-                        2 min ago
-                      </span>
-                    </div>
-                    <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-                  </div>
                 </div>
 
-                <div className="bg-[#182029] p-4">
+                <div className="bg-[#182029] p-4 flex">
                   <input
+                    onChange={(e) => set_message_data(e.target.value)}
                     className="flex items-center h-10 w-full rounded px-3 text-sm"
                     type="text"
                     placeholder="Say something…"
                   />
                 </div>
+                <button onClick={send_message}>send</button>
               </div>
 
               {/* recent videos  */}
@@ -279,4 +307,4 @@ const liveStream = ({ get_liveStream_data }) => {
   );
 };
 
-export default liveStream;
+export default LiveStream;

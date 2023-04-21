@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import videojs from "video.js";
 const goLive = ({ go_live }) => {
   const [data, set_data] = useState({
     thumbnail: "",
