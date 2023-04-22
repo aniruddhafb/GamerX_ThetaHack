@@ -203,10 +203,10 @@ export default function Home() {
               </div>
               <div className="col-md-5">
                 <div className="trendingNft__nav">
-                  <button className="slider-button-prev" tabindex="0" aria-label="Previous slide"
+                  <button className="slider-button-prev" tabIndex="0" aria-label="Previous slide"
                     aria-controls="swiper-wrapper-78bfcf17c01752af" fdprocessedid="b9aoy"><i
                       className="fas fa-angle-left"></i></button>
-                  <button className="slider-button-next" tabindex="0" aria-label="Next slide"
+                  <button className="slider-button-next" tabIndex="0" aria-label="Next slide"
                     aria-controls="swiper-wrapper-78bfcf17c01752af" fdprocessedid="4802g5"><i
                       className="fas fa-angle-right"></i></button>
                 </div>
