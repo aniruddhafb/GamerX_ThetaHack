@@ -20,8 +20,9 @@ import { ethers, Wallet } from "ethers";
 import axios from "axios";
 import { useRouter } from "next/router";
 
+// Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDMdg49PbtU35j4vAjummF-GdrW6Z4ex2A",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASEAPIKEY,
   authDomain: "gamerx-85d5f.firebaseapp.com",
   projectId: "gamerx-85d5f",
   storageBucket: "gamerx-85d5f.appspot.com",
@@ -29,10 +30,9 @@ const firebaseConfig = {
   appId: "1:45031986007:web:bf398bafc9dc8d4f23a412",
   measurementId: "G-Q06CCYY0T5",
 };
-
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
 
 export default function App({ Component, pageProps }) {
   const [provider, set_provider] = useState("");
@@ -40,6 +40,7 @@ export default function App({ Component, pageProps }) {
   const [signerAddress, setSignerAddress] = useState();
   const [signer_bal, set_signer_bal] = useState(0);
   const [format_signer_bal, set_format_signer_bal] = useState(0);
+  const [current_chainId, set_current_chainId] = useState(0);
 
   const [user_data, set_user_data] = useState();
   const storage = new ThirdwebStorage();
@@ -218,7 +219,6 @@ export default function App({ Component, pageProps }) {
   const get_video_data = async (id) => {
     const db = polybase();
     const res = await db.collection("Video").where("id", "==", id).get();
-    // console.log(res.data[0].data);
     const res4 = await axios({
       url: `https://api.thetavideoapi.com/video/${id}`,
       method: "GET",

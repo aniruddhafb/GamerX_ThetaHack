@@ -89,7 +89,9 @@ const Navbar = ({ connect_wallet, signerAddress, signer_bal }) => {
                                       "..." +
                                       signerAddress.slice(38)}
                                   </span>
-                                  <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">Balance : {signer_bal} TFUEL</p>
+                                  <p className="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap flex mt-2">Balance : {signer_bal}
+                                    <Image src="../../tfuel.png" height={20} width={20} className="ml-1" />
+                                  </p>
                                 </div>
                               </Link>
                             </li>
