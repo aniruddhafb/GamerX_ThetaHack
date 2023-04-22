@@ -42,7 +42,7 @@ const createNFT = () => {
                                                 <input
                                                     type="text"
                                                     name="title"
-                                                    placeholder="Give a title to your live"
+                                                    placeholder="Give a name to your NFT"
                                                     required
                                                 />
                                             </div>
@@ -63,7 +63,7 @@ const createNFT = () => {
                                         <div className="form-grp">
                                             <textarea
                                                 name="description"
-                                                placeholder="Add a description for your live"
+                                                placeholder="Add a description for your NFT"
                                             ></textarea>
                                         </div>
                                         <span

@@ -46,12 +46,12 @@ const ExploreContent = ({ fetch_videos }) => {
             </div>
             <div className="flex justify-around align-middle">
               {/* loop here  */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="flex flex-wrap justify-around align-middle">
                 {videos.map((e) => {
                   console.log(e);
                   return (
                     <div
-                      className="nft-item__box"
+                      className="nft-item__box m-4 w-[340px]"
                       style={{ backgroundColor: "transparent" }}
                     >
                       <div className="nft-item__content">
