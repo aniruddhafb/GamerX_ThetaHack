@@ -35,6 +35,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export default function App({ Component, pageProps }) {
+  const [provider, set_provider] = useState("");
   const [signer, set_signer] = useState("");
   const [signerAddress, setSignerAddress] = useState();
   const [signer_bal, set_signer_bal] = useState(0);
@@ -47,27 +48,31 @@ export default function App({ Component, pageProps }) {
   let wallet = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY);
 
   const connect_wallet = async () => {
-    let provider;
-    let signer;
     try {
       if (window.ethereum == null) {
         console.log("MetaMask not installed; using read-only defaults");
-        provider = ethers.getDefaultProvider();
       } else {
-        provider = new ethers.BrowserProvider(window.ethereum);
-        signer = await provider.getSigner();
+        const provider = new ethers.providers.Web3Provider(
+          window.ethereum,
+          "any"
+        );
+        set_provider(provider);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
         set_signer(signer);
+
         const signer_address = await signer.getAddress();
         setSignerAddress(signer_address);
 
-        const balance = await signer.provider.getBalance(signer_address);
-        console.log({ balance: balance.toString() });
-
+        const user_balance = await signer.getBalance();
         const signerToStr = ethers.utils.formatEther(user_balance.toString());
         set_signer_bal(signerToStr);
 
         const formatBalance = parseFloat(signerToStr).toFixed(2);
         set_format_signer_bal(formatBalance);
+
+        const { chainId } = await provider.getNetwork();
+        set_current_chainId(chainId);
 
         const db = polybase();
         const check_user = await db
@@ -285,7 +290,7 @@ export default function App({ Component, pageProps }) {
     console.log((await save_comment).data);
   };
 
-  const create_chat_room = async () => {};
+  const create_chat_room = async () => { };
 
   const test = async () => {
     const db = polybase();
