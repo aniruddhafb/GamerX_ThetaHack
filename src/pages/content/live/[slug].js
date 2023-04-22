@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 let socket;
 
 import {
@@ -14,12 +14,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-const LiveStream = ({
-  get_liveStream_data,
-  db,
-  signerAddress,
-  delete_live,
-}) => {
+const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
   const router = useRouter();
   const { slug } = router.query;
   const [data, set_data] = useState();
@@ -27,8 +22,8 @@ const LiveStream = ({
   const [new_message, set_message_data] = useState("");
 
   const messagesRef = collection(db, "messages");
+
   const stream_video = async () => {
-    if (!slug) return;
     const res = await get_liveStream_data(slug);
     set_data(res);
   };
@@ -45,13 +40,8 @@ const LiveStream = ({
     set_message_data("");
   };
 
-  const delete_livestream = async () => {
-    await delete_live(slug);
-  };
-
   useEffect(() => {
     if (!slug) return;
-
     stream_video();
 
     const queryMessages = query(
@@ -76,7 +66,6 @@ const LiveStream = ({
 
   return (
     <section className="blog-area blog-details-area" id="pageBG">
-      <button onClick={delete_live}>DELETE LIVESTREAM</button>
       <div className="container">
         <div className="justify-content-center my-6" id="flexCOL">
           <div className="blog-post-wrapper mr-4">
@@ -95,25 +84,15 @@ const LiveStream = ({
                 <div className="blog-post-meta">
                   <ul className="list-wrap">
                     <li>
-                      By<a href="#">Admin</a>
+                      By<a href="#">{data?.owner.username}</a>
                     </li>
                     <li>
                       <i className="far fa-calendar-alt"></i> Aug 16, 2023
                     </li>
                   </ul>
                 </div>
-                <h2 className="title">play to earn crypto games place</h2>
-                <p>
-                  Excepteur sint occaecat atat non proident, sunt in culpa qui
-                  officia deserunt mollit anim id est labor umLor em ipsum dolor
-                  amet, consteur adiscing Duis elentum solliciin is yaugue
-                  euismods Nulla ullaorper. Ipsum is simply dummy text of
-                  printing and typeetting industry. Lorem Ipsum has been the
-                  industry's standsaard sipiscing Duis elementum solliciin. Duis
-                  aute irure dolor in repderit in voluptate velit esse cillum
-                  dolorliquip ex ea commodo repderit in voluptate consequat
-                  nulla ullaorper.
-                </p>
+                <h2 className="title">{data?.stream_data.title}</h2>
+                <p>{data?.stream_data.description}</p>
                 <div className="blog-details-bottom">
                   <div className="row">
                     <div className="col-xl-6 col-md-7">
@@ -163,18 +142,23 @@ const LiveStream = ({
             <div className="blog__avatar-wrap mb-65">
               <div className="blog__avatar-img">
                 <a href="#">
-                  <img src="./#/avatar.jpg" alt="img" />
+                  <Image
+                    src={data?.owner.profile_image?.replace(
+                      "ipfs://",
+                      "https://gateway.ipfscdn.io/ipfs/"
+                    )}
+                    alt="img"
+                    height={100}
+                    width={100}
+                  />
                 </a>
               </div>
               <div className="blog__avatar-info">
                 <span className="designation">Live By</span>
                 <h4 className="name">
-                  <a href="#">Quantum</a>
+                  <a href="#">{data?.owner.username}</a>
                 </h4>
-                <p>
-                  Axcepteur sint occaecat atat non proident, sunt culpa officia
-                  deserunt mollit anim id est labor umLor emdolor.
-                </p>
+                <p>{data?.owner.bio}</p>
               </div>
             </div>
 

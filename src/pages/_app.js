@@ -153,6 +153,7 @@ export default function App({ Component, pageProps }) {
           db.collection("User").record(signer_address),
           res4.data.body.videos[0].state,
           thumbnail_ipfs,
+          Date.now().toString(),
         ]);
 
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
@@ -197,6 +198,17 @@ export default function App({ Component, pageProps }) {
         "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
       },
     });
+    // res4.data.body.videos[0].id
+    const polybase_video = await db
+      .collection("Video")
+      .record(res4.data.body.videos[0].id)
+      .get();
+
+    const video_owner = await db
+      .collection("User")
+      .record(polybase_video.data.owner.id)
+      .get();
+
     let comments = [{ owner: "", comment: "" }];
     for (const e of res.data[0].data.comments) {
       const comment = await db.collection("Comment").record(e.id).get();
@@ -206,7 +218,12 @@ export default function App({ Component, pageProps }) {
         .get();
       comments.push({ owner, comment });
     }
-    let obj = { ...res.data[0].data, ...res4.data.body.videos[0], comments };
+    let obj = {
+      ...res.data[0].data,
+      ...res4.data.body.videos[0],
+      comments,
+      owner: video_owner.data,
+    };
     return obj;
   };
 
@@ -228,11 +245,25 @@ export default function App({ Component, pageProps }) {
 
   const get_liveStream_data = async (stream_id) => {
     const db = polybase();
-    const res = await db.collection("LiveStream").record(stream_id).get();
-    console.log(res.data);
-    return res.data;
+    const res = await db
+      .collection("LiveStream")
+      .where("stream_id", "==", stream_id)
+      .get();
+    console.log({ id: res.data[0].data.owner.id });
+    const owner = await db
+      .collection("User")
+      .record(res.data[0].data.owner.id)
+      .get();
+    let obj = { owner: owner.data, stream_data: res.data[0].data };
+    console.log(obj);
+    return obj;
   };
 
+  const fetch_gamers = async () => {
+    const db = polybase();
+    const res = await db.collection("User").get();
+    return res.data;
+  };
   const post_comment = async (video_id, comment) => {
     const db = polybase();
     const signer_address = await signer.getAddress();
@@ -319,6 +350,7 @@ export default function App({ Component, pageProps }) {
         signerAddress={signerAddress}
         fetch_videos={fetch_videos}
         delete_live={delete_live}
+        fetch_gamers={fetch_gamers}
       />
       <Footer />
     </>

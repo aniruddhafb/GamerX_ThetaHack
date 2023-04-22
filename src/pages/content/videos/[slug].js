@@ -18,12 +18,14 @@ const video = ({ get_video_data, post_comment }) => {
   useEffect(() => {
     const video_data = async () => {
       const res = await get_video_data(slug);
+      console.log({ res });
       set_data(res);
     };
+
     if (!slug) return;
     video_data();
-
   }, [slug]);
+
   return (
     <main className="main--area" id="pageBG">
       <section className="blog-area blog-details-area">
@@ -45,12 +47,15 @@ const video = ({ get_video_data, post_comment }) => {
                   <div className="blog-post-meta">
                     <ul className="list-wrap" style={{ color: "white" }}>
                       <li>
-                        By<a href="#">Admin</a>
+                        By<a href="#">{data?.owner.username}</a>
                       </li>
                       <li>
                         <i className="far fa-calendar-alt"></i> Aug 16, 2023
                       </li>
-                      <li><i className="far fa-comments"></i>{data?.comments.length} comments</li>
+                      <li>
+                        <i className="far fa-comments"></i>
+                        {data?.comments.length} comments
+                      </li>
                     </ul>
                   </div>
                   <h2 className="title">{data?.name}</h2>
@@ -99,8 +104,9 @@ const video = ({ get_video_data, post_comment }) => {
                   const d = new Date();
                   let time;
                   if (e.comment.data?.date) {
-                    time = `${d.getDate(e.comment.data?.date)}/${d.getMonth(e.comment.data?.date) + 1
-                      }/${d.getFullYear(e.comment.data?.date)}`;
+                    time = `${d.getDate(e.comment.data?.date)}/${
+                      d.getMonth(e.comment.data?.date) + 1
+                    }/${d.getFullYear(e.comment.data?.date)}`;
                   }
 
                   return (
