@@ -38,20 +38,26 @@ const Navbar = ({ connect_wallet, signerAddress, signer_bal }) => {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/nfts/exploreNFTs" style={{ textDecoration: "none" }}>
-                          Explore NFTs
+                        <Link href="/profile/exploreGamers" style={{ textDecoration: "none" }}>
+                          Watch Live
                         </Link>
                       </li>
                       <li className="menu-item-has-children">
                         <Link href="#" style={{ textDecoration: "none" }}>
-                          Other Pages
+                          Explore
                         </Link>
                         <ul className="sub-menu">
                           <li>
-                            <Link href="/content/live/exploreLiveContent">Watch Live</Link>
+                            <Link href="/nfts/exploreNFTs" style={{ textDecoration: "none" }}>Top NFTs</Link>
                           </li>
                           <li>
-                            <Link href="/content/videos/exploreContent">Explore Content</Link>
+                            <Link href="/collection/exploreCollections" style={{ textDecoration: "none" }}>NFT Collections</Link>
+                          </li>
+                          <li>
+                            <Link href="/content/live/exploreLiveContent" style={{ textDecoration: "none" }}>Watch Live</Link>
+                          </li>
+                          <li>
+                            <Link href="/content/videos/exploreContent" style={{ textDecoration: "none" }}>Explore Video Content</Link>
                           </li>
                         </ul>
                         <div className="dropdown-btn">
