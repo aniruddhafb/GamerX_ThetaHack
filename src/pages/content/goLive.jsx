@@ -9,7 +9,6 @@ const goLive = ({ go_live }) => {
 
   const handle_change = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
   };
   const handle_submit = async (e) => {
     e.preventDefault();

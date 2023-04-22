@@ -12,7 +12,6 @@ const video = ({ get_video_data, post_comment }) => {
   const [comment, set_comment] = useState();
 
   const do_comment = () => {
-    console.log(comment);
     post_comment(slug, comment);
   };
 
@@ -24,7 +23,6 @@ const video = ({ get_video_data, post_comment }) => {
     if (!slug) return;
     video_data();
 
-    console.log("render");
   }, [slug]);
   return (
     <main className="main--area" id="pageBG">
@@ -103,7 +101,6 @@ const video = ({ get_video_data, post_comment }) => {
                   if (e.comment.data?.date) {
                     time = `${d.getDate(e.comment.data?.date)}/${d.getMonth(e.comment.data?.date) + 1
                       }/${d.getFullYear(e.comment.data?.date)}`;
-                    console.log({ time });
                   }
 
                   return (

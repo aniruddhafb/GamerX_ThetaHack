@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-// import { io } from "socket.io-client";
+
 let socket;
 
 import {
@@ -14,7 +14,12 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
+const LiveStream = ({
+  get_liveStream_data,
+  db,
+  signerAddress,
+  delete_live,
+}) => {
   const router = useRouter();
   const { slug } = router.query;
   const [data, set_data] = useState();
@@ -25,13 +30,11 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
   const stream_video = async () => {
     if (!slug) return;
     const res = await get_liveStream_data(slug);
-    console.log(res);
     set_data(res);
   };
 
   const send_message = async () => {
     if (new_message.trim() == "") return;
-    // console.log({ new_message, time: serverTimestamp(), signerAddress, slug });
     await addDoc(messagesRef, {
       text: new_message,
       createdAt: serverTimestamp(),
@@ -42,8 +45,13 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
     set_message_data("");
   };
 
+  const delete_livestream = async () => {
+    await delete_live(slug);
+  };
+
   useEffect(() => {
     if (!slug) return;
+
     stream_video();
 
     const queryMessages = query(
@@ -59,11 +67,16 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
       set_messages(messages);
     });
 
+    // if(signerAddress === )
+    // router.events.on("routeChangeStart", () => {
+    //   alert("are you sure you wanna exit?");
+    // });
     return () => unsubscribe();
   }, [slug]);
 
   return (
     <section className="blog-area blog-details-area" id="pageBG">
+      <button onClick={delete_live}>DELETE LIVESTREAM</button>
       <div className="container">
         <div className="justify-content-center my-6" id="flexCOL">
           <div className="blog-post-wrapper mr-4">
