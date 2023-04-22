@@ -24,14 +24,12 @@ const editGamerProfile = ({ update_profile, user_data }) => {
     update_profile(data);
   };
 
-  useEffect(() => {
-    console.log(user_data);
-  }, [user_data]);
+  useEffect(() => {}, [user_data]);
   return (
     <main className="pt-[5.5rem] lg:pt-24" id="pageBG">
       <form onSubmit={handle_submit}>
         <div className="relative">
-          {preview_cover == "" && data.cover_photo == "" ?
+          {preview_cover == "" && data.cover_photo == "" ? (
             <Image
               src="../../../slider_bg.jpg"
               alt="banner"
@@ -39,24 +37,24 @@ const editGamerProfile = ({ update_profile, user_data }) => {
               height={100}
               className="h-[18.75rem] w-[100%] object-cover"
             />
-            :
+          ) : (
             <Image
               src={
                 user_data?.cover_image
                   ? user_data?.cover_image.replace(
-                    "ipfs://",
-                    "https://gateway.ipfscdn.io/ipfs/"
-                  )
+                      "ipfs://",
+                      "https://gateway.ipfscdn.io/ipfs/"
+                    )
                   : preview_cover
-                    ? preview_cover
-                    : "img/user/banner.jpg"
+                  ? preview_cover
+                  : "img/user/banner.jpg"
               }
               height={100}
               width={100}
               alt="banner"
               className="h-[18.75rem] object-cover w-full"
             />
-          }
+          )}
           <div className="container relative -translate-y-4">
             <div className="group absolute right-0 bottom-4 flex items-center rounded-lg bg-white py-2 px-4 font-display text-sm hover:bg-accent">
               <input
@@ -165,15 +163,31 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                   >
                     Your Role <span className="text-red">*</span>
                   </label>
-                  <select
-                    className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500"
-                  >
-                    <option value="Gamer Influencer" className="text-white bg-[#0F161B]">Gamer Influencer</option>
-                    <option value="Esports Player" className="text-white bg-[#0F161B]">Esports Player</option>
-                    <option value="Gamer" className="text-white bg-[#0F161B]">Just a Gamer</option>
-                    <option value="Brand" className="text-white bg-[#0F161B]">Tech Brand</option>
-                    <option value="Dealer" className="text-white bg-[#0F161B]">Game Dealer</option>
-                    <option value="Coach" className="text-white bg-[#0F161B]">Gaming Coach</option>
+                  <select className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500">
+                    <option
+                      value="Gamer Influencer"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Gamer Influencer
+                    </option>
+                    <option
+                      value="Esports Player"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Esports Player
+                    </option>
+                    <option value="Gamer" className="text-white bg-[#0F161B]">
+                      Just a Gamer
+                    </option>
+                    <option value="Brand" className="text-white bg-[#0F161B]">
+                      Tech Brand
+                    </option>
+                    <option value="Dealer" className="text-white bg-[#0F161B]">
+                      Game Dealer
+                    </option>
+                    <option value="Coach" className="text-white bg-[#0F161B]">
+                      Gaming Coach
+                    </option>
                   </select>
                 </div>
                 <div className="mb-6">
@@ -184,7 +198,9 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                     className="js-copy-clipboard flex w-full select-none items-center rounded-lg border border-jacarta-100 bg-white py-3 px-4 hover:bg-jacarta-50 bg-transparent"
                     data-tippy-content="Copy"
                   >
-                    <span className="text-white">0x7a9fe22691c811ea339401bbb2leb</span>
+                    <span className="text-white">
+                      0x7a9fe22691c811ea339401bbb2leb
+                    </span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -210,7 +226,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                 <div className="flex space-x-5 flex-wrap">
                   <div className="shrink-0">
                     <figure className="relative inline-block">
-                      {preview_profile == "" && data.profile_photo == "" ?
+                      {preview_profile == "" && data.profile_photo == "" ? (
                         <Image
                           src="../../../dislogo.png"
                           alt="banner"
@@ -218,24 +234,24 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                           height={100}
                           className="rounded-xl border-[1px] border-gray-500 dark:border-jacarta-600 h-[130px] w-[auto]"
                         />
-                        :
+                      ) : (
                         <Image
                           src={
                             user_data?.profile_image
                               ? user_data?.profile_image.replace(
-                                "ipfs://",
-                                "https://gateway.ipfscdn.io/ipfs/"
-                              )
+                                  "ipfs://",
+                                  "https://gateway.ipfscdn.io/ipfs/"
+                                )
                               : preview_profile
-                                ? preview_profile
-                                : "img/user/user_avatar.gif"
+                              ? preview_profile
+                              : "img/user/user_avatar.gif"
                           }
                           height={100}
                           width={100}
                           alt="collection avatar"
                           className="rounded-xl border-[3px] border-white dark:border-jacarta-600 w-28 h-28 object-cover"
                         />
-                      }
+                      )}
                       <div className="group absolute -right-3 -bottom-2 h-8 w-8 overflow-hidden rounded-full border border-jacarta-100 bg-white text-center hover:border-transparent hover:bg-accent">
                         <input
                           type="file"

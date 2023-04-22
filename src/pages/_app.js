@@ -33,7 +33,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 export default function App({ Component, pageProps }) {
   const [provider, set_provider] = useState("");
   const [signer, set_signer] = useState("");
@@ -90,10 +89,15 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  const delete_live = async (live_id) => {
+    const db = polybase();
+    const res = await db.collection("LiveStream").record(live_id).call("del");
+    router.push("/");
+  };
+
   const upload_video = async (data) => {
     try {
       const thumbnail_ipfs = await storage.upload(data.thumbnail);
-      console.log({ thumbnail_ipfs });
       const res = await axios({
         url: "https://api.thetavideoapi.com/upload",
         method: "POST",
@@ -102,8 +106,6 @@ export default function App({ Component, pageProps }) {
           "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
         },
       });
-      console.log(res.data.body.uploads[0].id);
-      console.log(res.data.body.uploads[0]);
       const signer_address = await signer.getAddress();
 
       const res2 = await axios({
@@ -114,8 +116,6 @@ export default function App({ Component, pageProps }) {
         },
         data: data.file,
       });
-
-      console.log(res2);
 
       //GET VIDEO ID
       const res3 = await axios({
@@ -132,8 +132,6 @@ export default function App({ Component, pageProps }) {
         }),
       });
 
-      console.log(res3.data.body.videos[0].id);
-
       //GET VIDEO STATUS
       const res4 = await axios({
         url: `https://api.thetavideoapi.com/video/${res3.data.body.videos[0].id}`,
@@ -143,8 +141,6 @@ export default function App({ Component, pageProps }) {
           "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
         },
       });
-
-      console.log(res4.data.body.videos[0].state);
 
       const db = polybase();
 
@@ -159,38 +155,13 @@ export default function App({ Component, pageProps }) {
           thumbnail_ipfs,
         ]);
 
-      console.log({ db_res });
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
-
-      // const res5 = await axios({
-      //   url: `https://api.thetavideoapi.com/video${process.env.NEXT_PUBLIC_THETA_ID}list?page=1&number=100`,
-      //   method: "GET",
-      //   headers: {
-      //     "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
-      //     "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
-      //   },
-      // });
-
-      // console.log(res5.data);
     } catch (error) {
       console.log(error.message);
     }
-    //   techOrder: ["theta_hlsjs", "html5"],
-    //   sources: [
-    //     {
-    //       src: "https://media.thetavideoapi.com/video_kegqg8x8pz63rxqv650jzh8az6/master.m3u8",
-    //       type: "application/vnd.apple.mpegurl",
-    //       label: "1080p",
-    //     },
-    //   ],
-    //   theta_hlsjs: {
-    //     videoId: "video_kegqg8x8pz63rxqv650jzh8az6",
-    //   },
-    // });
   };
 
   const update_profile = async (data) => {
-    console.log(data);
     const ipfs_cover = await storage.upload(data.cover_photo);
     const ipfs_profile = await storage.upload(data.profile_photo);
     const signer_address = await signer.getAddress();
@@ -207,7 +178,6 @@ export default function App({ Component, pageProps }) {
         ipfs_cover,
         ipfs_profile,
       ]);
-    console.log(res.data);
   };
 
   const get_user_data = async (signer_address) => {
@@ -230,16 +200,13 @@ export default function App({ Component, pageProps }) {
     let comments = [{ owner: "", comment: "" }];
     for (const e of res.data[0].data.comments) {
       const comment = await db.collection("Comment").record(e.id).get();
-      console.log(comment.data.owner.id);
       const owner = await db
         .collection("User")
         .record(comment.data.owner.id)
         .get();
-      console.log({ owner });
       comments.push({ owner, comment });
     }
     let obj = { ...res.data[0].data, ...res4.data.body.videos[0], comments };
-    console.log({ obj });
     return obj;
   };
 
@@ -256,7 +223,6 @@ export default function App({ Component, pageProps }) {
         data.description,
         db.collection("User").record(signerAddress),
       ]);
-    console.log(res.data);
     router.push(`/content/live/${res.data.stream_id}`);
   };
 
@@ -268,7 +234,6 @@ export default function App({ Component, pageProps }) {
   };
 
   const post_comment = async (video_id, comment) => {
-    console.log(comment, video_id);
     const db = polybase();
     const signer_address = await signer.getAddress();
     const upload_comment = await db
@@ -279,7 +244,6 @@ export default function App({ Component, pageProps }) {
         Date.now().toString(),
         db.collection("User").record(signer_address),
       ]);
-    console.log(upload_comment.data);
 
     const save_comment = db
       .collection("Video")
@@ -287,10 +251,22 @@ export default function App({ Component, pageProps }) {
       .call("post_comment", [
         db.collection("Comment").record(upload_comment.data.id),
       ]);
-    console.log((await save_comment).data);
   };
 
-  const create_chat_room = async () => { };
+  const fetch_videos = async () => {
+    const db = polybase();
+    const res = await db.collection("Video").get();
+    const videos = [];
+    for (const e of res.data) {
+      let obj = {};
+      const owner = await db.collection("User").record(e.data.owner.id).get();
+      obj = { owner: { ...owner.data }, video: e.data };
+      videos.push(obj);
+    }
+    return videos;
+  };
+
+  const create_chat_room = async () => {};
 
   const test = async () => {
     const db = polybase();
@@ -320,7 +296,6 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     connect_wallet();
-    console.log("render");
   }, []);
   return (
     <>
@@ -342,6 +317,8 @@ export default function App({ Component, pageProps }) {
         get_liveStream_data={get_liveStream_data}
         db={db}
         signerAddress={signerAddress}
+        fetch_videos={fetch_videos}
+        delete_live={delete_live}
       />
       <Footer />
     </>

@@ -10,7 +10,6 @@ const uploadVideo = ({ upload_video }) => {
   });
   const onChange = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
   };
 
   const handle_submit = async (e) => {
