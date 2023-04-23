@@ -239,6 +239,7 @@ export default function App({ Component, pageProps }) {
         data.title,
         data.description,
         db.collection("User").record(signerAddress),
+        Date.now().toString(),
       ]);
     router.push(`/content/live/${res.data.stream_id}`);
   };
@@ -259,9 +260,31 @@ export default function App({ Component, pageProps }) {
     return obj;
   };
 
+  const get_all_livestreams = async () => {
+    const db = polybase();
+    const res = await db.collection("LiveStream").get();
+    const livestreams = [];
+    for (const e of res.data) {
+      let obj = {};
+      if (e.data.isActive) {
+        const owner = await db.collection("User").record(e.data.owner.id).get();
+        obj = { owner, livestream: e.data };
+        livestreams.push(obj);
+      }
+    }
+    console.log(livestreams);
+    return livestreams;
+  };
+
   const fetch_gamers = async () => {
     const db = polybase();
     const res = await db.collection("User").get();
+    return res.data;
+  };
+
+  const get_gamer = async (userId) => {
+    const db = polybase();
+    const res = await db.collection("User").record(userId).get();
     return res.data;
   };
   const post_comment = async (video_id, comment) => {
@@ -349,8 +372,9 @@ export default function App({ Component, pageProps }) {
         db={db}
         signerAddress={signerAddress}
         fetch_videos={fetch_videos}
-        delete_live={delete_live}
         fetch_gamers={fetch_gamers}
+        get_gamer={get_gamer}
+        get_all_livestreams={get_all_livestreams}
       />
       <Footer />
     </>

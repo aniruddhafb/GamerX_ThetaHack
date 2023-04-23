@@ -1,8 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const TopGamers = ({ fetch_gamers }) => {
+  const [data, set_data] = useState([]);
+  const get_gamers = async () => {
+    const res = await fetch_gamers();
+    console.log({ res });
+    set_data(res);
+  };
+
+  useEffect(() => {
+    get_gamers();
+  }, []);
   return (
     <section className="shop-area" id="pageBG">
       <div className="container mt-12">
@@ -50,44 +60,58 @@ const TopGamers = ({ fetch_gamers }) => {
                 </div>
               </div>
             </div>
-            <div className="row justify-content-center row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1">
+            <div className="flex justify-center w-full">
               {/* loop here  */}
-              <div className="col-xl-3 col-lg-4 col-sm-6 m-8">
-                <div className="team__item relative">
-                  <div>
-                    <Image
-                      src="../../mask_img02.jpg"
-                      height={100}
-                      width={100}
-                      alt="img"
-                      className="absolute top-0 right-0 h-[110px] w-[100%]"
-                    />
-                  </div>
-
-                  <div className="team__thumb">
-                    <Link href="#">
+              <div className="grid grid-cols-3 justify-center w-full">
+                {data.map((e) => (
+                  <Link
+                    className="team__item relative"
+                    href={`/profile/${e.data.id}`}
+                  >
+                    <div>
                       <Image
-                        src="../../mask_img02.jpg"
+                        src={e.data.cover_image?.replace(
+                          "ipfs://",
+                          "https://gateway.ipfscdn.io/ipfs/"
+                        )}
                         height={100}
                         width={100}
                         alt="img"
-                        className="ml-7 mt-4 h-[170px] w-[170px]"
-                        style={{ zIndex: "10", position: "relative" }}
+                        className="absolute top-0 right-0 h-[110px] w-[100%]"
                       />
-                    </Link>
-                  </div>
+                    </div>
 
-                  <div className="team__content mt-[-13px] mr-3">
-                    <h4 className="name">
-                      <Link href="#" style={{ textDecoration: "none" }}>
-                        killer master
+                    <div className="team__thumb">
+                      <Link href="#">
+                        <Image
+                          src={e.data.profile_image?.replace(
+                            "ipfs://",
+                            "https://gateway.ipfscdn.io/ipfs/"
+                          )}
+                          height={100}
+                          width={100}
+                          alt="img"
+                          className="ml-7 mt-4 h-[170px] w-[170px]"
+                          style={{ zIndex: "10", position: "relative" }}
+                        />
                       </Link>
-                    </h4>
-                    <span className="designation" style={{ fontSize: "15px" }}>
-                      Blockchain Expert
-                    </span>
-                  </div>
-                </div>
+                    </div>
+
+                    <div className="team__content mt-[-13px] mr-3">
+                      <h4 className="name">
+                        <Link href="#" style={{ textDecoration: "none" }}>
+                          {e.data.username}
+                        </Link>
+                      </h4>
+                      <span
+                        className="designation"
+                        style={{ fontSize: "15px" }}
+                      >
+                        {e.data.bio}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
