@@ -4630,7 +4630,7 @@ html.show-preloader body {
     margin: 0 auto 30px;
   }
 }
-.team__item::before,
+/* .team__item::before,
 .team__item::after {
   content: "";
   position: absolute;
@@ -4651,7 +4651,7 @@ html.show-preloader body {
   transition: all 0.3s ease-out 0s;
   opacity: 0.55;
   z-index: -1;
-}
+} */
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .team__item::before,
   .team__item::after {
@@ -4702,7 +4702,7 @@ html.show-preloader body {
     max-width: 100%;
   }
 }
-.team__thumb::before,
+/* .team__thumb::before,
 .team__thumb::after {
   content: "";
   position: absolute;
@@ -4732,7 +4732,7 @@ html.show-preloader body {
   -ms-transform: rotate(55deg);
   -o-transform: rotate(55deg);
   transform: rotate(55deg);
-}
+} */
 .team__content .name {
   font-size: 20px;
   font-weight: var(--tg-fw-extra-bold);

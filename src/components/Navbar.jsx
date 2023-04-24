@@ -38,7 +38,7 @@ const Navbar = ({ connect_wallet, signerAddress, signer_bal }) => {
                         </Link>
                       </li>
                       <li>
-                        <Link href="/profile/exploreGamers" style={{ textDecoration: "none" }}>
+                        <Link href="/content/live/exploreLiveContent" style={{ textDecoration: "none" }}>
                           Watch Live
                         </Link>
                       </li>
