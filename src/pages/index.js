@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import VideoCard from '@/components/cards/videoCard'
@@ -12,7 +13,22 @@ import heroLogo from "../../public/favicon.png"
 import thetalogo from "../../public/theta.webp"
 
 
-export default function Home() {
+export default function Home({ fetch_videos }) {
+
+  const [videos, set_videos] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const get_all_videos = async () => {
+    setLoading(true);
+    const data = await fetch_videos();
+    set_videos(data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    get_all_videos();
+  }, []);
+
   return (
     <>
       {/* hero section  */}
@@ -80,49 +96,20 @@ export default function Home() {
         <div className="container custom-container">
           <div className="row justify-content-center">
             {/* loop videos here  */}
-            <div className="col-xxl-4 col-xl-5 col-lg-6 col-md-9">
-              <div className="nft-item__box" style={{ backgroundColor: "transparent" }}>
-                <div className="nft-item__content">
-                  <Link href="/content/videos" style={{ textDecoration: "none", position: "relative", zIndex: "10" }}>
-                    <Image
-                      className='w-[100%] h-[200px] rounded-md'
-                      src="../../../nft_img01.jpg"
-                      height={100}
-                      width={100}
-                      alt="img" />
-                    <div className='absolute top-[30%] right-[46%]'>
-                      <i className="flaticon-play text-white text-4xl hover:text-green-500"></i>
-                    </div>
-                    <h4 className="title mt-4">
-                      wolf gaming is a perfect gameplay and on so..
-                    </h4>
-                  </Link>
-
-                  <div className="nft-item__avatar">
-                    <div className="avatar-img" style={{ zIndex: "11" }}>
-                      <Link href="#">
-                        <Image
-                          src="../../../nft_avatar01.png"
-                          height={100}
-                          width={100}
-                          className='h-[30px] w-[30px]'
-                          alt="img" />
-                      </Link>
-                    </div>
-                    <div className="avatar-name">
-                      <h5 className="name" style={{ zIndex: "11" }}>
-                        <Link href="#" style={{ textDecoration: "none", fontSize: "15px" }}>
-                          Alax Max
-                        </Link>
-                      </h5>
-                      <span className="designation">4/12/2023</span>
-                      <span className="designation">No views</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="flex flex-wrap justify-around align-middle">
+              {videos.map((e) => {
+                return (
+                  <VideoCard
+                    thumbnail={e.video.thumbnail}
+                    title={e.video.name}
+                    creatorImage={e.owner.profile_image}
+                    creatorName={e.owner.username}
+                    videoDate={"8/12/2023"}
+                    videoID={e.video.id}
+                  />
+                );
+              })}
             </div>
-            {/* <VideoCard /> */}
           </div>
         </div>
 
