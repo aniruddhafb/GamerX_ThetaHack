@@ -267,7 +267,7 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
                       <h6 className="title">
                         <a href="">zombie TOURNAMENT land max</a>
                       </h6>
-                      <span className="date">aug 19, 2023</span>
+                      <span className="date">date</span>
                     </div>
                   </div>
                   <div className="rc__post-item">
