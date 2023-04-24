@@ -20,6 +20,9 @@ import { ethers, Wallet } from "ethers";
 import axios from "axios";
 import { useRouter } from "next/router";
 
+//CONTRACTS
+import NFTCollection from "../../artifacts/contracts/NFTCollection.sol/NFTCollection.json";
+
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASEAPIKEY,
@@ -32,6 +35,10 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const default_nft_collection = "0x6E3249530dd3791Eafc61e320ebCef04116714cb";
+const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
+const marketplace = "0xA24495bfa8dE0BDC7cAF75AE0208338ac0F0a4D4";
 
 export default function App({ Component, pageProps }) {
   const [provider, set_provider] = useState("");
@@ -89,10 +96,51 @@ export default function App({ Component, pageProps }) {
     }
   };
 
-  const delete_live = async (live_id) => {
-    const db = polybase();
-    const res = await db.collection("LiveStream").record(live_id).call("del");
-    router.push("/");
+  const gamerX_collection = async (collection_address, signer) => {
+    if (!collection_address) return;
+    const collection_contract = new ethers.Contract(
+      collection_address,
+      NFTCollection,
+      signer
+    );
+    return collection_contract;
+  };
+
+  const create_token = async (_tokenURI, signer) => {
+    try {
+      // console.log(_tokenURI);
+      const tokenURI = await storage.upload(_tokenURI);
+      const rarx = gamerX_collection(_tokenURI.collection, signer);
+      const network = await provider.getNetwork();
+
+      rarx.on("TokenCreated", async (ipfsURL, tokenId) => {
+        // console.log({ ipfsURL, tokenId });
+        const db = polybase();
+        const res = await db
+          .collection("NFT")
+          .create([
+            `${_tokenURI.collection}/${tokenId.toString()}`,
+            tokenId.toString(),
+            network.chainId.toString(),
+            tokenURI,
+            db.collection("User").record(signer_address),
+            db.collection("NFTCollection").record(_tokenURI.collection),
+            _tokenURI.properties[0].type
+              ? JSON.stringify(_tokenURI.properties)
+              : "[]",
+            _tokenURI.name,
+            chainImg,
+            blockURL,
+            symbol,
+          ]);
+      });
+
+      const txn = await rarx.createToken(tokenURI);
+      await txn.wait();
+      // console.log({ txn });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const upload_video = async (data) => {
@@ -375,6 +423,7 @@ export default function App({ Component, pageProps }) {
         fetch_gamers={fetch_gamers}
         get_gamer={get_gamer}
         get_all_livestreams={get_all_livestreams}
+        create_token={create_token}
       />
       <Footer />
     </>
