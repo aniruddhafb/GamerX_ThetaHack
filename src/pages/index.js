@@ -11,22 +11,35 @@ import coin4 from "../../public/slider_shape04.png"
 import teamPNG from "../../public/team02.png"
 import heroLogo from "../../public/favicon.png"
 import thetalogo from "../../public/theta.webp"
+import ProfileCard from '@/components/cards/ProfileCard'
+import Loader from '@/components/Loader'
 
 
-export default function Home({ fetch_videos }) {
+export default function Home({ fetch_videos, fetch_gamers }) {
 
   const [videos, set_videos] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [gamers_data, set_gamers_data] = useState([]);
+
+  const [videoLoading, setVideoLoading] = useState(false);
+  const [gamerLoading, setGamerLoading] = useState(false);
 
   const get_all_videos = async () => {
-    setLoading(true);
+    setVideoLoading(true);
     const data = await fetch_videos();
     set_videos(data);
-    setLoading(false);
+    setVideoLoading(false);
+  };
+
+  const get_gamers = async () => {
+    setGamerLoading(true);
+    const res = await fetch_gamers();
+    set_gamers_data(res);
+    setGamerLoading(false);
   };
 
   useEffect(() => {
     get_all_videos();
+    get_gamers();
   }, []);
 
   return (
@@ -96,20 +109,24 @@ export default function Home({ fetch_videos }) {
         <div className="container custom-container">
           <div className="row justify-content-center">
             {/* loop videos here  */}
-            <div className="flex flex-wrap justify-around align-middle">
-              {videos.map((e) => {
-                return (
-                  <VideoCard
-                    thumbnail={e.video.thumbnail}
-                    title={e.video.name}
-                    creatorImage={e.owner.profile_image}
-                    creatorName={e.owner.username}
-                    videoDate={"8/12/2023"}
-                    videoID={e.video.id}
-                  />
-                );
-              })}
-            </div>
+            {videoLoading ?
+              <Loader />
+              :
+              <div className="flex flex-wrap justify-around align-middle">
+                {videos.map((e) => {
+                  return (
+                    <VideoCard
+                      thumbnail={e.video.thumbnail}
+                      title={e.video.name}
+                      creatorImage={e.owner.profile_image}
+                      creatorName={e.owner.username}
+                      videoDate={"8/12/2023"}
+                      videoID={e.video.id}
+                    />
+                  );
+                })}
+              </div>
+            }
           </div>
         </div>
 
@@ -136,30 +153,21 @@ export default function Home({ fetch_videos }) {
           </div>
           <div className="row justify-content-center">
             {/* loop here  */}
-            <div className="col-xl-3 col-lg-4 col-sm-6 wow fadeInUp" >
-              <div className="team__item relative">
-                <div>
-                  <Image
-                    src="../../mask_img02.jpg" height={100} width={100} alt="img" className='absolute top-0 right-0 h-[110px] w-[100%]' />
-                </div>
-
-                <div className="team__thumb">
-                  <Link href="#">
-                    <Image
-                      src={teamPNG} alt="img" className='ml-7 mt-4 h-[170px] w-[170px]' style={{ zIndex: "10", position: "relative" }} />
-                  </Link>
-                </div>
-
-                <div className="team__content mt-[-13px] mr-3">
-                  <h4 className="name">
-                    <Link href="#" style={{ textDecoration: "none" }}>
-                      killer
-                      master</Link>
-                  </h4>
-                  <span className="designation" style={{ fontSize: "15px" }}>Blockchain Expert</span>
-                </div>
+            {gamerLoading ?
+              <Loader />
+              :
+              <div className="flex flex-wrap justify-around align-middle">
+                {gamers_data.map((e) => (
+                  <ProfileCard
+                    coverImage={e.data.cover_image}
+                    gamerBio={e.data.bio}
+                    gamerID={e.data.id}
+                    gamerName={e.data.username}
+                    profileImage={e.data.profile_image}
+                  />
+                ))}
               </div>
-            </div>
+            }
           </div>
         </div>
         <div className="custom-shape-divider-bottom-1681980015">

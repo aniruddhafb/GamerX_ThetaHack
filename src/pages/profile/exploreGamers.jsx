@@ -1,4 +1,5 @@
 import Loader from "@/components/Loader";
+import ProfileCard from "@/components/cards/ProfileCard";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -61,54 +62,13 @@ const TopGamers = ({ fetch_gamers }) => {
                 {/* loop here  */}
                 <div className="grid grid-cols-3 justify-center w-full">
                   {data.map((e) => (
-                    <Link
-                      className="team__item relative"
-                      href={`/profile/${e.data.id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <div>
-                        <Image
-                          src={e.data.cover_image?.replace(
-                            "ipfs://",
-                            "https://gateway.ipfscdn.io/ipfs/"
-                          )}
-                          height={100}
-                          width={100}
-                          alt="img"
-                          className="absolute top-0 right-0 h-[110px] w-[100%]"
-                        />
-                      </div>
-
-                      <div className="team__thumb">
-                        <Link href="#">
-                          <Image
-                            src={e.data.profile_image?.replace(
-                              "ipfs://",
-                              "https://gateway.ipfscdn.io/ipfs/"
-                            )}
-                            height={100}
-                            width={100}
-                            alt="img"
-                            className="ml-12 mt-4 h-[120px] w-[120px]"
-                            style={{ zIndex: "10", position: "relative" }}
-                          />
-                        </Link>
-                      </div>
-
-                      <div className="team__content mt-[-13px] mr-3">
-                        <h4 className="name">
-                          <Link href="#" style={{ textDecoration: "none" }}>
-                            {e.data.username}
-                          </Link>
-                        </h4>
-                        <span
-                          className="designation"
-                          style={{ fontSize: "15px" }}
-                        >
-                          {e.data.bio}
-                        </span>
-                      </div>
-                    </Link>
+                    <ProfileCard
+                      coverImage={e.data.cover_image}
+                      gamerBio={e.data.bio}
+                      gamerID={e.data.id}
+                      gamerName={e.data.username}
+                      profileImage={e.data.profile_image}
+                    />
                   ))}
                 </div>
               </div>
