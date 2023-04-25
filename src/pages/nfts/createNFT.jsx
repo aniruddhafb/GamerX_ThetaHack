@@ -3,6 +3,19 @@ import { React, useState, useEffect } from 'react'
 const createNFT = () => {
 
     const [propModel, setPropModel] = useState(false);
+    const [data, set_data] = useState({
+        image: "",
+        name: "",
+        description: "",
+        collection: "defaultCollectionAddress",
+        properties: [{ type: "", value: "" }],
+    });
+
+    const handle_change_input = (index, e) => {
+        const values = [...data.properties];
+        values[index][e.target.name] = e.target.value;
+        set_data({ ...data, properties: values });
+    };
 
     const handle_add_field = () => {
         set_data({
@@ -115,7 +128,7 @@ const createNFT = () => {
                                     </div>
 
                                     {/* properties  */}
-                                    <div className="relative border-b border-jacarta-100 py-6 dark:border-jacarta-600 mb-6 mt-8">
+                                    <div className="relative border-b border-gray-700 py-6 mb-6 mt-8">
                                         <div className="flex items-center justify-between">
                                             <div className="flex">
                                                 <svg
@@ -130,16 +143,22 @@ const createNFT = () => {
                                                 </svg>
 
                                                 <div>
-                                                    <label className="block font-display text-jacarta-700 dark:text-black">
+                                                    <span
+                                                        style={{
+                                                            color: "white",
+                                                            fontFamily: "berlin_sans_fb_demibold",
+                                                            textTransform: "uppercase",
+                                                        }}
+                                                    >
                                                         Properties
-                                                    </label>
+                                                    </span>
                                                     <p className="dark:text-jacarta-300">
                                                         Textual traits that show up as rectangles.
                                                     </p>
                                                 </div>
                                             </div>
                                             <button
-                                                className="group flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-accent bg-white hover:border-transparent hover:bg-accent dark:bg-jacarta-700"
+                                                className="group flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-accent bg-transparent hover:border-transparent hover:bg-accent dark:bg-jacarta-700"
                                                 type="button"
                                                 id="item-properties"
                                                 data-bs-toggle="modal"
@@ -152,7 +171,7 @@ const createNFT = () => {
                                                         viewBox="0 0 24 24"
                                                         width="24"
                                                         height="24"
-                                                        className="fill-accent group-hover:fill-white"
+                                                        className="fill-white"
                                                     >
                                                         <path fill="none" d="M0 0h24v24H0z" />
                                                         <path d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" />
@@ -163,7 +182,7 @@ const createNFT = () => {
                                                         viewBox="0 0 24 24"
                                                         width="24"
                                                         height="24"
-                                                        className="h-6 w-6 fill-jacarta-500 group-hover:fill-white"
+                                                        className="h-6 w-6 fill-white "
                                                     >
                                                         <path fill="none" d="M0 0h24v24H0z"></path>
                                                         <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"></path>
@@ -177,8 +196,8 @@ const createNFT = () => {
                                     {propModel && (
                                         <div>
                                             <div className="max-w-2xl mb-4">
-                                                <div className="modal-content">
-                                                    <div className="modal-body p-6">
+                                                <div className="">
+                                                    <div className=" p-6">
                                                         {data.properties.map((e, index) => (
                                                             <div
                                                                 key={index}
@@ -194,7 +213,7 @@ const createNFT = () => {
                                                                         viewBox="0 0 24 24"
                                                                         width="24"
                                                                         height="24"
-                                                                        className="h-6 w-6 fill-jacarta-500 dark:fill-jacarta-300"
+                                                                        className="h-6 w-6 fill-white dark:fill-jacarta-300"
                                                                     >
                                                                         <path fill="none" d="M0 0h24v24H0z"></path>
                                                                         <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"></path>
@@ -207,7 +226,7 @@ const createNFT = () => {
                                                                         value={data.properties[index].type}
                                                                         name="type"
                                                                         type="text"
-                                                                        className="h-12 w-full border border-r-0 border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-black dark:placeholder-jacarta-300"
+                                                                        className="h-12 w-full border border-r-0 border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 bg-transparent p-2"
                                                                         placeholder="Type"
                                                                     />
                                                                 </div>
@@ -218,7 +237,7 @@ const createNFT = () => {
                                                                         value={data.properties[index].value}
                                                                         name="value"
                                                                         type="text"
-                                                                        className="h-12 w-full rounded-r-lg border border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 dark:text-black dark:placeholder-jacarta-300"
+                                                                        className="h-12 w-full rounded-r-lg border border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 bg-transparent p-2"
                                                                         placeholder="Value"
                                                                     />
                                                                 </div>
@@ -228,7 +247,7 @@ const createNFT = () => {
                                                         <button
                                                             type="button"
                                                             onClick={handle_add_field}
-                                                            className="mt-2 rounded-full border-2 border-accent py-2 px-8 text-center text-sm font-semibold text-accent transition-all hover:bg-accent hover:text-white"
+                                                            className="mt-2 rounded-full border-2 border-accent py-2 px-8 text-center text-sm font-semibold text-accent transition-all hover:bg-accent hover:text-white text-white"
                                                         >
                                                             Add More
                                                         </button>
