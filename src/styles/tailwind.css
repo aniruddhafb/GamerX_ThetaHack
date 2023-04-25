@@ -8941,6 +8941,21 @@ blockquote p {
   -o-transition: all 0.3s ease-out 0s;
   transition: all 0.3s ease-out 0s;
 }
+.comment-form .form-grp select {
+  display: block;
+  width: 100%;
+  border: 2px solid #19222b;
+  background: transparent;
+  color: var(--tg-common-color-white);
+  padding: 14px 25px;
+  -webkit-transition: all 0.3s ease-out 0s;
+  -moz-transition: all 0.3s ease-out 0s;
+  -ms-transition: all 0.3s ease-out 0s;
+  -o-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+  outline: none;
+}
+
 .comment-form .form-grp textarea {
   height: 160px;
   max-height: 160px;
