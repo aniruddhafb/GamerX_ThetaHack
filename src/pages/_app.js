@@ -414,6 +414,7 @@ export default function App({ Component, pageProps }) {
       const collection_image = await storage.upload(data.image);
       const collection_factory = collection_contract_factory(signer);
       console.log({ data });
+
       collection_factory.on(
         "CollectionCreated",
         async (
@@ -450,11 +451,23 @@ export default function App({ Component, pageProps }) {
         data.description
       );
       await txn.wait();
+      console.log(txn);
       // sendCollectionNoti({ collectionName: data.name });
     } catch (error) {
       alert(error.message);
     }
   };
+
+  const get_my_collections = async (signer) => {
+    try {
+      const collection = collection_contract_factory(signer);
+      const my_collections = await collection.getMyCollections();
+      return my_collections;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const test = async () => {
     const db = polybase();
     //FOR FETCHING ALL OF THE VIDEOS
