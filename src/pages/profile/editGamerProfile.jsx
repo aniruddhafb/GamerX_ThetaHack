@@ -33,9 +33,9 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
     if (!user_data) return;
     set_data({
       ...user_data,
-      twitter: user_data.socials[0],
-      instagram: user_data.socials[1],
-      link: user_data.socials[2],
+      twitter: user_data.socials.length ? user_data.socials[0] : "",
+      instagram: user_data.socials.length ? user_data.socials[1] : "",
+      link: user_data.socials.length ? user_data.socials[2] : "",
     });
   }, [user_data]);
   return (

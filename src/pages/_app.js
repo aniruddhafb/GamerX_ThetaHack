@@ -89,7 +89,9 @@ export default function App({ Component, pageProps }) {
           .where("id", "==", signer_address)
           .get();
         if (check_user.data.length == 0) {
-          db.collection("User").create([signer_address]);
+          await db
+            .collection("User")
+            .create([signer_address, "", "", "", "", ""]);
         }
         get_user_data(signer_address);
       }
@@ -261,7 +263,6 @@ export default function App({ Component, pageProps }) {
   const get_user_data = async (signer_address) => {
     const db = polybase();
     const res = await db.collection("User").record(signer_address).get();
-    console.log(res.data);
     set_user_data(res.data);
   };
 
@@ -458,10 +459,11 @@ export default function App({ Component, pageProps }) {
     }
   };
 
-  const get_my_collections = async (signer) => {
+  const get_my_collections = async () => {
     try {
       const collection = collection_contract_factory(signer);
       const my_collections = await collection.getMyCollections();
+      console.log({ my_collections });
       return my_collections;
     } catch (error) {
       console.log(error.message);
@@ -524,6 +526,7 @@ export default function App({ Component, pageProps }) {
         create_token={create_token}
         default_nft_collection={default_nft_collection}
         create_collection={create_collection}
+        get_my_collections={get_my_collections}
       />
       <Footer />
     </>
