@@ -11,7 +11,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
     twitter: "",
     instagram: "",
     link: "",
-    role: "",
+    role: "Gamer Influencer",
   });
 
   const [preview_cover, set_cover_preview] = useState("");
@@ -25,6 +25,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
   const handle_submit = async (e) => {
     e.preventDefault();
     update_profile(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -176,31 +177,53 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     Your Role <span className="text-red">*</span>
                   </label>
                   <select
-                    defaultValue={data.role}
+                    onChange={(e) =>
+                      set_data({ ...data, role: e.target.value })
+                    }
                     className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500"
                   >
                     <option
+                      selected={data.role === "Gamer Influencer"}
                       value="Gamer Influencer"
                       className="text-white bg-[#0F161B]"
                     >
                       Gamer Influencer
                     </option>
                     <option
+                      selected={data.role === "Esports Player"}
                       value="Esports Player"
                       className="text-white bg-[#0F161B]"
                     >
                       Esports Player
                     </option>
-                    <option value="Gamer" className="text-white bg-[#0F161B]">
+                    <option
+                      selected={data.role === "Just a Gamer"}
+                      Esports
+                      Player
+                      value="Gamer"
+                      className="text-white bg-[#0F161B]"
+                    >
                       Just a Gamer
                     </option>
-                    <option value="Brand" className="text-white bg-[#0F161B]">
+                    <option
+                      selected={data.role === "Tech Brand"}
+                      value="Brand"
+                      className="text-white bg-[#0F161B]"
+                    >
                       Tech Brand
                     </option>
-                    <option value="Dealer" className="text-white bg-[#0F161B]">
+                    <option
+                      selected={data.role === "Game Dealer"}
+                      value="Dealer"
+                      className="text-white bg-[#0F161B]"
+                    >
                       Game Dealer
                     </option>
-                    <option value="Coach" className="text-white bg-[#0F161B]">
+                    <option
+                      selected={data.role === "Gaming Coach"}
+                      value="Coach"
+                      className="text-white bg-[#0F161B]"
+                    >
                       Gaming Coach
                     </option>
                   </select>
