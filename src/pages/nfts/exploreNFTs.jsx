@@ -31,7 +31,7 @@ const exploreNFTs = () => {
                         <div className='flex flex-wrap justify-around align-middle'>
                             {/* loop here  */}
                             <div className="trendingNft__item">
-                                <div className="trendingNft__item-top">
+                                <div className="trendingNft__item-top mt-4">
                                     <div className="trendingNft__item-avatar">
                                         <div className="image">
                                             <a href="#">
@@ -50,10 +50,6 @@ const exploreNFTs = () => {
                                                 className="userName">@Jon Max</a>
                                         </div>
                                     </div>
-                                    <div className="trendingNft__item-wish">
-                                        <a href="#!"><i
-                                            className="far fa-heart"></i></a>
-                                    </div>
                                 </div>
                                 <div className="trendingNft__item-image">
                                     {/* nft image  */}
@@ -62,6 +58,7 @@ const exploreNFTs = () => {
                                             src="../../nftCard1.jpg"
                                             height={100}
                                             width={100}
+                                            className='h-[200px]'
                                             alt="img" />
                                     </a>
                                 </div>
