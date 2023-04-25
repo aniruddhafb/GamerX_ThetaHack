@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import VideoCard from '@/components/cards/videoCard'
+import VideoCard from '@/components/cards/VideoCard'
 
 import coin1 from "../../public/slider_shape01.png"
 import coin2 from "../../public/slider_shape02.png"
