@@ -1,10 +1,15 @@
 import Link from 'next/link';
 import { React, useState, useEffect } from 'react'
 
-const createNFT = () => {
+const createNFT = ({ default_nft_collection, create_token }) => {
 
     const [propModel, setPropModel] = useState(false);
+
     const [data, set_data] = useState({
+        title: "",
+        description: "",
+        image: "",
+        collection_address: default_nft_collection,
         properties: [{ type: "", value: "" }],
     });
 
@@ -25,6 +30,16 @@ const createNFT = () => {
         const values = [...data.properties];
         values.splice(index, 1);
         set_data({ ...data, properties: values });
+    };
+
+    const handle_change = (e) => {
+        set_data({ ...data, [e.target.name]: e.target.value });
+    };
+
+    const handle_submit = (e) => {
+        e.preventDefault();
+        console.log(data);
+        create_token(data);
     };
 
     return (
