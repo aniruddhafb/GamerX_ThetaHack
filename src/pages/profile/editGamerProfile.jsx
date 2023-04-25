@@ -24,7 +24,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
 
   const handle_submit = async (e) => {
     e.preventDefault();
-    update_profile(data);
+    // update_profile(data);
     console.log(data);
   };
 
@@ -33,9 +33,9 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
     if (!user_data) return;
     set_data({
       ...user_data,
-      twitter: user_data.socials.length ? user_data.socials[0] : "",
-      instagram: user_data.socials.length ? user_data.socials[1] : "",
-      link: user_data.socials.length ? user_data.socials[2] : "",
+      twitter: user_data.socials ? user_data.socials[0] : "",
+      instagram: user_data.socials ? user_data.socials[1] : "",
+      link: user_data.socials ? user_data.socials[2] : "",
     });
   }, [user_data]);
   return (
@@ -56,11 +56,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                 preview_cover
                   ? preview_cover
                   : user_data?.cover_image
-                    ? user_data?.cover_image.replace(
+                  ? user_data?.cover_image.replace(
                       "ipfs://",
                       "https://gateway.ipfscdn.io/ipfs/"
                     )
-                    : "img/user/banner.jpg"
+                  : "img/user/banner.jpg"
               }
               height={100}
               width={100}
@@ -288,11 +288,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                             preview_profile
                               ? preview_profile
                               : user_data?.profile_image
-                                ? user_data?.profile_image.replace(
+                              ? user_data?.profile_image.replace(
                                   "ipfs://",
                                   "https://gateway.ipfscdn.io/ipfs/"
                                 )
-                                : "img/user/user_avatar.gif"
+                              : "img/user/user_avatar.gif"
                           }
                           height={100}
                           width={100}
