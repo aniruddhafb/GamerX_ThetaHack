@@ -33,6 +33,7 @@ const firebaseConfig = {
   appId: "1:45031986007:web:bf398bafc9dc8d4f23a412",
   measurementId: "G-Q06CCYY0T5",
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -96,46 +97,61 @@ export default function App({ Component, pageProps }) {
     }
   };
 
-  const gamerX_collection = async (collection_address, signer) => {
+  //USE ONLY FOR CREATING DEFAULT NFT COLLECTION
+  const create_default_collection = async () => {
+    const db = polybase();
+    const res = await db
+      .collection("NFTCollection")
+      .create([
+        default_nft_collection,
+        db.collection("User").record(signerAddress),
+        "gamerx cover image",
+        "gamerx logo image",
+        "GamerX",
+        "GamerX",
+        "GamerX is a platform for gamer",
+        "Theta Chain Image",
+        "365",
+      ]);
+  };
+
+  const gamerX_collection = (collection_address, signer) => {
     if (!collection_address) return;
     const collection_contract = new ethers.Contract(
       collection_address,
-      NFTCollection,
+      NFTCollection.abi,
       signer
     );
     return collection_contract;
   };
 
-  const create_token = async (_tokenURI, signer) => {
+  const create_token = async (_tokenURI) => {
     try {
-      // console.log(_tokenURI);
+      console.log({ _tokenURI });
       const tokenURI = await storage.upload(_tokenURI);
-      const rarx = gamerX_collection(_tokenURI.collection, signer);
+      const gamerX = gamerX_collection(_tokenURI.collection_address, signer);
       const network = await provider.getNetwork();
 
-      rarx.on("TokenCreated", async (ipfsURL, tokenId) => {
+      gamerX.on("TokenCreated", async (ipfsURL, tokenId) => {
         // console.log({ ipfsURL, tokenId });
         const db = polybase();
         const res = await db
           .collection("NFT")
           .create([
-            `${_tokenURI.collection}/${tokenId.toString()}`,
+            `${_tokenURI.collection_address}/${tokenId.toString()}`,
             tokenId.toString(),
             network.chainId.toString(),
             tokenURI,
-            db.collection("User").record(signer_address),
-            db.collection("NFTCollection").record(_tokenURI.collection),
-            _tokenURI.properties[0].type
+            db.collection("User").record(signerAddress),
+            db.collection("NFTCollection").record(_tokenURI.collection_address),
+            _tokenURI.properties.length
               ? JSON.stringify(_tokenURI.properties)
               : "[]",
-            _tokenURI.name,
-            chainImg,
-            blockURL,
-            symbol,
+            _tokenURI.title,
           ]);
       });
 
-      const txn = await rarx.createToken(tokenURI);
+      const txn = await gamerX.createToken(tokenURI);
       await txn.wait();
       // console.log({ txn });
     } catch (error) {
@@ -424,6 +440,7 @@ export default function App({ Component, pageProps }) {
         get_gamer={get_gamer}
         get_all_livestreams={get_all_livestreams}
         create_token={create_token}
+        default_nft_collection={default_nft_collection}
       />
       <Footer />
     </>
