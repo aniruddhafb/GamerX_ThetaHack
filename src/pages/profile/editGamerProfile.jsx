@@ -56,11 +56,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                 preview_cover
                   ? preview_cover
                   : user_data?.cover_image
-                  ? user_data?.cover_image.replace(
+                    ? user_data?.cover_image.replace(
                       "ipfs://",
                       "https://gateway.ipfscdn.io/ipfs/"
                     )
-                  : "img/user/banner.jpg"
+                    : "img/user/banner.jpg"
               }
               height={100}
               width={100}
@@ -288,11 +288,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                             preview_profile
                               ? preview_profile
                               : user_data?.profile_image
-                              ? user_data?.profile_image.replace(
+                                ? user_data?.profile_image.replace(
                                   "ipfs://",
                                   "https://gateway.ipfscdn.io/ipfs/"
                                 )
-                              : "img/user/user_avatar.gif"
+                                : "img/user/user_avatar.gif"
                           }
                           height={100}
                           width={100}

@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import VideoCard from '@/components/cards/videoCard'
+import VideoCard from '@/components/cards/VideoCard'
 
 import coin1 from "../../public/slider_shape01.png"
 import coin2 from "../../public/slider_shape02.png"
 import coin3 from "../../public/slider_shape03.png"
 import coin4 from "../../public/slider_shape04.png"
 
-import teamPNG from "../../public/team02.png"
-import heroLogo from "../../public/favicon.png"
 import thetalogo from "../../public/theta.webp"
 import ProfileCard from '@/components/cards/ProfileCard'
 import Loader from '@/components/Loader'
@@ -57,16 +55,16 @@ export default function Home({ fetch_videos, fetch_gamers }) {
                     <h2 className="title">
                       Here Gamers Live!!</h2>
                     <p style={{ fontSize: "15px" }}>
-                      A platform for gamers</p>
+                      Watch content from your favourite <br /> gamers and Trade their NFTs..</p>
                     <div className="slider__btn">
-                      <Link href="#"
+                      <Link href="/content/uploadVideo"
                         className="tg-btn-1" style={{ textDecoration: "none" }}><span>Get Started</span></Link>
                     </div>
                   </div>
                 </div>
                 <div className="col-xxl-6 col-xl-5 col-lg-6">
                   <div className="slider__img text-center">
-                    <Image src={heroLogo} alt="img" />
+                    <Image src="../../hero1.png" height={100} width={100} className='h-[100%] w-auto' alt="img" />
                   </div>
                 </div>
               </div>
@@ -211,41 +209,34 @@ export default function Home({ fetch_videos, fetch_gamers }) {
           <div className='flex flex-wrap justify-around align-middle'>
             {/* loop here  */}
             <div className="trendingNft__item">
-              <div className="trendingNft__item-top">
-                <div className="trendingNft__item-avatar">
-                  <div className="image">
-                    <a href="#">
-                      <Image
-                        src="../../nft_avatar01.png"
-                        height={100}
-                        width={100}
-                        alt="img" />
-                    </a>
-                  </div>
-                  <div className="info">
-                    {/* full name  */}
-                    <h6 className="name">Black Crypto</h6>
-                    {/* username  */}
-                    <a href="#"
-                      className="userName">@Jon Max</a>
-                  </div>
-                </div>
-                <div className="trendingNft__item-wish">
-                  <a href="#!"><i
-                    className="far fa-heart"></i></a>
-                </div>
-              </div>
-              <div className="trendingNft__item-image">
-                {/* nft image  */}
+              <div className="trendingNft__item-image mt-8">
                 <a href="#">
                   <Image
                     src="../../nftCard1.jpg"
                     height={100}
                     width={100}
+                    className='h-[200px]'
                     alt="img" />
                 </a>
+                <div className="trendingNft__item-top mt-2">
+                  <div className="trendingNft__item-avatar">
+                    <div className="info">
+                      <h6 className="name">NFT #2</h6>
+                      <span className="userName"
+                        style={{
+                          width: "280px",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          textDecoration: "none"
+                        }}>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur, nihil. Culpa ducimus, iure veniam dolorem voluptas illo enim hic maiores possimus illum adipisci eum perferendis vel neque. Accusamus expedita similique, quos atque molestiae aliquid voluptatibus? Nulla amet repudiandae, labore adipisci ipsum excepturi hic vel molestiae dolorum ipsa odit enim quo!
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="trendingNft__item-bottom">
+              <div className="trendingNft__item-bottom mt-[-16px]">
                 <div className="trendingNft__item-price">
                   <span className="bid text-gray-400">Last Price</span>
                   <h6 className="eth"> 1.005 <span>TFUEL</span></h6>

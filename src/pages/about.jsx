@@ -120,25 +120,18 @@ const about = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6">
-                            <div className="services__images">
-                                <div className="services__images-item">
-                                    <Image src={demIMG} alt="img" />
-                                    {/* <a href="#" className="services__link">
-                                        <i className="flaticon-next"></i>
-                                    </a> */}
-                                </div>
-                                <div className="services__images-item">
-                                    <Image src={demIMG} alt="img" />
-                                </div>
-                                <div className="services__images-item">
-                                    <Image src={demIMG} alt="img" />
-                                </div>
-                                <div className="services__images-item active">
-                                    <Image src={demIMG} alt="img" />
+                        {/* youtube vid  */}
+                        {/* <div className="col-lg-6" style={{ height: "600px" }}>
+                            <div className="modal-dialog modal-dialog-centered">
+                                <div className="modal-content">
+                                    <div className="modal-body">
+                                        <div className="ratio ratio-16x9 before:bg-jacarta-900">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/hJsEJF-TrtM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

@@ -31,41 +31,34 @@ const exploreNFTs = () => {
                         <div className='flex flex-wrap justify-around align-middle'>
                             {/* loop here  */}
                             <div className="trendingNft__item">
-                                <div className="trendingNft__item-top">
-                                    <div className="trendingNft__item-avatar">
-                                        <div className="image">
-                                            <a href="#">
-                                                <Image
-                                                    src="../../nft_avatar01.png"
-                                                    height={100}
-                                                    width={100}
-                                                    alt="img" />
-                                            </a>
-                                        </div>
-                                        <div className="info">
-                                            {/* full name  */}
-                                            <h6 className="name">Black Crypto</h6>
-                                            {/* username  */}
-                                            <a href="#"
-                                                className="userName">@Jon Max</a>
-                                        </div>
-                                    </div>
-                                    <div className="trendingNft__item-wish">
-                                        <a href="#!"><i
-                                            className="far fa-heart"></i></a>
-                                    </div>
-                                </div>
-                                <div className="trendingNft__item-image">
-                                    {/* nft image  */}
+                                <div className="trendingNft__item-image mt-8">
                                     <a href="#">
                                         <Image
                                             src="../../nftCard1.jpg"
                                             height={100}
                                             width={100}
+                                            className='h-[200px]'
                                             alt="img" />
                                     </a>
+                                    <div className="trendingNft__item-top mt-2">
+                                        <div className="trendingNft__item-avatar">
+                                            <div className="info">
+                                                <h6 className="name">NFT #2</h6>
+                                                <span className="userName"
+                                                    style={{
+                                                        width: "280px",
+                                                        whiteSpace: "nowrap",
+                                                        textOverflow: "ellipsis",
+                                                        overflow: "hidden",
+                                                        textDecoration: "none"
+                                                    }}>
+                                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Pariatur, nihil. Culpa ducimus, iure veniam dolorem voluptas illo enim hic maiores possimus illum adipisci eum perferendis vel neque. Accusamus expedita similique, quos atque molestiae aliquid voluptatibus? Nulla amet repudiandae, labore adipisci ipsum excepturi hic vel molestiae dolorum ipsa odit enim quo!
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="trendingNft__item-bottom">
+                                <div className="trendingNft__item-bottom mt-[-16px]">
                                     <div className="trendingNft__item-price">
                                         <span className="bid text-gray-400">Last Price</span>
                                         <h6 className="eth"> 1.005 <span>TFUEL</span></h6>
