@@ -8,8 +8,6 @@ import coin2 from "../../public/slider_shape02.png"
 import coin3 from "../../public/slider_shape03.png"
 import coin4 from "../../public/slider_shape04.png"
 
-import teamPNG from "../../public/team02.png"
-import heroLogo from "../../public/favicon.png"
 import thetalogo from "../../public/theta.webp"
 import ProfileCard from '@/components/cards/ProfileCard'
 import Loader from '@/components/Loader'
@@ -57,16 +55,16 @@ export default function Home({ fetch_videos, fetch_gamers }) {
                     <h2 className="title">
                       Here Gamers Live!!</h2>
                     <p style={{ fontSize: "15px" }}>
-                      A platform for gamers</p>
+                      Watch content from your favourite <br /> gamers and Trade their NFTs..</p>
                     <div className="slider__btn">
-                      <Link href="#"
+                      <Link href="/content/uploadVideo"
                         className="tg-btn-1" style={{ textDecoration: "none" }}><span>Get Started</span></Link>
                     </div>
                   </div>
                 </div>
                 <div className="col-xxl-6 col-xl-5 col-lg-6">
                   <div className="slider__img text-center">
-                    <Image src={heroLogo} alt="img" />
+                    <Image src="../../hero1.png" height={100} width={100} className='h-[100%] w-auto' alt="img" />
                   </div>
                 </div>
               </div>

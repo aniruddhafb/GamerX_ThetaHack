@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
 @font-face {
   font-family: "berlin_sans_fb_demibold";
-  src: url("../fonts/berlin_sans_fb_demi_bold-webfont.woff2") format("woff2"),
-    url("../fonts/berlin_sans_fb_demi_bold-webfont.woff") format("woff");
+  src: url("../fonts/berlin_sans.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -2503,6 +2502,14 @@ html.show-preloader body {
   .slider__img img {
     margin: 0 auto;
     max-width: 480px;
+    width: 100%;
+    display: block;
+  }
+}
+@media (max-width: 530.98px) {
+  .slider__img img {
+    margin: 0 auto;
+    max-width: 300px;
     width: 100%;
     display: block;
   }
