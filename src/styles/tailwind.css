@@ -3127,9 +3127,9 @@ html.show-preloader body {
   font-family: var(--tg-heading-font-family);
   text-decoration: underline;
 }
-.trendingNft__item-avatar .info .userName:hover {
+/* .trendingNft__item-avatar .info .userName:hover {
   color: var(--tg-theme-primary);
-}
+} */
 .trendingNft__item-wish {
   margin-left: auto;
 }
