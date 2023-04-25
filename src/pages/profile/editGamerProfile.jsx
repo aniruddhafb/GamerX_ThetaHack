@@ -1,35 +1,47 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-
-const editGamerProfile = ({ update_profile, user_data }) => {
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
+const EditGamerProfile = ({ update_profile, user_data }) => {
   const [data, set_data] = useState({
-    cover_photo: "",
-    profile_photo: "",
+    cover_image: "",
+    profile_image: "",
     username: "",
     bio: "",
     email: "",
     twitter: "",
     instagram: "",
     link: "",
+    role: "",
   });
 
   const [preview_cover, set_cover_preview] = useState("");
   const [preview_profile, set_profile_preview] = useState("");
+  const storage = new ThirdwebStorage();
+
   const handle_change = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handle_submit = (e) => {
+  const handle_submit = async (e) => {
     e.preventDefault();
     update_profile(data);
   };
 
-  useEffect(() => {}, [user_data]);
+  useEffect(() => {
+    console.log({ user_data });
+    if (!user_data) return;
+    set_data({
+      ...user_data,
+      twitter: user_data.socials[0],
+      instagram: user_data.socials[1],
+      link: user_data.socials[2],
+    });
+  }, [user_data]);
   return (
     <main className="pt-[5.5rem] lg:pt-24" id="pageBG">
       <form onSubmit={handle_submit}>
         <div className="relative">
-          {preview_cover == "" && data.cover_photo == "" ? (
+          {preview_cover == "" && data.cover_image == "" ? (
             <Image
               src="../../../slider_bg.jpg"
               alt="banner"
@@ -40,13 +52,13 @@ const editGamerProfile = ({ update_profile, user_data }) => {
           ) : (
             <Image
               src={
-                user_data?.cover_image
+                preview_cover
+                  ? preview_cover
+                  : user_data?.cover_image
                   ? user_data?.cover_image.replace(
                       "ipfs://",
                       "https://gateway.ipfscdn.io/ipfs/"
                     )
-                  : preview_cover
-                  ? preview_cover
                   : "img/user/banner.jpg"
               }
               height={100}
@@ -62,7 +74,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                 accept="image/*"
                 onChange={(e) => {
                   set_cover_preview(URL.createObjectURL(e.target.files[0]));
-                  set_data({ ...data, cover_photo: e.target.files[0] });
+                  set_data({ ...data, cover_image: e.target.files[0] });
                 }}
                 className="absolute inset-0 cursor-pointer opacity-0"
               />
@@ -102,7 +114,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                     name="username"
                     onChange={handle_change}
                     type="text"
-                    value={user_data?.username}
+                    value={data.username}
                     id="profile-username"
                     className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500"
                     placeholder="Enter username"
@@ -124,7 +136,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                     name="bio"
                     onChange={handle_change}
                     id="profile-bio"
-                    value={user_data?.bio}
+                    value={data.bio}
                     className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500"
                     required
                     placeholder="Tell the world your story!"
@@ -145,7 +157,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                     type="text"
                     id="profile-email"
                     name="email"
-                    value={user_data?.email}
+                    value={data.email}
                     onChange={handle_change}
                     className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500"
                     placeholder="Enter email"
@@ -163,7 +175,10 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                   >
                     Your Role <span className="text-red">*</span>
                   </label>
-                  <select className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500">
+                  <select
+                    defaultValue={data.role}
+                    className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500"
+                  >
                     <option
                       value="Gamer Influencer"
                       className="text-white bg-[#0F161B]"
@@ -226,7 +241,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                 <div className="flex space-x-5 flex-wrap">
                   <div className="shrink-0">
                     <figure className="relative inline-block">
-                      {preview_profile == "" && data.profile_photo == "" ? (
+                      {preview_profile == "" && data.profile_image == "" ? (
                         <Image
                           src="../../../dislogo.png"
                           alt="banner"
@@ -236,14 +251,24 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                         />
                       ) : (
                         <Image
+                          // src={
+                          //   user_data?.profile_image
+                          //     ? user_data?.profile_image.replace(
+                          //         "ipfs://",
+                          //         "https://gateway.ipfscdn.io/ipfs/"
+                          //       )
+                          //     : preview_profile
+                          //     ? preview_profile
+                          //     : "img/user/user_avatar.gif"
+                          // }
                           src={
-                            user_data?.profile_image
+                            preview_profile
+                              ? preview_profile
+                              : user_data?.profile_image
                               ? user_data?.profile_image.replace(
                                   "ipfs://",
                                   "https://gateway.ipfscdn.io/ipfs/"
                                 )
-                              : preview_profile
-                              ? preview_profile
                               : "img/user/user_avatar.gif"
                           }
                           height={100}
@@ -261,7 +286,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                             );
                             set_data({
                               ...data,
-                              profile_photo: e.target.files[0],
+                              profile_image: e.target.files[0],
                             });
                           }}
                           accept="image/*"
@@ -315,7 +340,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                       type="text"
                       name="twitter"
                       onChange={handle_change}
-                      // value={user_data && user_data?.socials[1]}
+                      value={data.twitter}
                       id="profile-twitter"
                       className="w-full rounded-t-lg py-3 pl-10 hover:ring-2 hover:ring-accent/10 focus:ring-inset focus:ring-accent border border-gray-200 bg-transparent text-white"
                       placeholder="@twittername"
@@ -337,7 +362,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                     <input
                       type="text"
                       id="profile-instagram"
-                      // value={user_data?.socials[0]}
+                      value={data.instagram}
                       name="instagram"
                       onChange={handle_change}
                       className="-mt-px w-full border-jacarta-100 py-3 pl-10 hover:ring-2 hover:ring-accent/10 focus:ring-inset focus:ring-accent  border border-gray-200 bg-transparent text-white"
@@ -359,7 +384,7 @@ const editGamerProfile = ({ update_profile, user_data }) => {
                       type="url"
                       id="profile-website"
                       name="link"
-                      // value={user_data?.socials[2]}
+                      value={data.link}
                       onChange={handle_change}
                       className="-mt-px w-full rounded-b-lg border-jacarta-100 py-3 pl-10 hover:ring-2 hover:ring-accent/10 focus:ring-inset focus:ring-accent border border-gray-200 bg-transparent text-white"
                       placeholder="yoursitename.com"
@@ -375,4 +400,4 @@ const editGamerProfile = ({ update_profile, user_data }) => {
   );
 };
 
-export default editGamerProfile;
+export default EditGamerProfile;

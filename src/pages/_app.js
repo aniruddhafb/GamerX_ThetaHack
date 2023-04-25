@@ -227,10 +227,19 @@ export default function App({ Component, pageProps }) {
   };
 
   const update_profile = async (data) => {
-    const ipfs_cover = await storage.upload(data.cover_photo);
-    const ipfs_profile = await storage.upload(data.profile_photo);
-    const signer_address = await signer.getAddress();
+    console.log({ data });
+    console.log(data.cover_image);
+    console.log(data.profile_image);
+    let ipfs_cover = data.cover_image;
+    let ipfs_profile = data.profile_image;
+    if (typeof data.cover_image === "object") {
+      ipfs_cover = await storage.upload(data.cover_image);
+    }
+    if (typeof data.profile_image === "object") {
+      ipfs_profile = await storage.upload(data.profile_image);
+    }
 
+    const signer_address = await signer.getAddress();
     const db = polybase();
     const res = await db
       .collection("User")
@@ -242,12 +251,16 @@ export default function App({ Component, pageProps }) {
         [data.instagram, data.twitter, data.link],
         ipfs_cover,
         ipfs_profile,
+        data.role,
       ]);
+
+    console.log(res.data);
   };
 
   const get_user_data = async (signer_address) => {
     const db = polybase();
     const res = await db.collection("User").record(signer_address).get();
+    console.log(res.data);
     set_user_data(res.data);
   };
 
