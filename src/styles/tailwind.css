@@ -2884,6 +2884,7 @@ html.show-preloader body {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 .nft-item__avatar .avatar-name .name {
