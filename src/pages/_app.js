@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 
 //CONTRACTS
 import NFTCollection from "../../artifacts/contracts/NFTCollection.sol/NFTCollection.json";
+import Collection_Factory from "../../artifacts/contracts/CollectionFactory.sol/CollectionFactory.json";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -397,8 +398,63 @@ export default function App({ Component, pageProps }) {
     return videos;
   };
 
-  const create_chat_room = async () => {};
+  // deploy collections
+  const collection_contract_factory = (signer) => {
+    const collection_factory = new ethers.Contract(
+      default_collection_factory,
+      Collection_Factory.abi,
+      signer
+    );
+    return collection_factory;
+  };
 
+  const create_collection = async (data) => {
+    try {
+      const collection_logo = await storage.upload(data.logo);
+      const collection_image = await storage.upload(data.image);
+      const collection_factory = collection_contract_factory(signer);
+      console.log({ data });
+      collection_factory.on(
+        "CollectionCreated",
+        async (
+          collectionId,
+          name,
+          symbol,
+          description,
+          image,
+          logo,
+          owner,
+          collection_address
+        ) => {
+          console.log("event called");
+          const db = polybase();
+          const res = await db
+            .collection("NFTCollection")
+            .create([
+              collection_address,
+              db.collection("User").record(signerAddress),
+              image,
+              logo,
+              name,
+              symbol,
+              description,
+            ]);
+          console.log({ polybase: res });
+        }
+      );
+      const txn = await collection_factory.create_collection(
+        data.name,
+        data.symbol,
+        collection_image,
+        collection_logo,
+        data.description
+      );
+      await txn.wait();
+      // sendCollectionNoti({ collectionName: data.name });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   const test = async () => {
     const db = polybase();
     //FOR FETCHING ALL OF THE VIDEOS
@@ -454,6 +510,7 @@ export default function App({ Component, pageProps }) {
         get_all_livestreams={get_all_livestreams}
         create_token={create_token}
         default_nft_collection={default_nft_collection}
+        create_collection={create_collection}
       />
       <Footer />
     </>
