@@ -1,13 +1,10 @@
+import Link from 'next/link';
 import { React, useState, useEffect } from 'react'
 
 const createNFT = () => {
 
     const [propModel, setPropModel] = useState(false);
     const [data, set_data] = useState({
-        image: "",
-        name: "",
-        description: "",
-        collection: "defaultCollectionAddress",
         properties: [{ type: "", value: "" }],
     });
 
@@ -82,7 +79,7 @@ const createNFT = () => {
                                                     textTransform: "uppercase",
                                                 }}
                                             >
-                                                Select Collection*
+                                                Select Collection* <Link href="/collection/createCollection" target='_blank' className='text-gray-400 text-sm hover:text-gray-300' style={{ textTransform: "lowercase" }}>[Create your collection ➚]</Link>
                                             </span>
                                         </div>
                                         <div className="relative mt-4">
