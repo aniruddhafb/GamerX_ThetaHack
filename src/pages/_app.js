@@ -176,8 +176,10 @@ export default function App({ Component, pageProps }) {
   };
 
   const upload_video = async (data) => {
+    console.log("upload video called");
     try {
       const thumbnail_ipfs = await storage.upload(data.thumbnail);
+      console.log(thumbnail_ipfs);
       const res = await axios({
         url: "https://api.thetavideoapi.com/upload",
         method: "POST",
