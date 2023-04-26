@@ -7973,6 +7973,29 @@ html.show-preloader body {
 .shop__details-images-wrap .tab-content {
   filter: drop-shadow(0 0 0.75rem rgba(19, 19, 19, 0.49));
 }
+.imageBck {
+  -webkit-clip-path: polygon(
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%,
+    0 0
+  );
+  clip-path: polygon(
+    100% 0,
+    100% calc(100% - 20px),
+    calc(100% - 20px) 100%,
+    0 100%,
+    0 0
+  );
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+  background: #1c262f;
+  width: 150px;
+}
 .shop__details-images-wrap .tab-pane {
   padding: 19px;
   -webkit-clip-path: polygon(
@@ -8271,6 +8294,12 @@ html.show-preloader body {
 @media (max-width: 1199.98px) {
   .product__desc-wrap .tab-content {
     padding: 25px 25px;
+  }
+}
+
+@media (max-width: 400px) {
+  .phoneGayab {
+    display: none;
   }
 }
 .product__desc-wrap .tab-content p {
