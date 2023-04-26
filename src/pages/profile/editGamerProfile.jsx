@@ -25,12 +25,10 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
   const handle_submit = async (e) => {
     e.preventDefault();
     update_profile(data);
-    console.log(data);
   };
 
   useEffect(() => {
     if (!user_data) return;
-    console.log({ user_data });
     set_data({
       ...user_data,
       twitter: user_data.socials ? user_data.socials[0] : "",

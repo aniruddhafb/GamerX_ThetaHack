@@ -3,7 +3,7 @@ import LiveVideoCard from "@/components/cards/LiveVideoCard";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { RiLiveFill } from "react-icons/ri"
+import { RiLiveFill } from "react-icons/ri";
 
 const ExploreLiveContent = ({ get_all_livestreams }) => {
   const [data, set_data] = useState([]);
@@ -13,7 +13,6 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
     setLoading(true);
     const res = await get_all_livestreams();
     set_data(res);
-    console.log({ liveres: res })
     setLoading(false);
   };
 
@@ -53,13 +52,14 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
                 </div>
               </div>
             </div>
-            {loading ?
+            {loading ? (
               <Loader />
-              :
+            ) : (
               <div className="flex flex-wrap justify-around align-middle">
                 {/* loop here  */}
-                {data.map((e) => (
+                {data.map((e, index) => (
                   <LiveVideoCard
+                    key={index}
                     liveID={e.livestream.stream_id}
                     liveTitle={e.livestream.title}
                     ownerProfileImg={e.owner.data.profile_image}
@@ -68,7 +68,7 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
                   />
                 ))}
               </div>
-            }
+            )}
           </div>
         </div>
       </div>

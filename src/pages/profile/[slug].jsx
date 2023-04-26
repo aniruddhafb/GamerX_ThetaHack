@@ -8,8 +8,7 @@ const GamerProfile = ({ get_gamer }) => {
   const [data, set_data] = useState([]);
   const fetch_gamer = async () => {
     const res = await get_gamer(slug);
-    console.log(res);
-    set_data(res);
+   set_data(res);
   };
   useEffect(() => {
     if (!slug) return;

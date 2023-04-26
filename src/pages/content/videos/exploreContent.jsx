@@ -50,16 +50,16 @@ const ExploreContent = ({ fetch_videos }) => {
                 </div>
               </div>
             </div>
-            {loading ?
+            {loading ? (
               <Loader />
-              :
+            ) : (
               <div className="flex justify-around align-middle">
                 {/* loop here  */}
                 <div className="flex flex-wrap justify-around align-middle">
-                  {videos.map((e) => {
-                    console.log(e);
+                  {videos.map((e, index) => {
                     return (
                       <VideoCard
+                        key={index}
                         thumbnail={e.video.thumbnail}
                         title={e.video.name}
                         creatorImage={e.owner.profile_image}
@@ -71,7 +71,7 @@ const ExploreContent = ({ fetch_videos }) => {
                   })}
                 </div>
               </div>
-            }
+            )}
           </div>
         </div>
       </div>

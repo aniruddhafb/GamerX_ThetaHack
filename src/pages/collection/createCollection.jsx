@@ -14,7 +14,6 @@ const CreateCollection = ({ create_collection }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
     // set_loading(true);
     await create_collection(data);
     // setTimeout(() => {

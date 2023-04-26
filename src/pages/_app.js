@@ -58,6 +58,7 @@ export default function App({ Component, pageProps }) {
 
   const connect_wallet = async () => {
     // delete_users("0xfD2958c381aE4fAaF77ed06F619d2246a8a3dB60");
+    // delete_video("video_y4wtagafu2vvy1tzascigwca3k");
     try {
       if (window.ethereum == null) {
         console.log("MetaMask not installed; using read-only defaults");
@@ -101,6 +102,12 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  const delete_video = async (video) => {
+    const db = polybase();
+    const res = await db.collection("Video").record(video).call("del");
+    console.log(res.data);
+  };
+
   const delete_users = async (address) => {
     const db = polybase();
     const res = await db.collection("User").record(address).call("del");
@@ -136,9 +143,7 @@ export default function App({ Component, pageProps }) {
   };
 
   const create_token = async (_tokenURI) => {
-    console.log({ _tokenURI });
     try {
-      console.log({ _tokenURI });
       const tokenURI = await storage.upload(_tokenURI);
       const gamerX = gamerX_collection(_tokenURI.collection_address, signer);
       const network = await provider.getNetwork();
@@ -238,12 +243,8 @@ export default function App({ Component, pageProps }) {
   };
 
   const update_profile = async (data) => {
-    console.log({ data });
-    console.log(data.cover_image);
-    console.log(data.profile_image);
     let ipfs_cover = data.cover_image ? data.cover_image : "";
     let ipfs_profile = data.profile_image ? data.profile_image : "";
-    console.log([data.instagram, data.twitter, data.link]);
     if (typeof data.cover_image === "object") {
       ipfs_cover = await storage.upload(data.cover_image);
     }
@@ -265,8 +266,6 @@ export default function App({ Component, pageProps }) {
         ipfs_profile,
         data.role,
       ]);
-
-    console.log(res.data);
   };
 
   const get_user_data = async (signer_address) => {
@@ -286,6 +285,7 @@ export default function App({ Component, pageProps }) {
         "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
       },
     });
+
     // res4.data.body.videos[0].id
     const polybase_video = await db
       .collection("Video")
@@ -338,13 +338,11 @@ export default function App({ Component, pageProps }) {
       .collection("LiveStream")
       .where("stream_id", "==", stream_id)
       .get();
-    console.log({ id: res.data[0].data.owner.id });
     const owner = await db
       .collection("User")
       .record(res.data[0].data.owner.id)
       .get();
     let obj = { owner: owner.data, stream_data: res.data[0].data };
-    console.log(obj);
     return obj;
   };
 
@@ -360,7 +358,6 @@ export default function App({ Component, pageProps }) {
         livestreams.push(obj);
       }
     }
-    console.log(livestreams);
     return livestreams;
   };
 
@@ -375,6 +372,7 @@ export default function App({ Component, pageProps }) {
     const res = await db.collection("User").record(userId).get();
     return res.data;
   };
+
   const post_comment = async (video_id, comment) => {
     const db = polybase();
     const signer_address = await signer.getAddress();
@@ -402,10 +400,43 @@ export default function App({ Component, pageProps }) {
     for (const e of res.data) {
       let obj = {};
       const owner = await db.collection("User").record(e.data.owner.id).get();
-      obj = { owner: { ...owner.data }, video: e.data };
-      videos.push(obj);
+      if (owner) {
+        obj = { owner: { ...owner.data }, video: e.data };
+        videos.push(obj);
+      }
     }
     return videos;
+  };
+
+  const fetch_all_nfts = async () => {
+    try {
+      const db = polybase();
+      const res = await db.collection("NFT").get();
+      let nfts = [];
+      for (const e of res.data) {
+        let obj = {};
+        obj.chainId = e.data.chainId;
+        obj.tokenId = e.data.tokenId;
+        obj.isListed = e.data.isListed;
+        obj.listingPrice = e.data.listingPrice
+          ? ethers.utils.formatEther(e.data.listingPrice)
+          : "";
+        obj.nft_name = e.data?.nft_name ? e.data?.nft_name : "";
+        obj.chain_block = e.data.chain_block;
+        obj.chain_image = e.data.chain_image;
+        obj.chain_symbol = e.data.chain_symbol;
+        const url = e.data.ipfsURL.replace(
+          "ipfs://",
+          "https://gateway.ipfscdn.io/ipfs/"
+        );
+        const { data } = await axios.get(url);
+        obj.ipfsData = data;
+        nfts.push(obj);
+      }
+      return nfts;
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   // deploy collections
@@ -424,7 +455,6 @@ export default function App({ Component, pageProps }) {
       const collection_logo = await storage.upload(data.logo);
       const collection_image = await storage.upload(data.image);
       const collection_factory = collection_contract_factory(signer);
-      console.log({ data });
 
       collection_factory.on(
         "CollectionCreated",
@@ -438,7 +468,6 @@ export default function App({ Component, pageProps }) {
           owner,
           collection_address
         ) => {
-          console.log("event called");
           const db = polybase();
           const res = await db
             .collection("NFTCollection")
@@ -451,7 +480,6 @@ export default function App({ Component, pageProps }) {
               symbol,
               description,
             ]);
-          console.log({ polybase: res });
         }
       );
       const txn = await collection_factory.create_collection(
@@ -462,7 +490,6 @@ export default function App({ Component, pageProps }) {
         data.description
       );
       await txn.wait();
-      console.log(txn);
       // sendCollectionNoti({ collectionName: data.name });
     } catch (error) {
       alert(error.message);
@@ -471,11 +498,9 @@ export default function App({ Component, pageProps }) {
 
   const get_my_collections = async () => {
     if (!signer) return;
-    console.log("get collections called");
     try {
       const collection = collection_contract_factory(signer);
       const my_collections = await collection.getMyCollections();
-      console.log({ my_collections });
       return my_collections;
     } catch (error) {
       console.log(error.message);
@@ -540,6 +565,7 @@ export default function App({ Component, pageProps }) {
         create_collection={create_collection}
         get_my_collections={get_my_collections}
         signer={signer}
+        fetch_all_nfts={fetch_all_nfts}
       />
       <Footer />
     </>

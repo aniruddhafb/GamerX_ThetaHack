@@ -18,7 +18,6 @@ const video = ({ get_video_data, post_comment }) => {
   useEffect(() => {
     const video_data = async () => {
       const res = await get_video_data(slug);
-      console.log({ res });
       set_data(res);
     };
 
@@ -100,7 +99,7 @@ const video = ({ get_video_data, post_comment }) => {
                 <h4 className="comments-wrap-title">
                   {data?.comments.length} Comments
                 </h4>
-                {data?.comments.map((e) => {
+                {data?.comments.map((e, index) => {
                   const d = new Date();
                   let time;
                   if (e.comment.data?.date) {
@@ -110,7 +109,7 @@ const video = ({ get_video_data, post_comment }) => {
                   }
 
                   return (
-                    <div className="latest-comments">
+                    <div key={index} className="latest-comments">
                       <ul className="list-wrap">
                         <li>
                           <div className="comments-box">

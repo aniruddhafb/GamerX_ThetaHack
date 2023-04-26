@@ -55,14 +55,18 @@ const TopGamers = ({ fetch_gamers }) => {
                 </div>
               </div>
             </div>
-            {loading ?
+            {loading ? (
               <Loader />
-              :
-              <div className="flex justify-center w-full" style={{ display: "flex", flexWrap: "wrap" }}>
+            ) : (
+              <div
+                className="flex justify-center w-full"
+                style={{ display: "flex", flexWrap: "wrap" }}
+              >
                 {/* loop here  */}
                 <div className="grid grid-cols-3 justify-center w-full">
-                  {data.map((e) => (
+                  {data.map((e, index) => (
                     <ProfileCard
+                      key={index}
                       coverImage={e.data.cover_image}
                       gamerBio={e.data.bio}
                       gamerID={e.data.id}
@@ -72,7 +76,7 @@ const TopGamers = ({ fetch_gamers }) => {
                   ))}
                 </div>
               </div>
-            }
+            )}
           </div>
         </div>
       </div>

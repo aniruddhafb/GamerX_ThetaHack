@@ -43,14 +43,12 @@ const CreateNFT = ({
 
   const handle_submit = (e) => {
     e.preventDefault();
-    // console.log(data);
     create_token(data);
   };
 
   useEffect(() => {
     const collections = async () => {
       const res = await get_my_collections();
-      console.log({ res });
       set_my_collections(res);
     };
     collections();
@@ -110,8 +108,9 @@ const CreateNFT = ({
                           <option className="bg-gray-800" value="">
                             GamerX Main
                           </option>
-                          {my_collections?.map((e) => (
+                          {my_collections?.map((e, index) => (
                             <option
+                              key={index}
                               className="bg-gray-800"
                               value={e.collection_address}
                             >
