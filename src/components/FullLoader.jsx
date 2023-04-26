@@ -1,12 +1,12 @@
 import React from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 
-const Loader = () => {
+const FullLoader = () => {
     return (
-        <div className="flex justify-center items-center ">
+        <div className="flex justify-center items-center">
             <BiLoaderAlt className="h-52 w-[70px] animate-spin text-gray-300" />
         </div>
-    );
-};
+    )
+}
 
-export default Loader;
+export default FullLoader

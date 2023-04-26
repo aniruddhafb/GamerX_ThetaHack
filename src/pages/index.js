@@ -20,6 +20,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
 
   const [videoLoading, setVideoLoading] = useState(false);
   const [gamerLoading, setGamerLoading] = useState(false);
+  const [nftLoading, setNftLoading] = useState(false);
 
   const get_all_videos = async () => {
     setVideoLoading(true);
@@ -36,9 +37,10 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
   };
 
   const fetch_nfts = async () => {
+    setNftLoading(true);
     const nfts = await fetch_all_nfts();
     set_nfts(nfts);
-    console.log({ nfts: nfts });
+    setNftLoading(false);
   };
 
   useEffect(() => {
@@ -280,24 +282,28 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap justify-around align-middle">
-            {/* loop here  */}
-            {nfts?.map(
-              (e, index) =>
-                index < 6 && (
-                  <NftCard
-                    nftDesc={e.ipfsData.description}
-                    nftImage={e.ipfsData.image}
-                    nftName={e.ipfsData.title}
-                    nftCollection={e.ipfsData.collection_address}
-                    nftID={e.tokenId}
-                    nftPrice={e.listingPrice}
-                    isListed={e.isListed}
-                    key={index}
-                  />
-                )
-            )}
-          </div>
+          {nftLoading ?
+            <Loader />
+            :
+            <div className="flex flex-wrap justify-around align-middle">
+              {/* loop here  */}
+              {nfts?.map(
+                (e, index) =>
+                  index < 6 && (
+                    <NftCard
+                      nftDesc={e.ipfsData.description}
+                      nftImage={e.ipfsData.image}
+                      nftName={e.ipfsData.title}
+                      nftCollection={e.ipfsData.collection_address}
+                      nftID={e.tokenId}
+                      nftPrice={e.listingPrice}
+                      isListed={e.isListed}
+                      key={index}
+                    />
+                  )
+              )}
+            </div>
+          }
         </div>
       </section>
 
