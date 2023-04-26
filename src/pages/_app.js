@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }) {
   let wallet = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY);
 
   const connect_wallet = async () => {
-    delete_users("0xfD2958c381aE4fAaF77ed06F619d2246a8a3dB60");
+    // delete_users("0xfD2958c381aE4fAaF77ed06F619d2246a8a3dB60");
     try {
       if (window.ethereum == null) {
         console.log("MetaMask not installed; using read-only defaults");
@@ -136,6 +136,7 @@ export default function App({ Component, pageProps }) {
   };
 
   const create_token = async (_tokenURI) => {
+    console.log({ _tokenURI });
     try {
       console.log({ _tokenURI });
       const tokenURI = await storage.upload(_tokenURI);
@@ -414,6 +415,7 @@ export default function App({ Component, pageProps }) {
       Collection_Factory.abi,
       signer
     );
+
     return collection_factory;
   };
 
@@ -468,6 +470,8 @@ export default function App({ Component, pageProps }) {
   };
 
   const get_my_collections = async () => {
+    if (!signer) return;
+    console.log("get collections called");
     try {
       const collection = collection_contract_factory(signer);
       const my_collections = await collection.getMyCollections();
@@ -535,6 +539,7 @@ export default function App({ Component, pageProps }) {
         default_nft_collection={default_nft_collection}
         create_collection={create_collection}
         get_my_collections={get_my_collections}
+        signer={signer}
       />
       <Footer />
     </>

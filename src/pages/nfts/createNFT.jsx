@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { React, useState, useEffect } from "react";
 
-const createNFT = ({
+const CreateNFT = ({
   default_nft_collection,
   create_token,
   get_my_collections,
+  signer,
 }) => {
   const [propModel, setPropModel] = useState(false);
+  const [my_collections, set_my_collections] = useState([]);
 
   const [data, set_data] = useState({
     title: "",
@@ -41,8 +43,7 @@ const createNFT = ({
 
   const handle_submit = (e) => {
     e.preventDefault();
-    console.log(data);
-
+    // console.log(data);
     create_token(data);
   };
 
@@ -50,9 +51,10 @@ const createNFT = ({
     const collections = async () => {
       const res = await get_my_collections();
       console.log({ res });
+      set_my_collections(res);
     };
     collections();
-  }, []);
+  }, [signer]);
 
   return (
     <div id="pageBG">
@@ -62,14 +64,25 @@ const createNFT = ({
             <div className="blog-post-wrapper">
               <div className="comment-respond" style={{ marginTop: "30px" }}>
                 <h3 className="comment-reply-title">Create NFT</h3>
-                <form className="comment-form" action="#">
+                <form
+                  onSubmit={handle_submit}
+                  className="comment-form"
+                  action="#"
+                >
                   <p className="comment-notes pb-4">
                     Launch your NFTs on GamerX Platform
                   </p>
                   <div className="row">
                     <div className="col-sm-6 relative">
                       <div className="form-grp">
-                        <input name="thumbnail" type="file" required />
+                        <input
+                          name="thumbnail"
+                          onChange={(e) =>
+                            set_data({ ...data, image: e.target.files[0] })
+                          }
+                          type="file"
+                          required
+                        />
                       </div>
                       <span
                         style={{
@@ -85,13 +98,26 @@ const createNFT = ({
                     </div>
                     <div className="col-sm-6 relative">
                       <div className="form-grp ">
-                        <select name="collection">
-                          <option className="bg-gray-800" value="">
-                            Default Collection
-                          </option>
+                        <select
+                          onChange={(e) =>
+                            set_data({
+                              ...data,
+                              collection_address: e.target.value,
+                            })
+                          }
+                          name="collection"
+                        >
                           <option className="bg-gray-800" value="">
                             GamerX Main
                           </option>
+                          {my_collections?.map((e) => (
+                            <option
+                              className="bg-gray-800"
+                              value={e.collection_address}
+                            >
+                              {e.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
                       <span
@@ -119,6 +145,7 @@ const createNFT = ({
                         <input
                           type="text"
                           name="title"
+                          onChange={handle_change}
                           placeholder="Give a name to your NFT"
                           required
                         />
@@ -140,6 +167,7 @@ const createNFT = ({
                     <div className="form-grp">
                       <textarea
                         name="description"
+                        onChange={handle_change}
                         placeholder="Add a description for your NFT"
                       ></textarea>
                     </div>
@@ -301,4 +329,4 @@ const createNFT = ({
   );
 };
 
-export default createNFT;
+export default CreateNFT;
