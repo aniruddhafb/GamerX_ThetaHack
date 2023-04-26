@@ -50,7 +50,11 @@ const ExploreCollections = ({ get_all_collections }) => {
             <div className="flex flex-wrap justify-around align-middle">
               {/* loop here  */}
               {collections.map((e, index) => (
-                <div key={index} className="trendingNft__item">
+                <Link
+                  href={`/collection/${e.id}`}
+                  key={index}
+                  className="trendingNft__item"
+                >
                   <div className="trendingNft__item-image relative">
                     <a href="#">
                       <Image
@@ -105,7 +109,7 @@ const ExploreCollections = ({ get_all_collections }) => {
                       </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

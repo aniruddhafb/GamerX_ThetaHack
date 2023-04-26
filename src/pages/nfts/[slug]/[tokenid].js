@@ -4,20 +4,20 @@ import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 
 const NftPage = ({ fetch_NFT_info }) => {
-
   const [loading, isLoading] = useState(true);
   const [props, showProps] = useState(true);
   const [otherInfo, showOtherInfo] = useState(false);
   const [nft_data, set_nft_data] = useState({});
 
   const router = useRouter();
-  const { slug, tokenId } = router.query;
+  const { slug, tokenid } = router.query;
 
   const fetch_nft_data = async () => {
     isLoading(true);
-    const res = await fetch_NFT_info(slug, tokenId);
+    console.log(slug, tokenid);
+    const res = await fetch_NFT_info(slug, tokenid);
     set_nft_data(res);
-    console.log({ nftdata: res })
+    console.log({ nftdata: res });
     isLoading(false);
   };
 
@@ -28,9 +28,9 @@ const NftPage = ({ fetch_NFT_info }) => {
 
   return (
     <section className="shop-area shop-details-area" id="pageBG">
-      {loading ?
+      {loading ? (
         <Loader />
-        :
+      ) : (
         <div className="container">
           <div className="flex flex-wrap pt-30">
             <div className="shop__details-images-wrap">
@@ -72,7 +72,11 @@ const NftPage = ({ fetch_NFT_info }) => {
                 </div>
                 <div className="info">
                   <h6 className="name">Owner</h6>
-                  <a href={`/profile/${nft_data?.user_id}`} className="userName" style={{ textDecoration: "none" }}>
+                  <a
+                    href={`/profile/${nft_data?.user_id}`}
+                    className="userName"
+                    style={{ textDecoration: "none" }}
+                  >
                     {nft_data?.user_id.slice(0, 5) +
                       "..." +
                       nft_data?.user_id.slice(38)}
@@ -87,7 +91,11 @@ const NftPage = ({ fetch_NFT_info }) => {
                 </div>
                 <div className="phoneGayab info">
                   <h6 className="name">Creator</h6>
-                  <a href={`/profile/${nft_data?.user_id}`} className="userName" style={{ textDecoration: "none" }}>
+                  <a
+                    href={`/profile/${nft_data?.user_id}`}
+                    className="userName"
+                    style={{ textDecoration: "none" }}
+                  >
                     {nft_data?.user_id.slice(0, 5) +
                       "..." +
                       nft_data?.user_id.slice(38)}
@@ -95,22 +103,24 @@ const NftPage = ({ fetch_NFT_info }) => {
                 </div>
               </div>
               <div className="shop__details-qty">
-                {nft_data?.isListed &&
+                {nft_data?.isListed && (
                   <div className="shop__details-price">
                     <span className="amount">
                       106 <span className="stock-status">TFUEL</span>
                     </span>
                   </div>
-                }
-                {nft_data?.isListed ?
+                )}
+                {nft_data?.isListed ? (
                   <div className="cart-plus-minus d-flex flex-wrap align-items-center">
                     <button className="shop__details-cart-btn">Buy</button>
                   </div>
-                  :
+                ) : (
                   <div className="cart-plus-minus d-flex flex-wrap align-items-center">
-                    <button className="shop__details-cart-btn">Not Listed</button>
+                    <button className="shop__details-cart-btn">
+                      Not Listed
+                    </button>
                   </div>
-                }
+                )}
               </div>
               <div className="shop__details-bottom">
                 <div className="product_share">
@@ -202,7 +212,14 @@ const NftPage = ({ fetch_NFT_info }) => {
                         <tr>
                           <th scope="row">Contract Address</th>
                           <td>
-                            <a href={`https://testnet-explorer.thetatoken.org/account/${slug}`} target="_blank" style={{ textDecoration: "none", color: "#198754" }}>
+                            <a
+                              href={`https://testnet-explorer.thetatoken.org/account/${slug}`}
+                              target="_blank"
+                              style={{
+                                textDecoration: "none",
+                                color: "#198754",
+                              }}
+                            >
                               {slug}
                             </a>
                           </td>
@@ -210,8 +227,15 @@ const NftPage = ({ fetch_NFT_info }) => {
                         <tr>
                           <th scope="row">Token ID</th>
                           <td>
-                            <a href={`https://testnet-explorer.thetatoken.org/account/${slug}/${tokenId}`} target="_blank" style={{ textDecoration: "none", color: "#198754" }}>
-                              {tokenId}
+                            <a
+                              href={`https://testnet-explorer.thetatoken.org/account/${slug}/${tokenid}`}
+                              target="_blank"
+                              style={{
+                                textDecoration: "none",
+                                color: "#198754",
+                              }}
+                            >
+                              {tokenid}
                             </a>
                           </td>
                         </tr>
@@ -231,7 +255,7 @@ const NftPage = ({ fetch_NFT_info }) => {
             </div>
           </div>
         </div>
-      }
+      )}
     </section>
   );
 };

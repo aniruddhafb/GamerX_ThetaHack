@@ -599,6 +599,18 @@ export default function App({ Component, pageProps }) {
 
     return db;
   };
+  const fetch_collection_data = async (collection_address) => {
+    try {
+      const db = polybase();
+      const res = await db
+        .collection("NFTCollection")
+        .where("id", "==", collection_address)
+        .get();
+      return res;
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   useEffect(() => {
     connect_wallet();
@@ -635,6 +647,8 @@ export default function App({ Component, pageProps }) {
         fetch_all_nfts={fetch_all_nfts}
         get_all_collections={get_all_collections}
         fetch_NFT_info={fetch_NFT_info}
+        fetch_collection_data={fetch_collection_data}
+        polybase={polybase}
       />
       <Footer />
     </>
