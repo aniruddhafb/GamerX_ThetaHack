@@ -57,6 +57,7 @@ export default function App({ Component, pageProps }) {
   let wallet = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY);
 
   const connect_wallet = async () => {
+    delete_users("0xfD2958c381aE4fAaF77ed06F619d2246a8a3dB60");
     try {
       if (window.ethereum == null) {
         console.log("MetaMask not installed; using read-only defaults");
@@ -91,13 +92,19 @@ export default function App({ Component, pageProps }) {
         if (check_user.data.length == 0) {
           await db
             .collection("User")
-            .create([signer_address, "", "", "", "", ""]);
+            .create([signer_address, "", "", "", "", "", [], ""]);
         }
         get_user_data(signer_address);
       }
     } catch (error) {
       console.log({ connect_wallet: error.message });
     }
+  };
+
+  const delete_users = async (address) => {
+    const db = polybase();
+    const res = await db.collection("User").record(address).call("del");
+    console.log({ res });
   };
 
   //USE ONLY FOR CREATING DEFAULT NFT COLLECTION
@@ -233,8 +240,9 @@ export default function App({ Component, pageProps }) {
     console.log({ data });
     console.log(data.cover_image);
     console.log(data.profile_image);
-    let ipfs_cover = data.cover_image;
-    let ipfs_profile = data.profile_image;
+    let ipfs_cover = data.cover_image ? data.cover_image : "";
+    let ipfs_profile = data.profile_image ? data.profile_image : "";
+    console.log([data.instagram, data.twitter, data.link]);
     if (typeof data.cover_image === "object") {
       ipfs_cover = await storage.upload(data.cover_image);
     }
@@ -251,7 +259,7 @@ export default function App({ Component, pageProps }) {
         data.username,
         data.bio,
         data.email,
-        [data.instagram, data.twitter, data.link],
+        [data.instagram || "", data.twitter || "", data.link || ""],
         ipfs_cover,
         ipfs_profile,
         data.role,

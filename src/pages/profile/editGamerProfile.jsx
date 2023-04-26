@@ -24,18 +24,21 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
 
   const handle_submit = async (e) => {
     e.preventDefault();
-    // update_profile(data);
+    update_profile(data);
     console.log(data);
   };
 
   useEffect(() => {
-    console.log({ user_data });
     if (!user_data) return;
+    console.log({ user_data });
     set_data({
       ...user_data,
       twitter: user_data.socials ? user_data.socials[0] : "",
       instagram: user_data.socials ? user_data.socials[1] : "",
       link: user_data.socials ? user_data.socials[2] : "",
+      role: user_data.role ? user_data.role : "Gamer Influencer",
+      cover_image: user_data.cover_image ? user_data.cover_image : "",
+      profile_image: user_data.profile_image ? user_data.profile_image : "",
     });
   }, [user_data]);
   return (
@@ -183,21 +186,21 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500"
                   >
                     <option
-                      selected={data.role === "Gamer Influencer"}
+                      defaultValue={data.role === "Gamer Influencer"}
                       value="Gamer Influencer"
                       className="text-white bg-[#0F161B]"
                     >
                       Gamer Influencer
                     </option>
                     <option
-                      selected={data.role === "Esports Player"}
+                      defaultValue={data.role === "Esports Player"}
                       value="Esports Player"
                       className="text-white bg-[#0F161B]"
                     >
                       Esports Player
                     </option>
                     <option
-                      selected={data.role === "Just a Gamer"}
+                      defaultValue={data.role === "Just a Gamer"}
                       Esports
                       Player
                       value="Gamer"
@@ -206,21 +209,21 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                       Just a Gamer
                     </option>
                     <option
-                      selected={data.role === "Tech Brand"}
+                      defaultValue={data.role === "Tech Brand"}
                       value="Brand"
                       className="text-white bg-[#0F161B]"
                     >
                       Tech Brand
                     </option>
                     <option
-                      selected={data.role === "Game Dealer"}
+                      defaultValue={data.role === "Game Dealer"}
                       value="Dealer"
                       className="text-white bg-[#0F161B]"
                     >
                       Game Dealer
                     </option>
                     <option
-                      selected={data.role === "Gaming Coach"}
+                      defaultValue={data.role === "Gaming Coach"}
                       value="Coach"
                       className="text-white bg-[#0F161B]"
                     >
