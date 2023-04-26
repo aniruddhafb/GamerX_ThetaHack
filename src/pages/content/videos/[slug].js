@@ -18,6 +18,7 @@ const video = ({ get_video_data, post_comment }) => {
   useEffect(() => {
     const video_data = async () => {
       const res = await get_video_data(slug);
+      console.log({ res });
       set_data(res);
     };
 
@@ -36,8 +37,14 @@ const video = ({ get_video_data, post_comment }) => {
                   className="blog-post-thumb"
                   style={{ marginTop: "60px", marginBottom: "40px" }}
                 >
-                  {data?.playback_uri ? (
-                    <Image src={videoImg} alt="img" />
+                  {data?.id ? (
+                    <iframe
+                      src={`https://player.thetavideoapi.com/video/${data?.id}`}
+                      border="0"
+                      width="100%"
+                      height="100%"
+                      allowfullscreen
+                    />
                   ) : (
                     <div className="text-white text-2xl">{data?.state}</div>
                   )}
