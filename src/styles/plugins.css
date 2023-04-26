@@ -3747,14 +3747,15 @@ fieldset:disabled .btn {
 .nav-tabs .nav-link {
   margin-bottom: -1px;
   background: 0 0;
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
 .nav-tabs .nav-link:focus,
 .nav-tabs .nav-link:hover {
-  border-color: #e9ecef #e9ecef #dee2e6;
-  isolation: isolate;
+  /* border-color: #e9ecef #e9ecef #dee2e6;
+  isolation: isolate; */
+  color: white;
 }
 .nav-tabs .nav-link.disabled {
   color: #6c757d;
