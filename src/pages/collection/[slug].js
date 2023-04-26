@@ -2,13 +2,93 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { MdVerified } from "react-icons/md";
-
-const CollectionPage = () => {
+import axios from "axios";
+import NftCard from "@/components/cards/NftCard";
+const CollectionPage = ({ fetch_collection_data, polybase }) => {
   const router = useRouter();
   const { slug } = router.query;
 
+  const [collection_data, set_collection_data] = useState();
   const [share, setShare] = useState(false);
-  useEffect(() => {}, []);
+
+  const [nfts, set_nfts] = useState([]);
+  const [volume, set_volume] = useState(0);
+  const [floor_price, set_floor_price] = useState(0);
+
+  const get_collection = async () => {
+    const collection = await fetch_collection_data(slug);
+    set_collection_data(collection.data[0].data);
+  };
+
+  const get_nfts_by_collection = async () => {
+    const res = await fetch_nfts_from_collection(slug);
+    let volume = 0;
+    let lowest_price = 0;
+    if (res) {
+      for (let i = 0; i < res.length; i++) {
+        if (res[i]?.listingPrice && res[i + 1]?.listingPrice) {
+          lowest_price =
+            res[i].listingPrice > res[i + 1].listingPrice
+              ? res[i + 1].listingPrice
+              : res[i].listingPrice;
+
+          const summed_price =
+            parseFloat(res[i].listingPrice) +
+            parseFloat(res[i + 1].listingPrice);
+          volume = summed_price;
+        }
+      }
+      set_floor_price(lowest_price);
+      set_volume(volume);
+    }
+    set_nfts(res);
+  };
+
+  const fetch_nfts_from_collection = async (collection_address) => {
+    try {
+      const db = polybase();
+
+      let nfts = [];
+      const res = await db
+        .collection("NFT")
+        .where("nftCollection", "==", {
+          collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/NFTCollection`,
+          id: collection_address,
+        })
+        .get();
+
+      for (const e of res.data) {
+        let obj = {};
+        obj.chainId = e.data.chainId;
+        obj.tokenId = e.data.tokenId;
+        obj.isListed = e.data.isListed;
+        obj.listingPrice = e.data.listingPrice
+          ? ethers.utils.formatEther(e.data.listingPrice)
+          : "";
+        obj.chain_block = e.data.chain_block;
+        obj.chain_image = e.data.chain_image;
+        obj.chain_symbol = e.data.chain_symbol;
+        const url = await e.data.ipfsURL.replace(
+          "ipfs://",
+          "https://gateway.ipfscdn.io/ipfs/"
+        );
+        const { data } = await axios.get(url);
+        obj.ipfsData = data;
+        nfts.push(obj);
+      }
+      return nfts;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    if (!slug) return;
+    const fetchData = async () => {
+      get_collection();
+      get_nfts_by_collection();
+    };
+    fetchData();
+  }, [slug]);
   return (
     <>
       {/* <!-- Banner IMG--> */}
@@ -31,11 +111,10 @@ const CollectionPage = () => {
         <div className="absolute left-1/2 top-0 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
           <div className="relative">
             <Image
-              // src={collection.logo?.replace(
-              //     "ipfs://",
-              //     "https://gateway.ipfscdn.io/ipfs/"
-              // )}
-              src="../../nftCard1.jpg"
+              src={collection_data?.logo.replace(
+                "ipfs://",
+                "https://gateway.ipfscdn.io/ipfs/"
+              )}
               width={100}
               height={100}
               alt="collection avatar"
@@ -63,13 +142,13 @@ const CollectionPage = () => {
               </a>
             </div>
             <h2 className="mb-2 mt-2 font-display text-4xl font-medium text-jacarta-700 dark:text-white">
-              col name
+              {collection_data?.name}
             </h2>
             <div className="mb-4"></div>
 
             {/* desc  */}
             <p className="mx-auto mb-14 max-w-xl text-lg dark:text-jacarta-300">
-              col desc
+              {collection_data?.description}
             </p>
 
             {/* stats  */}
@@ -80,7 +159,7 @@ const CollectionPage = () => {
                 style={{ textDecoration: "none" }}
               >
                 <div className="mb-1 text-base font-bold text-jacarta-700 dark:text-white">
-                  {/* {nfts ? nfts?.length : "0"} */}2
+                  {nfts ? nfts?.length : "0"}
                 </div>
                 <div className="text-2xs font-medium tracking-tight ">
                   Items
@@ -92,7 +171,7 @@ const CollectionPage = () => {
                 className="w-1/2 border-jacarta-100 py-4 hover:shadow-md dark:border-jacarta-600 sm:w-32 sm:border-r"
               >
                 <div className="mb-1 text-base font-bold text-jacarta-700 dark:text-white">
-                  {/* {nfts ? nfts?.length : "0"} */}2
+                  {nfts ? nfts?.length : "0"}
                 </div>
                 <div className="text-2xs font-medium tracking-tight ">
                   Owners
@@ -104,7 +183,7 @@ const CollectionPage = () => {
                 className="w-1/2 border-r border-jacarta-100 py-4 hover:shadow-md dark:border-jacarta-600 sm:w-32"
               >
                 <div className="mb-1 flex items-center justify-center text-base font-medium text-jacarta-700 dark:text-white">
-                  <span className="font-bold mr-2">0.5</span>
+                  <span className="font-bold mr-2">{floor_price}</span>
                   <Image src="../../tfuel.png" height={18} width={18} />
                 </div>
                 <div className="text-2xs font-medium tracking-tight ">
@@ -117,7 +196,7 @@ const CollectionPage = () => {
                 className="w-1/2 rounded-r-xl border-jacarta-100 py-4 hover:shadow-md sm:w-32"
               >
                 <div className="mb-1 flex items-center justify-center text-base font-medium text-jacarta-700 dark:text-white">
-                  <span className="font-bold mr-2">22</span>
+                  <span className="font-bold mr-2">{volume}</span>
                   <Image src="../../tfuel.png" height={18} width={18} />
                 </div>
                 <div className="text-2xs font-medium tracking-tight ">
@@ -140,26 +219,21 @@ const CollectionPage = () => {
               aria-labelledby="on-sale-tab"
             >
               <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
-                {/* {nfts?.map((e, index) => {
-                                    return (
-                                        <NftCard
-                                            key={index}
-                                            ImageSrc={e.ipfsData.image.replace(
-                                                "ipfs://",
-                                                "https://gateway.ipfscdn.io/ipfs/"
-                                            )}
-                                            Name={e.ipfsData.name}
-                                            Description={e.ipfsData.description}
-                                            Address={e.ipfsData.collection}
-                                            tokenId={e.tokenId}
-                                            listedBool={e.isListed}
-                                            listingPrice={e.listingPrice}
-                                            chainImgPre={"../"}
-                                            chain_image={e.chain_image}
-                                            chain_symbol={e.chain_symbol}
-                                        />
-                                    );
-                                })} */}
+                {nfts?.map((e, index) => {
+                  console.log(e);
+                  return (
+                    <NftCard
+                      key={index}
+                      nftImage={e.ipfsData.image}
+                      nftName={e.ipfsData.title}
+                      nftDesc={e.ipfsData.description}
+                      nftCollection={e.ipfsData.collection_address}
+                      nftID={e.tokenId}
+                      isListed={e.isListed}
+                      nftPrice={e.listingPrice}
+                    />
+                  );
+                })}
               </div>
               <div className="flex justify-center">
                 {/* {nfts?.length <= 0 && (
