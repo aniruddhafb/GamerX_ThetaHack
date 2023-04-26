@@ -439,6 +439,21 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  const get_all_collections = async () => {
+    try {
+      const db = polybase();
+      const collections = await db.collection("NFTCollection").get();
+      const allCollections = [];
+      collections.data.map((e) => {
+        const { data } = e;
+        allCollections.push(data);
+      });
+      return allCollections;
+      console.log({ allCollections });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   // deploy collections
   const collection_contract_factory = (signer) => {
     const collection_factory = new ethers.Contract(
@@ -566,6 +581,7 @@ export default function App({ Component, pageProps }) {
         get_my_collections={get_my_collections}
         signer={signer}
         fetch_all_nfts={fetch_all_nfts}
+        get_all_collections={get_all_collections}
       />
       <Footer />
     </>
