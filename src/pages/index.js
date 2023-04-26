@@ -11,6 +11,7 @@ import coin4 from "../../public/slider_shape04.png";
 import thetalogo from "../../public/theta.webp";
 import ProfileCard from "@/components/cards/ProfileCard";
 import Loader from "@/components/Loader";
+import NftCard from "@/components/cards/NftCard";
 
 export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
   const [videos, set_videos] = useState([]);
@@ -37,7 +38,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
   const fetch_nfts = async () => {
     const nfts = await fetch_all_nfts();
     set_nfts(nfts);
-    console.log({ nfts });
+    console.log({ nfts: nfts });
   };
 
   useEffect(() => {
@@ -284,59 +285,16 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
             {nfts?.map(
               (e, index) =>
                 index < 6 && (
-                  <div key={index} className="trendingNft__item">
-                    <div className="trendingNft__item-image mt-8">
-                      <a href="#">
-                        <Image
-                          src={e.ipfsData.image.replace(
-                            "ipfs://",
-                            "https://gateway.ipfscdn.io/ipfs/"
-                          )}
-                          height={100}
-                          width={100}
-                          className="h-[200px]"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="trendingNft__item-top mt-2">
-                        <div className="trendingNft__item-avatar">
-                          <div className="info">
-                            <h6 className="name">{e.ipfsData.name}</h6>
-                            <span
-                              className="userName"
-                              style={{
-                                width: "280px",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                                overflow: "hidden",
-                                textDecoration: "none",
-                              }}
-                            >
-                              {e.ipfsData.description}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {e.isListed && (
-                      <div className="trendingNft__item-bottom mt-[-16px]">
-                        <div className="trendingNft__item-price">
-                          <span className="bid text-gray-400">Last Price</span>
-                          <h6 className="eth">
-                            {" "}
-                            1.005 <span>TFUEL</span>
-                          </h6>
-                        </div>
-                        <a
-                          href="#"
-                          className="bid-btn"
-                          style={{ textDecoration: "none" }}
-                        >
-                          Buy <i className="fas fa-long-arrow-alt-right"></i>
-                        </a>
-                      </div>
-                    )}
-                  </div>
+                  <NftCard
+                    nftDesc={e.ipfsData.description}
+                    nftImage={e.ipfsData.image}
+                    nftName={e.ipfsData.title}
+                    nftCollection={e.ipfsData.collection_address}
+                    nftID={e.tokenId}
+                    nftPrice={e.listingPrice}
+                    isListed={e.isListed}
+                    key={index}
+                  />
                 )
             )}
           </div>
