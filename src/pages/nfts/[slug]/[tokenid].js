@@ -81,7 +81,7 @@ const NftPage = ({ fetch_NFT_info }) => {
                 </a>
               </div>
             </div>
-            {nft_data.isListed && (
+            {nft_data?.isListed && (
               <div className="shop__details-qty">
                 <div className="shop__details-price">
                   <span className="amount">
