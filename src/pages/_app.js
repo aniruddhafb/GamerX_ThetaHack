@@ -465,6 +465,56 @@ export default function App({ Component, pageProps }) {
     return collection_factory;
   };
 
+  const fetch_NFT_info = async (collection_address, tokenId) => {
+    try {
+      const db = polybase();
+      let obj = {};
+      const res = await db
+        .collection("NFT")
+        .record(`${collection_address}/${tokenId}`)
+        .get();
+      const collectionInfo = await db
+        .collection("NFTCollection")
+        .record(collection_address)
+        .get();
+      const ownerInfo = await db
+        .collection("User")
+        .record(res.data.owner.id)
+        .get();
+      obj.nft_properties = res.data.properties
+        ? JSON.parse(res.data.properties)
+        : [];
+      // COLLECTION INFO
+      obj.collectionLogo = collectionInfo.data.logo;
+      obj.collection_name = collectionInfo.data.name;
+      obj.collection_id = collectionInfo.data.id;
+      obj.collection_owner = collectionInfo.data.owner.id;
+      obj.collection_symbol = collectionInfo.data.symbol;
+      //OWNER INFO
+      obj.ownerImage = ownerInfo.data.profileImage;
+      obj.owner_username = res.data.username;
+      obj.seller = res.data.seller?.id;
+      obj.user_id = ownerInfo.data.id;
+      // NFT INFO
+      obj.chainId = res.data.chainId;
+      obj.isListed = res.data.isListed;
+      obj.listingPrice = res.data.listingPrice
+        ? ethers.utils.formatEther(res.data.listingPrice)
+        : "";
+      obj.nft_owner = res.data.owner.id;
+      obj.chain_block = res.data.chain_block;
+      obj.chain_image = res.data.chain_image;
+      obj.chain_symbol = res.data.chain_symbol;
+      const parsed_nft = await axios.get(
+        res.data.ipfsURL.replace("ipfs://", "https://gateway.ipfscdn.io/ipfs/")
+      );
+      obj.ipfsData = parsed_nft.data;
+      return obj;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const create_collection = async (data) => {
     try {
       const collection_logo = await storage.upload(data.logo);
@@ -582,6 +632,7 @@ export default function App({ Component, pageProps }) {
         signer={signer}
         fetch_all_nfts={fetch_all_nfts}
         get_all_collections={get_all_collections}
+        fetch_NFT_info={fetch_NFT_info}
       />
       <Footer />
     </>

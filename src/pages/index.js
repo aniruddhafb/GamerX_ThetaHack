@@ -286,7 +286,9 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                 index < 6 && (
                   <div key={index} className="trendingNft__item">
                     <div className="trendingNft__item-image mt-8">
-                      <a href="#">
+                      <Link
+                        href={`/nfts/${e.ipfsData.collection_address}/${e.tokenId}`}
+                      >
                         <Image
                           src={e.ipfsData.image.replace(
                             "ipfs://",
@@ -297,7 +299,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                           className="h-[200px]"
                           alt="img"
                         />
-                      </a>
+                      </Link>
                       <div className="trendingNft__item-top mt-2">
                         <div className="trendingNft__item-avatar">
                           <div className="info">

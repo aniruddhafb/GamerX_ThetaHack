@@ -40,7 +40,9 @@ const uploadVideo = ({ upload_video }) => {
                       <div className="form-grp">
                         <input
                           name="file"
-                          onChange={onChange}
+                          onChange={(e) =>
+                            set_data({ ...data, file: e.target.files[0] })
+                          }
                           type="file"
                           required
                         />
@@ -61,7 +63,9 @@ const uploadVideo = ({ upload_video }) => {
                       <div className="form-grp ">
                         <input
                           name="thumbnail"
-                          onChange={onChange}
+                          onChange={(e) =>
+                            set_data({ ...data, thumbnail: e.target.files[0] })
+                          }
                           type="file"
                           required
                         />
