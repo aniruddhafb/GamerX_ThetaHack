@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
+
 const EditGamerProfile = ({ update_profile, user_data }) => {
   const [data, set_data] = useState({
     cover_image: "",
@@ -10,10 +11,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
     email: "",
     twitter: "",
     instagram: "",
-    link: "",
+    link: "https://gamex.space",
     role: "Gamer Influencer",
   });
 
+  const [loading, isLoading] = useState(false);
   const [preview_cover, set_cover_preview] = useState("");
   const [preview_profile, set_profile_preview] = useState("");
   const storage = new ThirdwebStorage();
@@ -39,6 +41,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
       profile_image: user_data.profile_image ? user_data.profile_image : "",
     });
   }, [user_data]);
+
   return (
     <main className="pt-[5.5rem] lg:pt-24" id="pageBG">
       <form onSubmit={handle_submit}>
@@ -57,11 +60,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                 preview_cover
                   ? preview_cover
                   : user_data?.cover_image
-                  ? user_data?.cover_image.replace(
+                    ? user_data?.cover_image.replace(
                       "ipfs://",
                       "https://gateway.ipfscdn.io/ipfs/"
                     )
-                  : "img/user/banner.jpg"
+                    : "img/user/banner.jpg"
               }
               height={100}
               width={100}
@@ -101,6 +104,8 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
           <div className="container">
             <div className="mx-auto max-w-[48.125rem] md:flex">
               <div className="mb-12 md:w-1/2 md:pr-8">
+
+                {/* username  */}
                 <div className="mb-6">
                   <label
                     htmlFor="profile-username"
@@ -123,6 +128,8 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     required
                   />
                 </div>
+
+                {/* bio  */}
                 <div className="mb-6">
                   <label
                     htmlFor="profile-bio"
@@ -144,6 +151,8 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     placeholder="Tell the world your story!"
                   ></textarea>
                 </div>
+
+                {/* email  */}
                 <div className="mb-6">
                   <label
                     htmlFor="profile-email"
@@ -166,6 +175,8 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     required
                   />
                 </div>
+
+                {/* role  */}
                 <div className="mb-6">
                   <label
                     htmlFor="profile-email"
@@ -229,6 +240,89 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     </option>
                   </select>
                 </div>
+
+                {/* game  */}
+                <div className="mb-6">
+                  <label
+                    htmlFor="profile-email"
+                    style={{
+                      fontFamily: "berlin_sans_fb_demibold",
+                      textTransform: "uppercase",
+                    }}
+                    className="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
+                  >
+                    You Play <span className="text-red">*</span>
+                  </label>
+                  <select
+                    // onChange={(e) =>
+                    //   set_data({ ...data, role: e.target.value })
+                    // }
+                    className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500"
+                  >
+                    <option
+                      value="Axie Infinity"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Axie Infinity
+                    </option>
+                    <option
+                      value="The Sandbox"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      The Sandbox
+                    </option>
+                    <option
+                      value="Crypto Kitties"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Crypto Kitties
+                    </option>
+                    <option
+                      value="Star Atlas"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Star Atlas
+                    </option>
+                    <option
+                      value="Sidus Heros"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Sidus Heros
+                    </option>
+                    <option
+                      value="Wynd Blast"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Wynd Blast
+                    </option>
+                    <option
+                      value="Pubg Mobile"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Pubg Mobile
+                    </option>
+                    <option
+                      value="Apex Legends"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Apex Legends
+                    </option>
+                    <option
+                      value="Valorant"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Valorant
+                    </option>
+                    <option
+                      value="Rocket League"
+                      className="text-white bg-[#0F161B]"
+                    >
+                      Rocket League
+                    </option>
+                  </select>
+                </div>
+
+                {/* wallet address  */}
                 <div className="mb-6">
                   <label className="mb-1 block font-display text-sm text-jacarta-700 dark:text-white">
                     Wallet Address
@@ -262,6 +356,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
               </div>
 
               <div className="flex flex-col lg:ml-20">
+                {/* profile image  */}
                 <div className="flex space-x-5 flex-wrap">
                   <div className="shrink-0">
                     <figure className="relative inline-block">
@@ -275,25 +370,15 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                         />
                       ) : (
                         <Image
-                          // src={
-                          //   user_data?.profile_image
-                          //     ? user_data?.profile_image.replace(
-                          //         "ipfs://",
-                          //         "https://gateway.ipfscdn.io/ipfs/"
-                          //       )
-                          //     : preview_profile
-                          //     ? preview_profile
-                          //     : "img/user/user_avatar.gif"
-                          // }
                           src={
                             preview_profile
                               ? preview_profile
                               : user_data?.profile_image
-                              ? user_data?.profile_image.replace(
+                                ? user_data?.profile_image.replace(
                                   "ipfs://",
                                   "https://gateway.ipfscdn.io/ipfs/"
                                 )
-                              : "img/user/user_avatar.gif"
+                                : "img/user/user_avatar.gif"
                           }
                           height={100}
                           width={100}
@@ -340,6 +425,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     </p>
                   </div>
                 </div>
+                {/* social links  */}
                 <div className="mb-6">
                   <label
                     htmlFor="profile-twitter"
@@ -389,11 +475,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                       value={data.instagram}
                       name="instagram"
                       onChange={handle_change}
-                      className="-mt-px w-full border-jacarta-100 py-3 pl-10 hover:ring-2 hover:ring-accent/10 focus:ring-inset focus:ring-accent  border border-gray-200 bg-transparent text-white"
+                      className="-mt-px w-full rounded-b-lg border-jacarta-100 py-3 pl-10 hover:ring-2 hover:ring-accent/10 focus:ring-inset focus:ring-accent border border-gray-200 bg-transparent text-white"
                       placeholder="instagramname"
                     />
                   </div>
-                  <div className="relative">
+                  {/* <div className="relative">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -413,7 +499,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                       className="-mt-px w-full rounded-b-lg border-jacarta-100 py-3 pl-10 hover:ring-2 hover:ring-accent/10 focus:ring-inset focus:ring-accent border border-gray-200 bg-transparent text-white"
                       placeholder="yoursitename.com"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

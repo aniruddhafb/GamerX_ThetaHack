@@ -11,7 +11,7 @@ const GamerProfile = ({ get_gamer }) => {
   const [data, set_data] = useState([]);
   const [loading, isLoading] = useState(false);
 
-  const [NFTs, showNFTs] = useState(false);
+  const [NFTs, showNFTs] = useState(true);
   const [videos, showVideos] = useState(false);
   const [lives, showLives] = useState(false);
   const [jobs, showJobs] = useState(false);

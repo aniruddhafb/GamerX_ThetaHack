@@ -105,8 +105,8 @@ const CreateNFT = ({
                           }
                           name="collection"
                         >
-                          <option className="bg-gray-800" value="">
-                            GamerX Main
+                          <option className="bg-gray-800" value={default_nft_collection}>
+                            GamerX Collection
                           </option>
                           {my_collections?.map((e, index) => (
                             <option
@@ -139,6 +139,7 @@ const CreateNFT = ({
                         </Link>
                       </span>
                     </div>
+
                     <div className="relative mt-4">
                       <div className="form-grp">
                         <input
@@ -162,6 +163,8 @@ const CreateNFT = ({
                       </span>
                     </div>
                   </div>
+
+                  {/* description  */}
                   <div className=" relative mt-4">
                     <div className="form-grp">
                       <textarea
@@ -180,6 +183,58 @@ const CreateNFT = ({
                       }}
                     >
                       Description*
+                    </span>
+                  </div>
+
+                  {/* nft tag  */}
+                  <div className="col-sm-6 relative">
+                    <div className="form-grp">
+                      <select
+                        // onChange={(e) =>
+                        //   set_data({
+                        //     ...data,
+                        //     collection_address: e.target.value,
+                        //   })
+                        // }
+                        name="Tag"
+                        style={{ marginTop: "55px" }}
+                      >
+                        <option className="bg-gray-800">
+                          P2E Game
+                        </option>
+                        <option className="bg-gray-800">
+                          Music NFT
+                        </option>
+                        <option className="bg-gray-800">
+                          NFT Ticket
+                        </option>
+                        <option className="bg-gray-800">
+                          Collectibles
+                        </option>
+                        <option className="bg-gray-800">
+                          Avatar
+                        </option>
+                        <option className="bg-gray-800">
+                          Art
+                        </option>
+                        <option className="bg-gray-800">
+                          Game Skins
+                        </option>
+                        <option className="bg-gray-800">
+                          Game Account
+                        </option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "-30px",
+                        color: "white",
+                        fontFamily: "berlin_sans_fb_demibold",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      NFT Tag*{" "}
                     </span>
                   </div>
 

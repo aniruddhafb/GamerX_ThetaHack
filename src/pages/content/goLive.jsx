@@ -54,6 +54,8 @@ const goLive = ({ go_live }) => {
                         Live Thumbnail*
                       </span>
                     </div>
+
+                    {/* stream id  */}
                     <div className="col-sm-6 relative">
                       <div className="form-grp">
                         <input
@@ -76,6 +78,8 @@ const goLive = ({ go_live }) => {
                         Stream ID*
                       </span>
                     </div>
+
+                    {/* title  */}
                     <div className="relative mt-4">
                       <div className="form-grp">
                         <input
@@ -99,6 +103,8 @@ const goLive = ({ go_live }) => {
                       </span>
                     </div>
                   </div>
+
+                  {/* desc  */}
                   <div className=" relative mt-4">
                     <div className="form-grp">
                       <textarea
@@ -119,6 +125,47 @@ const goLive = ({ go_live }) => {
                       Stream Description*
                     </span>
                   </div>
+
+                  {/* stream tag  */}
+                  <div className="col-sm-6 relative">
+                    <div className="form-grp">
+                      <select
+                        // onChange={(e) =>
+                        //   set_data({
+                        //     ...data,
+                        //     collection_address: e.target.value,
+                        //   })
+                        // }
+                        name="Tag"
+                        style={{ marginTop: "55px" }}
+                      >
+                        <option className="bg-gray-800">
+                          Gameplay
+                        </option>
+                        <option className="bg-gray-800">
+                          Reaction
+                        </option>
+                        <option className="bg-gray-800">
+                          Informative
+                        </option>
+                        <option className="bg-gray-800">
+                          Esports
+                        </option>
+                      </select>
+                    </div>
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "-30px",
+                        color: "white",
+                        fontFamily: "berlin_sans_fb_demibold",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      Stream Tag*{" "}
+                    </span>
+                  </div>
+
                   <button type="submit">Start Streaming</button>
                 </form>
               </div>
