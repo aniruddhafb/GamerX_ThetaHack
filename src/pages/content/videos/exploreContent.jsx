@@ -40,10 +40,6 @@ const ExploreContent = ({ fetch_videos }) => {
                       <option value="Sort by popularity">
                         Sort by popularity
                       </option>
-                      <option value="Sort by average rating">
-                        Sort by average rating
-                      </option>
-                      <option value="Sort by latest">Sort by latest</option>
                       <option value="Sort by latest">Sort by latest</option>
                     </select>
                   </div>
