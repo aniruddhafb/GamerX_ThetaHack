@@ -64,6 +64,7 @@ const ExploreContent = ({ fetch_videos }) => {
                         title={e.video.name}
                         creatorImage={e.owner.profile_image}
                         creatorName={e.owner.username}
+                        creatorAddress={e.owner.id}
                         videoDate={"8/12/2023"}
                         videoID={e.video.id}
                       />

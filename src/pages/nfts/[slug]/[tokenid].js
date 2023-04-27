@@ -204,6 +204,9 @@ const NftPage = ({ fetch_NFT_info }) => {
                           </a>
                         ))}
                       </div>
+                      {nft_data?.ipfsData?.properties.length <= 0 &&
+                        <h5 scope="row" style={{ color: "#adb0bc" }}>No Properties</h5>
+                      }
                     </div>
                   </div>
                   <div className={`tab-pane ${otherInfo && "active"}`}>

@@ -64,6 +64,7 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
                     liveTitle={e.livestream.title}
                     ownerProfileImg={e.owner.data.profile_image}
                     ownerUsername={e.owner.data.username}
+                    ownerAddress={e.owner.data.id}
                     thumbnail={e.livestream.thumbnail}
                   />
                 ))}

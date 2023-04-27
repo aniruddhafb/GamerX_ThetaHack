@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const VideoCard = ({ thumbnail, title, creatorName, creatorImage, videoDate, videoID }) => {
+const VideoCard = ({ thumbnail, title, creatorName, creatorImage, creatorAddress, videoDate, videoID }) => {
     return (
         <div
             className="nft-item__box m-4 w-[340px]"
@@ -35,7 +35,7 @@ const VideoCard = ({ thumbnail, title, creatorName, creatorImage, videoDate, vid
 
                 <div className="nft-item__avatar">
                     <div className="avatar-img" style={{ zIndex: "11" }}>
-                        <Link href="#">
+                        <Link href={`/profile/${creatorAddress}`}>
                             <Image
                                 src={creatorImage?.replace(
                                     "ipfs://",
@@ -51,7 +51,7 @@ const VideoCard = ({ thumbnail, title, creatorName, creatorImage, videoDate, vid
                     <div className="avatar-name">
                         <h5 className="name" style={{ zIndex: "11" }}>
                             <Link
-                                href="#"
+                                href={`/profile/${creatorAddress}`}
                                 style={{
                                     textDecoration: "none",
                                     fontSize: "15px",

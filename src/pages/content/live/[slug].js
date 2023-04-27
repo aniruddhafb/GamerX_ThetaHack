@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-let socket;
-
+import { MdSend } from "react-icons/md";
 import {
   addDoc,
   collection,
@@ -13,19 +12,28 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
+import Link from "next/link";
+import Loader from "@/components/Loader";
 
-const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
+const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) => {
   const router = useRouter();
   const { slug } = router.query;
+
   const [data, set_data] = useState();
+  const [videoData, setVideoData] = useState([]);
+  const [loading, isLoading] = useState(false);
   const [messages, set_messages] = useState([]);
   const [new_message, set_message_data] = useState("");
 
   const messagesRef = collection(db, "messages");
 
   const stream_video = async () => {
+    isLoading(true);
     const res = await get_liveStream_data(slug);
     set_data(res);
+    const videoRes = await fetch_videos();
+    setVideoData(videoRes);
+    isLoading(false);
   };
 
   const send_message = async () => {
@@ -66,104 +74,103 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
 
   return (
     <section className="blog-area blog-details-area" id="pageBG">
-      <div className="container">
-        <div className="justify-content-center my-6" id="flexCOL">
-          <div className="blog-post-wrapper mr-4">
-            {/* blog main section  */}
-            <div className="blog-post-item">
-              <div className="blog-post-thumb">
-                <iframe
-                  width="100%"
-                  height="500px"
-                  src={`https://edge-player-beta.thetatoken.org/?streamId=${slug}`}
-                  frameBorder="0"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="blog-post-content blog-details-content">
-                <div className="blog-post-meta">
-                  <ul className="list-wrap">
-                    <li>
-                      By<a href="#">{data?.owner.username}</a>
-                    </li>
-                    <li>
-                      <i className="far fa-calendar-alt"></i> Aug 16, 2023
-                    </li>
-                  </ul>
+      {loading ?
+        <div className="pt-[300px] pb-[300px]">
+          <Loader />
+        </div>
+        :
+        <div className="container">
+          <div className="justify-content-center my-6" id="flexCOL">
+            <div className="blog-post-wrapper mr-4">
+              {/* blog main section  */}
+              <div className="blog-post-item">
+                <div className="blog-post-thumb">
+                  <iframe
+                    width="100%"
+                    height="500px"
+                    src={`https://edge-player-beta.thetatoken.org/?streamId=${slug}`}
+                    allowFullScreen
+                  ></iframe>
                 </div>
-                <h2 className="title">{data?.stream_data.title}</h2>
-                <p>{data?.stream_data.description}</p>
-                <div className="blog-details-bottom">
-                  <div className="row">
-                    <div className="col-xl-6 col-md-7">
-                      <div className="tg-post-tags">
-                        <h5 className="tags-title">tags :</h5>
-                        <ul className="list-wrap d-flex flex-wrap align-items-center m-0">
-                          <li>
-                            <a href="#">Esports</a>,
-                          </li>
-                          <li>
-                            <a href="#">Fantasy</a>,
-                          </li>
-                          <li>
-                            <a href="#">game</a>
-                          </li>
-                        </ul>
+                <div className="blog-post-content blog-details-content">
+                  <div className="blog-post-meta">
+                    <ul className="list-wrap">
+                      <li style={{ color: "white" }}>
+                        By <Link href={`/profile/${data?.owner.id}`} style={{ textDecoration: "none" }}>{data?.owner.username}</Link>
+                      </li>
+                      <li style={{ color: "white" }}>
+                        <i className="far fa-calendar-alt"></i> Aug 16, 2023
+                      </li>
+                    </ul>
+                  </div>
+                  <h2 className="title">{data?.stream_data.title}</h2>
+                  <p>{data?.stream_data.description}</p>
+                  <div className="blog-details-bottom">
+                    <div className="row">
+                      <div className="col-xl-6 col-md-7">
+                        <div className="tg-post-tags">
+                          <h5 className="tags-title">tags :</h5>
+                          <ul className="list-wrap d-flex flex-wrap align-items-center m-0">
+                            <li>
+                              <a href="#" style={{ textDecoration: "none" }}>Esports</a>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-xl-6 col-md-5">
-                      <div className="blog-post-share justify-content-start justify-content-md-end">
-                        <h5 className="share">share :</h5>
-                        <ul className="list-wrap">
-                          <li>
-                            <a href="#">
-                              <i className="fab fa-facebook-f"></i>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="fab fa-twitter"></i>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="fab fa-linkedin-in"></i>
-                            </a>
-                          </li>
-                        </ul>
+                      <div className="col-xl-6 col-md-5">
+                        <div className="blog-post-share justify-content-start justify-content-md-end">
+                          <h5 className="share">share :</h5>
+                          <ul className="list-wrap">
+                            <li>
+                              <a href="#">
+                                <i className="fab fa-facebook-f"></i>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <i className="fab fa-twitter"></i>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#">
+                                <i className="fab fa-linkedin-in"></i>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* live by  */}
-            <div className="blog__avatar-wrap mb-65">
-              <div className="blog__avatar-img">
-                <a href="#">
-                  <Image
-                    src={data?.owner.profile_image?.replace(
-                      "ipfs://",
-                      "https://gateway.ipfscdn.io/ipfs/"
-                    )}
-                    alt="img"
-                    height={100}
-                    width={100}
-                  />
-                </a>
+              {/* live by  */}
+              <div className="blog__avatar-wrap mb-65">
+                <div className="blog__avatar-img">
+                  <Link href={`/profile/${data?.owner.id}`}>
+                    <Image
+                      src={data?.owner.profile_image?.replace(
+                        "ipfs://",
+                        "https://gateway.ipfscdn.io/ipfs/"
+                      )}
+                      alt="img"
+                      height={100}
+                      width={100}
+                      className="h-[300px] w-[300px]"
+                    />
+                  </Link>
+                </div>
+                <div className="blog__avatar-info">
+                  <span className="designation">Streamer</span>
+                  <h4 className="name">
+                    <Link href={`/profile/${data?.owner.id}`} style={{ textDecoration: "none" }}>{data?.owner.username}</Link>
+                  </h4>
+                  <p>{data?.owner.bio}</p>
+                </div>
               </div>
-              <div className="blog__avatar-info">
-                <span className="designation">Live By</span>
-                <h4 className="name">
-                  <a href="#">{data?.owner.username}</a>
-                </h4>
-                <p>{data?.owner.bio}</p>
-              </div>
-            </div>
 
-            {/* comments  */}
-            {/* <div className="comments-wrap">
+              {/* comments  */}
+              {/* <div className="comments-wrap">
               <h4 className="comments-wrap-title">3 Comments</h4>
               <div className="latest-comments">
                 <ul className="list-wrap">
@@ -199,109 +206,95 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress }) => {
                 <button type="submit">Post Comment</button>
               </form>
             </div> */}
-          </div>
+            </div>
 
-          {/* right section  */}
-          <div className="blog-post-sidebar">
-            <aside className="blog-sidebar">
-              {/* live chat  */}
-              <div className="flex flex-col flex-grow w-full max-w-xl bg-[#182029] shadow-xl rounded-lg overflow-hidden h-[500px] mb-12">
-                <div className="m-3">
-                  <h4 className=" text-lg">
-                    <i className="far fa-comments"></i> Live Chat
-                  </h4>
-                </div>
-                <hr className="h-2 bg-white mt-[-20px]" />
-                <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
-                  {/* single comment  */}
-                  {messages.map((e, index) => {
-                    return (
-                      <div
-                        key={e.id}
-                        className={`flex w-full mt-2 space-x-3 max-w-xs ${
-                          e.user === signerAddress && "ml-auto justify-end"
-                        }`}
-                      >
-                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-                        <div>
-                          <div
-                            className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
-                              e.user === signerAddress && "bg-green-600"
+            {/* right section  */}
+            <div className="blog-post-sidebar">
+              <aside className="blog-sidebar">
+                {/* live chat  */}
+                <div className="flex flex-col flex-grow w-full max-w-xl bg-[#182029] shadow-xl rounded-lg overflow-hidden h-[500px] mb-12">
+                  <div className="m-3">
+                    <h4 className=" text-lg">
+                      <i className="far fa-comments"></i> Live Chat
+                    </h4>
+                  </div>
+                  <hr className="h-2 bg-white mt-[-20px]" />
+                  <div className="flex flex-col flex-grow h-0 p-4 overflow-auto">
+                    {/* single comment  */}
+                    {messages.map((e, index) => {
+                      return (
+                        <div
+                          key={e.id}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
                             }`}
-                          >
-                            <p className="text-sm text-black">{e.text}</p>
+                        >
+                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+                          <div>
+                            <div
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
+                                }`}
+                            >
+                              <p className="text-sm text-black">{e.text}</p>
+                            </div>
+                            <span className="text-xs text-gray-500 leading-none">
+                              2 min ago
+                            </span>
                           </div>
-                          <span className="text-xs text-gray-500 leading-none">
-                            2 min ago
-                          </span>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
 
-                  {/* current user comment  */}
-                </div>
-
-                <div className="bg-[#182029] p-4 flex">
-                  <input
-                    onChange={(e) => set_message_data(e.target.value)}
-                    className="flex items-center h-10 w-full rounded px-3 text-sm"
-                    type="text"
-                    placeholder="Say something…"
-                  />
-                </div>
-                <button onClick={send_message}>send</button>
-              </div>
-
-              {/* recent videos  */}
-              <div className="blog-widget">
-                <h4 className="fw-title">Recent Videos</h4>
-                <div className="rc__post-wrapper">
-                  <div className="rc__post-item">
-                    <div className="rc__post-thumb">
-                      <a href="">
-                        <img src="./#/rc_post01.jpg" alt="img" />
-                      </a>
-                    </div>
-                    <div className="rc__post-content">
-                      <h6 className="title">
-                        <a href="">zombie TOURNAMENT land max</a>
-                      </h6>
-                      <span className="date">date</span>
-                    </div>
+                    {/* current user comment  */}
                   </div>
-                  <div className="rc__post-item">
-                    <div className="rc__post-thumb">
-                      <a href="">
-                        <img src="./#/rc_post02.jpg" alt="img" />
-                      </a>
-                    </div>
-                    <div className="rc__post-content">
-                      <h6 className="title">
-                        <a href="">play to earn crypto games</a>
-                      </h6>
-                      <span className="date">aug 19, 2023</span>
-                    </div>
-                  </div>
-                  <div className="rc__post-item">
-                    <div className="rc__post-thumb">
-                      <a href="">
-                        <img src="./#/rc_post03.jpg" alt="img" />
-                      </a>
-                    </div>
-                    <div className="rc__post-content">
-                      <h6 className="title">
-                        <a href="">nft games android land max</a>
-                      </h6>
-                      <span className="date">aug 19, 2023</span>
+
+                  <div className="bg-[#182029] p-4 flex" style={{ position: "relative" }}>
+                    <input
+                      onChange={(e) => set_message_data(e.target.value)}
+                      className="flex items-center h-10 w-full rounded px-3 text-sm"
+                      type="text"
+                      placeholder="Say something…"
+                    />
+                    <div className="absolute right-[24.5px] bg-green-500 p-[9px] rounded-r-sm cursor-pointer hover:bg-green-600" onClick={send_message}>
+                      <MdSend className="text-[23px] text-gray-200" />
                     </div>
                   </div>
                 </div>
-              </div>
-            </aside>
+
+                {/* recent videos  */}
+                <div className="blog-widget">
+                  <h4 className="fw-title">Recent Videos</h4>
+                  <div className="rc__post-wrapper">
+                    {videoData.map((e, index) => {
+                      return (
+                        <div className="rc__post-item" key={index}>
+                          <div className="rc__post-thumb">
+                            <Link href={`/content/videos/${e.video.id}`}>
+                              <Image
+                                src={e.video.thumbnail?.replace(
+                                  "ipfs://",
+                                  "https://gateway.ipfscdn.io/ipfs/"
+                                )}
+                                height={100}
+                                width={100}
+                                alt="img" />
+                            </Link>
+                          </div>
+                          <div className="rc__post-content">
+                            <h6 className="title">
+                              <Link href={`/content/videos/${e.video.id}`} style={{ textDecoration: "none" }}>{e.video.name}</Link>
+                            </h6>
+                            <span className="date">aug 19, 2023</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </aside>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </section>
   );
 };

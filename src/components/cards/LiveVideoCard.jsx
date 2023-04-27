@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import { RiLiveFill } from 'react-icons/ri'
 
-const LiveVideoCard = ({ liveID, thumbnail, liveTitle, ownerUsername, ownerProfileImg }) => {
+const LiveVideoCard = ({ liveID, thumbnail, liveTitle, ownerUsername, ownerProfileImg, ownerAddress }) => {
     return (
         <Link
             href={`/content/live/${liveID}`}
@@ -43,7 +43,7 @@ const LiveVideoCard = ({ liveID, thumbnail, liveTitle, ownerUsername, ownerProfi
 
                     <div className="nft-item__avatar">
                         <div className="avatar-img" style={{ zIndex: "11" }}>
-                            <Link href="#">
+                            <Link href={`/profile/${ownerAddress}`}>
                                 <Image
                                     src={ownerProfileImg.replace(
                                         "ipfs://",
@@ -59,7 +59,7 @@ const LiveVideoCard = ({ liveID, thumbnail, liveTitle, ownerUsername, ownerProfi
                         <div className="avatar-name">
                             <h5 className="name" style={{ zIndex: "11" }}>
                                 <Link
-                                    href="#"
+                                    href={`/profile/${ownerAddress}`}
                                     style={{
                                         textDecoration: "none",
                                         fontSize: "15px",
