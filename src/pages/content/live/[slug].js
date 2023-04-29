@@ -15,7 +15,13 @@ import {
 import Link from "next/link";
 import Loader from "@/components/Loader";
 
-const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) => {
+const LiveStream = ({
+  get_liveStream_data,
+  db,
+  signerAddress,
+  fetch_videos,
+  get_user_data,
+}) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -48,6 +54,11 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
     set_message_data("");
   };
 
+  const user_info = async (user_id) => {
+    const res = await get_user_data(user_id);
+    return res;
+  };
+
   useEffect(() => {
     if (!slug) return;
     stream_video();
@@ -59,8 +70,14 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
     );
     const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
       let messages = [];
-      snapshot.forEach((doc) => {
-        messages.push({ ...doc.data(), id: doc.id });
+      snapshot.forEach(async (doc) => {
+        let user = doc.data();
+        const user_detail = await user_info(user.user);
+        messages.push({
+          ...doc.data(),
+          id: doc.id,
+          profile_image: user_detail.profile_image,
+        });
       });
       set_messages(messages);
     });
@@ -74,11 +91,11 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
 
   return (
     <section className="blog-area blog-details-area" id="pageBG">
-      {loading ?
+      {loading ? (
         <div className="pt-[300px] pb-[300px]">
           <Loader />
         </div>
-        :
+      ) : (
         <div className="container">
           <div className="justify-content-center my-6" id="flexCOL">
             <div className="blog-post-wrapper mr-4">
@@ -96,7 +113,13 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
                   <div className="blog-post-meta">
                     <ul className="list-wrap">
                       <li style={{ color: "white" }}>
-                        By <Link href={`/profile/${data?.owner.id}`} style={{ textDecoration: "none" }}>{data?.owner.username}</Link>
+                        By{" "}
+                        <Link
+                          href={`/profile/${data?.owner.id}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          {data?.owner.username}
+                        </Link>
                       </li>
                       <li style={{ color: "white" }}>
                         <i className="far fa-calendar-alt"></i> Aug 16, 2023
@@ -112,7 +135,9 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
                           <h5 className="tags-title">tags :</h5>
                           <ul className="list-wrap d-flex flex-wrap align-items-center m-0">
                             <li>
-                              <a href="#" style={{ textDecoration: "none" }}>Esports</a>
+                              <a href="#" style={{ textDecoration: "none" }}>
+                                Esports
+                              </a>
                             </li>
                           </ul>
                         </div>
@@ -163,7 +188,12 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
                 <div className="blog__avatar-info">
                   <span className="designation">Streamer</span>
                   <h4 className="name">
-                    <Link href={`/profile/${data?.owner.id}`} style={{ textDecoration: "none" }}>{data?.owner.username}</Link>
+                    <Link
+                      href={`/profile/${data?.owner.id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      {data?.owner.username}
+                    </Link>
                   </h4>
                   <p>{data?.owner.bio}</p>
                 </div>
@@ -225,19 +255,29 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
-                            }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
+                            e.user === signerAddress && "ml-auto justify-end"
+                          }`}
                         >
-                          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
+                          {/* <Image
+                            src={e.profile_image?.replace(
+                              "ipfs://",
+                              "https://gateway.ipfscdn.io/ipfs/"
+                            )}
+                            width={100}
+                            height={100}
+                            className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+                          ></Image> */}
                           <div>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
-                                }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
+                                e.user === signerAddress && "bg-green-600"
+                              }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>
                             <span className="text-xs text-gray-500 leading-none">
-                              2 min ago
+                              {e.user}
                             </span>
                           </div>
                         </div>
@@ -247,14 +287,20 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
                     {/* current user comment  */}
                   </div>
 
-                  <div className="bg-[#182029] p-4 flex" style={{ position: "relative" }}>
+                  <div
+                    className="bg-[#182029] p-4 flex"
+                    style={{ position: "relative" }}
+                  >
                     <input
                       onChange={(e) => set_message_data(e.target.value)}
                       className="flex items-center h-10 w-full rounded px-3 text-sm"
                       type="text"
                       placeholder="Say something…"
                     />
-                    <div className="absolute right-[24.5px] bg-green-500 p-[9px] rounded-r-sm cursor-pointer hover:bg-green-600" onClick={send_message}>
+                    <div
+                      className="absolute right-[24.5px] bg-green-500 p-[9px] rounded-r-sm cursor-pointer hover:bg-green-600"
+                      onClick={send_message}
+                    >
                       <MdSend className="text-[23px] text-gray-200" />
                     </div>
                   </div>
@@ -276,12 +322,18 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
                                 )}
                                 height={100}
                                 width={100}
-                                alt="img" />
+                                alt="img"
+                              />
                             </Link>
                           </div>
                           <div className="rc__post-content">
                             <h6 className="title">
-                              <Link href={`/content/videos/${e.video.id}`} style={{ textDecoration: "none" }}>{e.video.name}</Link>
+                              <Link
+                                href={`/content/videos/${e.video.id}`}
+                                style={{ textDecoration: "none" }}
+                              >
+                                {e.video.name}
+                              </Link>
                             </h6>
                             <span className="date">aug 19, 2023</span>
                           </div>
@@ -294,7 +346,7 @@ const LiveStream = ({ get_liveStream_data, db, signerAddress, fetch_videos }) =>
             </div>
           </div>
         </div>
-      }
+      )}
     </section>
   );
 };

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 
-const NftPage = ({ fetch_NFT_info }) => {
+const NftPage = ({ fetch_NFT_info, list_nft, signerAddress }) => {
   const [loading, isLoading] = useState(true);
   const [props, showProps] = useState(true);
   const [otherInfo, showOtherInfo] = useState(false);
@@ -19,6 +19,10 @@ const NftPage = ({ fetch_NFT_info }) => {
     set_nft_data(res);
     console.log({ nftdata: res });
     isLoading(false);
+  };
+
+  const sell_nft = async (tokenId, price, collection_address) => {
+    const res = await list_nft(tokenId, price, collection_address);
   };
 
   useEffect(() => {
@@ -121,6 +125,12 @@ const NftPage = ({ fetch_NFT_info }) => {
                     </button>
                   </div>
                 )}
+                <button
+                  className="text-white"
+                  onClick={() => sell_nft(tokenid, "0.1", slug)}
+                >
+                  list nft
+                </button>
               </div>
               <div className="shop__details-bottom">
                 <div className="product_share">
@@ -204,9 +214,11 @@ const NftPage = ({ fetch_NFT_info }) => {
                           </a>
                         ))}
                       </div>
-                      {nft_data?.ipfsData?.properties.length <= 0 &&
-                        <h5 scope="row" style={{ color: "#adb0bc" }}>No Properties</h5>
-                      }
+                      {nft_data?.ipfsData?.properties.length <= 0 && (
+                        <h5 scope="row" style={{ color: "#adb0bc" }}>
+                          No Properties
+                        </h5>
+                      )}
                     </div>
                   </div>
                   <div className={`tab-pane ${otherInfo && "active"}`}>

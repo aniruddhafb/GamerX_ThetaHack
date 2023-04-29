@@ -40,7 +40,7 @@ const db = getFirestore(app);
 
 const default_nft_collection = "0x6E3249530dd3791Eafc61e320ebCef04116714cb";
 const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
-const marketplace = "0xA24495bfa8dE0BDC7cAF75AE0208338ac0F0a4D4";
+const marketplace = "0x9b964836d15266447308D82e90cB62517A080439";
 
 export default function App({ Component, pageProps }) {
   const [provider, set_provider] = useState("");
@@ -238,7 +238,7 @@ export default function App({ Component, pageProps }) {
           thumbnail_ipfs,
           Date.now().toString(),
         ]);
-        
+
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
     } catch (error) {
       console.log(error.message);
@@ -276,6 +276,7 @@ export default function App({ Component, pageProps }) {
     const db = polybase();
     const res = await db.collection("User").record(signer_address).get();
     set_user_data(res.data);
+    return res.data;
   };
 
   const get_video_data = async (id) => {
@@ -662,6 +663,75 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  // lsit nft for sale
+  const list_nft = async (tokenId, price, collection_address) => {
+    console.log({ tokenId, price, collection_address, signer });
+    const collection_contract = gamerX_collection(collection_address, signer);
+    try {
+      const txnApproval = await collection_contract.setApprovalForAll(
+        marketplace,
+        true
+      );
+      await txnApproval.wait();
+      const contract = marketplace();
+
+      const txn = await contract.ListToken(
+        tokenId,
+        ethers.utils.parseEther(price),
+        collection_address,
+        {
+          value: ethers.utils.parseEther("0.01"),
+        }
+      );
+      await txn.wait();
+
+      const nftRec = await contract.nft_record(collection_address, tokenId);
+      if (txn.hash) {
+        const db = polybase();
+        const res = await db
+          .collection("NFT")
+          .record(`${collection_address}/${tokenId}`)
+          .call("listNFT", [
+            ethers.utils.parseEther(price).toString(),
+            chainIdMain.toString(),
+            db.collection("User").record(marketplace.toLowerCase()),
+          ]);
+        console.log({ polybaseres: res });
+        sendNFTListNoti(tokenId, price);
+        router.reload();
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // execute sales
+  const executeSale = async (tokenId, collection_address, listing_price) => {
+    console.log({ tokenId, collection_address, listing_price });
+    const db = polybase();
+
+    const res = await db
+      .collection("NFT")
+      .record(`${collection_address}/${tokenId}`)
+      .get();
+    try {
+      const contract = marketplace();
+      const txn = await contract.executeSale(tokenId, collection_address, {
+        value: ethers.utils.parseEther(listing_price),
+      });
+      await txn.wait();
+      if (txn.hash) {
+        const res = await db
+          .collection("NFT")
+          .record(`${collection_address}/${tokenId}`)
+          .call("executeSale", [db.collection("User").record(signer_address)]);
+      }
+      sendNFTSaleNoti(tokenId, listing_price);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     connect_wallet();
   }, []);
@@ -701,6 +771,7 @@ export default function App({ Component, pageProps }) {
         polybase={polybase}
         fetch_nfts_from_user_wallet={fetch_nfts_from_user_wallet}
         get_user_videos={get_user_videos}
+        list_nft={list_nft}
       />
       <Footer />
     </>
