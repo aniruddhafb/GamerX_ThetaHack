@@ -5,6 +5,7 @@ const goLive = ({ go_live }) => {
     stream_id: "",
     title: "",
     description: "",
+    tag: "Gameplay",
   });
 
   const handle_change = (e) => {
@@ -12,7 +13,8 @@ const goLive = ({ go_live }) => {
   };
   const handle_submit = async (e) => {
     e.preventDefault();
-    go_live(data);
+    console.log(data);
+    // go_live(data);
   };
   return (
     <div id="pageBG">
@@ -130,27 +132,19 @@ const goLive = ({ go_live }) => {
                   <div className="col-sm-6 relative">
                     <div className="form-grp">
                       <select
-                        // onChange={(e) =>
-                        //   set_data({
-                        //     ...data,
-                        //     collection_address: e.target.value,
-                        //   })
-                        // }
+                        onChange={(e) =>
+                          set_data({
+                            ...data,
+                            tag: e.target.value,
+                          })
+                        }
                         name="Tag"
                         style={{ marginTop: "55px" }}
                       >
-                        <option className="bg-gray-800">
-                          Gameplay
-                        </option>
-                        <option className="bg-gray-800">
-                          Reaction
-                        </option>
-                        <option className="bg-gray-800">
-                          Informative
-                        </option>
-                        <option className="bg-gray-800">
-                          Esports
-                        </option>
+                        <option className="bg-gray-800">Gameplay</option>
+                        <option className="bg-gray-800">Reaction</option>
+                        <option className="bg-gray-800">Informative</option>
+                        <option className="bg-gray-800">Esports</option>
                       </select>
                     </div>
                     <span

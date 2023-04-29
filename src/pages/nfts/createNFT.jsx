@@ -16,6 +16,7 @@ const CreateNFT = ({
     image: "",
     collection_address: default_nft_collection,
     properties: [{ type: "", value: "" }],
+    tag: "P2E Game",
   });
 
   const handle_change_input = (index, e) => {
@@ -105,7 +106,10 @@ const CreateNFT = ({
                           }
                           name="collection"
                         >
-                          <option className="bg-gray-800" value={default_nft_collection}>
+                          <option
+                            className="bg-gray-800"
+                            value={default_nft_collection}
+                          >
                             GamerX Collection
                           </option>
                           {my_collections?.map((e, index) => (
@@ -190,37 +194,69 @@ const CreateNFT = ({
                   <div className="col-sm-6 relative">
                     <div className="form-grp">
                       <select
-                        // onChange={(e) =>
-                        //   set_data({
-                        //     ...data,
-                        //     collection_address: e.target.value,
-                        //   })
-                        // }
+                        onChange={(e) =>
+                          set_data({
+                            ...data,
+                            tag: e.target.value,
+                          })
+                        }
                         name="Tag"
                         style={{ marginTop: "55px" }}
                       >
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "P2E Game"}
+                          className="bg-gray-800"
+                          value="P2E Game"
+                        >
                           P2E Game
                         </option>
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "Music NFT"}
+                          value="Music NFT"
+                          className="bg-gray-800"
+                        >
                           Music NFT
                         </option>
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "NFT Ticket"}
+                          value="NFT Ticket"
+                          className="bg-gray-800"
+                        >
                           NFT Ticket
                         </option>
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "Collectibles"}
+                          value="Collectibles"
+                          className="bg-gray-800"
+                        >
                           Collectibles
                         </option>
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "Avatar"}
+                          value="Avatar"
+                          className="bg-gray-800"
+                        >
                           Avatar
                         </option>
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "Art"}
+                          value="Art"
+                          className="bg-gray-800"
+                        >
                           Art
                         </option>
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "Game Skins"}
+                          value="Game Skins"
+                          className="bg-gray-800"
+                        >
                           Game Skins
                         </option>
-                        <option className="bg-gray-800">
+                        <option
+                          selected={data.tag === "Game Account"}
+                          value="Game Account"
+                          className="bg-gray-800"
+                        >
                           Game Account
                         </option>
                       </select>

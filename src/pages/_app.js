@@ -164,6 +164,7 @@ export default function App({ Component, pageProps }) {
               ? JSON.stringify(_tokenURI.properties)
               : "[]",
             _tokenURI.title,
+            _tokenURI.tag,
           ]);
       });
 
@@ -267,6 +268,7 @@ export default function App({ Component, pageProps }) {
         ipfs_cover,
         ipfs_profile,
         data.role,
+        data.favourite_game,
       ]);
   };
 
@@ -330,6 +332,7 @@ export default function App({ Component, pageProps }) {
         data.description,
         db.collection("User").record(signerAddress),
         Date.now().toString(),
+        data.tag
       ]);
     router.push(`/content/live/${res.data.stream_id}`);
   };

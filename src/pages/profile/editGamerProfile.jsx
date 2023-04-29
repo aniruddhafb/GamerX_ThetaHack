@@ -13,6 +13,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
     instagram: "",
     link: "https://gamex.space",
     role: "Gamer Influencer",
+    favourite_game: "",
   });
 
   const [loading, isLoading] = useState(false);
@@ -39,6 +40,9 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
       role: user_data.role ? user_data.role : "Gamer Influencer",
       cover_image: user_data.cover_image ? user_data.cover_image : "",
       profile_image: user_data.profile_image ? user_data.profile_image : "",
+      favourite_game: user_data.favourite_game
+        ? user_data.favourite_game
+        : "Axie Infinity",
     });
   }, [user_data]);
 
@@ -60,11 +64,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                 preview_cover
                   ? preview_cover
                   : user_data?.cover_image
-                    ? user_data?.cover_image.replace(
+                  ? user_data?.cover_image.replace(
                       "ipfs://",
                       "https://gateway.ipfscdn.io/ipfs/"
                     )
-                    : "img/user/banner.jpg"
+                  : "img/user/banner.jpg"
               }
               height={100}
               width={100}
@@ -104,7 +108,6 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
           <div className="container">
             <div className="mx-auto max-w-[48.125rem] md:flex">
               <div className="mb-12 md:w-1/2 md:pr-8">
-
                 {/* username  */}
                 <div className="mb-6">
                   <label
@@ -254,66 +257,76 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     You Play <span className="text-red">*</span>
                   </label>
                   <select
-                    // onChange={(e) =>
-                    //   set_data({ ...data, role: e.target.value })
-                    // }
+                    onChange={(e) =>
+                      set_data({ ...data, favourite_game: e.target.value })
+                    }
                     className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent text-white bg-transparent border-2 border-gray-500"
                   >
                     <option
                       value="Axie Infinity"
+                      selected={user_data?.favourite_game === "Axie Infinity"}
                       className="text-white bg-[#0F161B]"
                     >
                       Axie Infinity
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "The Sandbox"}
                       value="The Sandbox"
                       className="text-white bg-[#0F161B]"
                     >
                       The Sandbox
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Crypto Kitties"}
                       value="Crypto Kitties"
                       className="text-white bg-[#0F161B]"
                     >
                       Crypto Kitties
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Star Atlas"}
                       value="Star Atlas"
                       className="text-white bg-[#0F161B]"
                     >
                       Star Atlas
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Sidus Heros"}
                       value="Sidus Heros"
                       className="text-white bg-[#0F161B]"
                     >
                       Sidus Heros
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Wynd Blast"}
                       value="Wynd Blast"
                       className="text-white bg-[#0F161B]"
                     >
                       Wynd Blast
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Pubg Mobile"}
                       value="Pubg Mobile"
                       className="text-white bg-[#0F161B]"
                     >
                       Pubg Mobile
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Apex Legends"}
                       value="Apex Legends"
                       className="text-white bg-[#0F161B]"
                     >
                       Apex Legends
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Valorant"}
                       value="Valorant"
                       className="text-white bg-[#0F161B]"
                     >
                       Valorant
                     </option>
                     <option
+                      selected={user_data?.favourite_game === "Rocket League"}
                       value="Rocket League"
                       className="text-white bg-[#0F161B]"
                     >
@@ -374,11 +387,11 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                             preview_profile
                               ? preview_profile
                               : user_data?.profile_image
-                                ? user_data?.profile_image.replace(
+                              ? user_data?.profile_image.replace(
                                   "ipfs://",
                                   "https://gateway.ipfscdn.io/ipfs/"
                                 )
-                                : "img/user/user_avatar.gif"
+                              : "img/user/user_avatar.gif"
                           }
                           height={100}
                           width={100}
