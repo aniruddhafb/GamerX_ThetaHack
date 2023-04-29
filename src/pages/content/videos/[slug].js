@@ -135,9 +135,8 @@ const Video = ({ get_video_data, post_comment }) => {
                     const d = new Date();
                     let time;
                     if (e.comment.data?.date) {
-                      time = `${d.getDate(e.comment.data?.date)}/${
-                        d.getMonth(e.comment.data?.date) + 1
-                      }/${d.getFullYear(e.comment.data?.date)}`;
+                      time = `${d.getDate(e.comment.data?.date)}/${d.getMonth(e.comment.data?.date) + 1
+                        }/${d.getFullYear(e.comment.data?.date)}`;
                     }
                     return (
                       e.owner && (
@@ -154,6 +153,7 @@ const Video = ({ get_video_data, post_comment }) => {
                                     alt="img"
                                     width={100}
                                     height={100}
+                                    className="h-[100px] w-[100px]"
                                   />
                                 </div>
                                 <div className="comments-text">
@@ -161,7 +161,7 @@ const Video = ({ get_video_data, post_comment }) => {
                                     <h6 className="name">
                                       {e.owner.data?.username}
                                     </h6>
-                                    <span className="date text-white">
+                                    <span className="date text-white" style={{ fontSize: "13px" }}>
                                       {time}
                                     </span>
                                   </div>
