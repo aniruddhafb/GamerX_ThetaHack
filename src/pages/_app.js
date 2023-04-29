@@ -238,7 +238,7 @@ export default function App({ Component, pageProps }) {
           thumbnail_ipfs,
           Date.now().toString(),
         ]);
-
+        
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
     } catch (error) {
       console.log(error.message);
@@ -332,7 +332,7 @@ export default function App({ Component, pageProps }) {
         data.description,
         db.collection("User").record(signerAddress),
         Date.now().toString(),
-        data.tag
+        data.tag,
       ]);
     router.push(`/content/live/${res.data.stream_id}`);
   };
@@ -375,6 +375,19 @@ export default function App({ Component, pageProps }) {
   const get_gamer = async (userId) => {
     const db = polybase();
     const res = await db.collection("User").record(userId).get();
+    return res.data;
+  };
+
+  const get_user_videos = async (signerAddress) => {
+    console.log({ signerAddress });
+    const db = polybase();
+    const res = await db
+      .collection("Video")
+      .where("owner", "==", {
+        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
+        id: signerAddress,
+      })
+      .get();
     return res.data;
   };
 
@@ -589,6 +602,39 @@ export default function App({ Component, pageProps }) {
       .get();
   };
 
+  //FETCHES NFTS BY USER FROM POLYBASE
+  const fetch_nfts_from_user_wallet = async (signerAddress) => {
+    try {
+      // if (!signer_address) return;
+      let nfts = [];
+      const db = polybase();
+      const res = await db
+        .collection("NFT")
+        .where("owner", "==", {
+          collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
+          id: signerAddress,
+        })
+        .get();
+
+      for (const e of res.data) {
+        let obj = {};
+        obj.chainId = e.data.chainId;
+        obj.tokenId = e.data.tokenId;
+        obj.isListed = e.data.isListed;
+        const url = e.data.ipfsURL.replace(
+          "ipfs://",
+          "https://gateway.ipfscdn.io/ipfs/"
+        );
+        const { data } = await axios.get(url);
+        obj.ipfsData = data;
+        nfts.push(obj);
+      }
+      return nfts;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const polybase = () => {
     const db = new Polybase({
       defaultNamespace: process.env.NEXT_PUBLIC_NAMESPACE,
@@ -602,6 +648,7 @@ export default function App({ Component, pageProps }) {
 
     return db;
   };
+
   const fetch_collection_data = async (collection_address) => {
     try {
       const db = polybase();
@@ -652,6 +699,8 @@ export default function App({ Component, pageProps }) {
         fetch_NFT_info={fetch_NFT_info}
         fetch_collection_data={fetch_collection_data}
         polybase={polybase}
+        fetch_nfts_from_user_wallet={fetch_nfts_from_user_wallet}
+        get_user_videos={get_user_videos}
       />
       <Footer />
     </>

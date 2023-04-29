@@ -5,23 +5,24 @@ import axios from "axios";
 import moment from "moment/moment";
 import Loader from "@/components/Loader";
 
-const video = ({ get_video_data, post_comment }) => {
+const Video = ({ get_video_data, post_comment }) => {
   const router = useRouter();
   const { slug } = router.query;
+  const [comments_length, set_comments_length] = useState(0);
 
   const [loading, isLoading] = useState();
   const [data, set_data] = useState();
   const [comment, set_comment] = useState();
 
-  const do_comment = () => {
-    post_comment(slug, comment);
+  const do_comment = async (e) => {
+    e.preventDefault();
+    await post_comment(slug, comment);
   };
 
   useEffect(() => {
     const video_data = async () => {
       isLoading(true);
       const res = await get_video_data(slug);
-      console.log({ res });
       set_data(res);
       isLoading(false);
     };
@@ -32,19 +33,28 @@ const video = ({ get_video_data, post_comment }) => {
 
   return (
     <main className="main--area" id="pageBG">
-      {loading ?
+      {loading ? (
         <div className="pt-[300px] pb-[300px]">
           <Loader />
         </div>
-        :
+      ) : (
         <section className="blog-area blog-details-area">
           <div className="container">
             <div className="row justify-content-center">
-              <div className="blog-post-wrapper" style={{ marginBottom: "30px" }}>
+              <form
+                onSubmit={do_comment}
+                className="blog-post-wrapper"
+                style={{ marginBottom: "30px" }}
+              >
                 <div className="blog-post-item">
                   <div
                     className="blog-post-thumb"
-                    style={{ marginTop: "60px", marginBottom: "40px", height: "100%", width: "100%" }}
+                    style={{
+                      marginTop: "60px",
+                      marginBottom: "40px",
+                      height: "100%",
+                      width: "100%",
+                    }}
                   >
                     {data?.id ? (
                       <iframe
@@ -63,7 +73,10 @@ const video = ({ get_video_data, post_comment }) => {
                     <div className="blog-post-meta">
                       <ul className="list-wrap" style={{ color: "white" }}>
                         <li>
-                          By<a href="#" style={{ textDecoration: "none" }}>{data?.owner.username}</a>
+                          By
+                          <a href="#" style={{ textDecoration: "none" }}>
+                            {data?.owner.username}
+                          </a>
                         </li>
                         <li>
                           <i className="far fa-calendar-alt"></i> Aug 16, 2023
@@ -84,7 +97,9 @@ const video = ({ get_video_data, post_comment }) => {
                             <h5 className="tags-title">tags :</h5>
                             <ul className="list-wrap d-flex flex-wrap align-items-center m-0">
                               <li>
-                                <a href="#" style={{ textDecoration: "none" }}>Esports</a>
+                                <a href="#" style={{ textDecoration: "none" }}>
+                                  Esports
+                                </a>
                               </li>
                             </ul>
                           </div>
@@ -114,44 +129,49 @@ const video = ({ get_video_data, post_comment }) => {
                 {/* comments  */}
                 <div className="comments-wrap">
                   <h4 className="comments-wrap-title">
-                    {data?.comments.length} Comments
+                    {data?.comments.length - 1} Comments
                   </h4>
                   {data?.comments.map((e, index) => {
                     const d = new Date();
                     let time;
                     if (e.comment.data?.date) {
-                      time = `${d.getDate(e.comment.data?.date)}/${d.getMonth(e.comment.data?.date) + 1
-                        }/${d.getFullYear(e.comment.data?.date)}`;
+                      time = `${d.getDate(e.comment.data?.date)}/${
+                        d.getMonth(e.comment.data?.date) + 1
+                      }/${d.getFullYear(e.comment.data?.date)}`;
                     }
                     return (
-                      <div key={index} className="latest-comments">
-                        <ul className="list-wrap">
-                          <li>
-                            <div className="comments-box">
-                              <div className="comments-avatar">
-                                <Image
-                                  src={e.owner.data?.profile_image.replace(
-                                    "ipfs://",
-                                    "https://gateway.ipfscdn.io/ipfs/"
-                                  )}
-                                  alt="img"
-                                  width={100}
-                                  height={100}
-                                />
-                              </div>
-                              <div className="comments-text">
-                                <div className="avatar-name">
-                                  <h6 className="name">
-                                    {e.owner.data?.username}
-                                  </h6>
-                                  <span className="date text-white">{time}</span>
+                      e.owner && (
+                        <div key={index} className="latest-comments">
+                          <ul className="list-wrap">
+                            <li>
+                              <div className="comments-box">
+                                <div className="comments-avatar">
+                                  <Image
+                                    src={e.owner.data?.profile_image.replace(
+                                      "ipfs://",
+                                      "https://gateway.ipfscdn.io/ipfs/"
+                                    )}
+                                    alt="img"
+                                    width={100}
+                                    height={100}
+                                  />
                                 </div>
-                                <p>{e.comment.data?.comment_data}</p>
+                                <div className="comments-text">
+                                  <div className="avatar-name">
+                                    <h6 className="name">
+                                      {e.owner.data?.username}
+                                    </h6>
+                                    <span className="date text-white">
+                                      {time}
+                                    </span>
+                                  </div>
+                                  <p>{e.comment.data?.comment_data}</p>
+                                </div>
                               </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
+                            </li>
+                          </ul>
+                        </div>
+                      )
                     );
                   })}
                 </div>
@@ -159,7 +179,7 @@ const video = ({ get_video_data, post_comment }) => {
                 {/* post a comment  */}
                 <div className="comment-respond">
                   <h3 className="comment-reply-title">Post a comment</h3>
-                  <form className="comment-form" action="#">
+                  <div className="comment-form" action="#">
                     <div className="form-grp">
                       <textarea
                         name="message"
@@ -169,18 +189,16 @@ const video = ({ get_video_data, post_comment }) => {
                         required
                       ></textarea>
                     </div>
-                    <button onClick={do_comment} type="submit">
-                      Post Comment
-                    </button>
-                  </form>
+                    <button type="submit">Post Comment</button>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </section>
-      }
+      )}
     </main>
   );
 };
 
-export default video;
+export default Video;

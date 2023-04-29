@@ -3,9 +3,14 @@ import React, { useEffect, useState } from "react";
 import heroLogo from "../../../public/favicon.png";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
+import NftCard from "@/components/cards/NftCard";
 
-const GamerProfile = ({ get_gamer }) => {
-
+const GamerProfile = ({
+  get_gamer,
+  fetch_nfts_from_user_wallet,
+  signerAddress,
+  get_user_videos,
+}) => {
   const router = useRouter();
   const { slug } = router.query;
   const [data, set_data] = useState([]);
@@ -16,26 +21,38 @@ const GamerProfile = ({ get_gamer }) => {
   const [lives, showLives] = useState(false);
   const [jobs, showJobs] = useState(false);
 
+  const [user_nfts, set_user_nfts] = useState([]);
+
   const fetch_gamer = async () => {
     isLoading(true);
     const res = await get_gamer(slug);
     set_data(res);
-    console.log({ gamerdata: res })
     isLoading(false);
   };
 
+  const get_nfts = async () => {
+    const res = await fetch_nfts_from_user_wallet(signerAddress);
+    set_user_nfts(res);
+  };
+
+  const get_videos = async () => {
+    const res = await get_user_videos(signerAddress);
+    console.log(res);
+  };
   useEffect(() => {
-    if (!slug) return;
+    if (!slug && !signerAddress) return;
     fetch_gamer();
-  }, [slug]);
+    get_nfts();
+    // get_videos();
+  }, [slug, signerAddress]);
 
   return (
     <div id="pageBG">
-      {loading ?
+      {loading ? (
         <div className="pt-[400px] pb-[400px]">
           <Loader />
         </div>
-        :
+      ) : (
         <div>
           {/* top area  */}
           <section className="breadcrumb-area">
@@ -48,12 +65,18 @@ const GamerProfile = ({ get_gamer }) => {
                       <p className="mt-[5px] text-wheat">{data.bio}</p>
                       <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
-                          <li className="breadcrumb-item active">{data.role}</li>
+                          <li className="breadcrumb-item active">
+                            {data.role}
+                          </li>
                           <li
                             className="breadcrumb-item active"
                             aria-current="page"
                           >
-                            <a href={data.username && data?.socials[1]} target="_blank" style={{ textDecoration: "none", color: "white" }}>
+                            <a
+                              href={data.username && data?.socials[1]}
+                              target="_blank"
+                              style={{ textDecoration: "none", color: "white" }}
+                            >
                               <svg
                                 aria-hidden="true"
                                 focusable="false"
@@ -68,7 +91,11 @@ const GamerProfile = ({ get_gamer }) => {
                               </svg>
                             </a>
 
-                            <a href={data.username && data?.socials[0]} target="_blank" style={{ textDecoration: "none", color: "white" }}>
+                            <a
+                              href={data.username && data?.socials[0]}
+                              target="_blank"
+                              style={{ textDecoration: "none", color: "white" }}
+                            >
                               <svg
                                 aria-hidden="true"
                                 focusable="false"
@@ -97,7 +124,8 @@ const GamerProfile = ({ get_gamer }) => {
                         height={100}
                         width={100}
                         className="rounded-[50%] h-[250px] w-[250px]"
-                        alt="img" />
+                        alt="img"
+                      />
                     </div>
                   </div>
                 </div>
@@ -117,8 +145,12 @@ const GamerProfile = ({ get_gamer }) => {
                           <Image src={heroLogo} alt="img" />
                         </div>
                         <div className="team__info-content">
-                          <span className="sub" style={{ fontSize: "16px" }}>GamerX Identity</span>
-                          <h5 className="title" style={{ fontSize: "18px" }}>Beginner</h5>
+                          <span className="sub" style={{ fontSize: "16px" }}>
+                            GamerX Identity
+                          </span>
+                          <h5 className="title" style={{ fontSize: "18px" }}>
+                            Beginner
+                          </h5>
                         </div>
                       </div>
                     </div>
@@ -156,7 +188,17 @@ const GamerProfile = ({ get_gamer }) => {
 
           {/* tabs area  */}
           <div className="w-[100%] h-[100%] flex justify-center align-middle py-4 cursor-pointer">
-            <div onClick={() => (showVideos(false), showLives(false), showJobs(false), showNFTs(true))} className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"}`}>
+            <div
+              onClick={() => (
+                showVideos(false),
+                showLives(false),
+                showJobs(false),
+                showNFTs(true)
+              )}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                NFTs && "border-b-green-500"
+              }`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -170,15 +212,45 @@ const GamerProfile = ({ get_gamer }) => {
               <h4>NFTs</h4>
             </div>
 
-            <div onClick={() => (showVideos(true), showLives(false), showJobs(false), showNFTs(false))} className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"}`}>
+            <div
+              onClick={() => (
+                showVideos(true),
+                showLives(false),
+                showJobs(false),
+                showNFTs(false)
+              )}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                videos && "border-b-green-500"
+              }`}
+            >
               <h4>Videos</h4>
             </div>
 
-            <div onClick={() => (showVideos(false), showLives(true), showJobs(false), showNFTs(false))} className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"}`}>
+            <div
+              onClick={() => (
+                showVideos(false),
+                showLives(true),
+                showJobs(false),
+                showNFTs(false)
+              )}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                lives && "border-b-green-500"
+              }`}
+            >
               <h4>Live Streams</h4>
             </div>
 
-            <div onClick={() => (showVideos(false), showLives(false), showJobs(true), showNFTs(false))} className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"}`}>
+            <div
+              onClick={() => (
+                showVideos(false),
+                showLives(false),
+                showJobs(true),
+                showNFTs(false)
+              )}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                jobs && "border-b-green-500"
+              }`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -194,28 +266,43 @@ const GamerProfile = ({ get_gamer }) => {
           </div>
 
           {/* tab info area  */}
-          {NFTs &&
-            <div className="h-[400px] flex justify-center align-middle">
-              <h3 className="mt-16">No NFTs Found!</h3>
+          {NFTs && (
+            <div className="h-[400px] flex justify-center align-middle w-full">
+              {!user_nfts?.length && <h3 className="mt-16">No NFTs Found!</h3>}
+              <div className="flex flex-wrap gap-3">
+                {user_nfts?.map((e, index) => (
+                  <NftCard
+                    key={index}
+                    nftName={e.ipfsData.title}
+                    isListed={e.isListed}
+                    nftID={e.tokenId}
+                    nftCollection={e.ipfsData.collection_address}
+                    nftImage={e.ipfsData.image.replace(
+                      "ipfs://",
+                      "https://gateway.ipfscdn.io/ipfs/"
+                    )}
+                  />
+                ))}
+              </div>
             </div>
-          }
-          {videos &&
+          )}
+          {videos && (
             <div className="h-[400px] flex justify-center align-middle">
               <h3 className="mt-16">No Content Found!</h3>
             </div>
-          }
-          {lives &&
+          )}
+          {lives && (
             <div className="h-[400px] flex justify-center align-middle">
               <h3 className="mt-16">No Live Streams!</h3>
             </div>
-          }
-          {jobs &&
+          )}
+          {jobs && (
             <div className="h-[400px] flex justify-center align-middle">
               <h3 className="mt-16">No Jobs Found!</h3>
             </div>
-          }
+          )}
         </div>
-      }
+      )}
     </div>
   );
 };

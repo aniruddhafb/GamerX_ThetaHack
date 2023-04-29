@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const goLive = ({ go_live }) => {
+const GoLive = ({ go_live }) => {
   const [data, set_data] = useState({
     thumbnail: "",
     stream_id: "",
@@ -10,12 +10,13 @@ const goLive = ({ go_live }) => {
 
   const handle_change = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
+    console.log(data);
   };
   const handle_submit = async (e) => {
     e.preventDefault();
-    console.log(data);
-    // go_live(data);
+    go_live(data);
   };
+
   return (
     <div id="pageBG">
       <section className="blog-area blog-details-area">
@@ -38,7 +39,7 @@ const goLive = ({ go_live }) => {
                         <input
                           name="thumbnail"
                           onChange={(e) =>
-                            set_data({ thumbnail: e.target.files[0] })
+                            set_data({ ...data, thumbnail: e.target.files[0] })
                           }
                           type="file"
                           required
@@ -141,10 +142,18 @@ const goLive = ({ go_live }) => {
                         name="Tag"
                         style={{ marginTop: "55px" }}
                       >
-                        <option className="bg-gray-800">Gameplay</option>
-                        <option className="bg-gray-800">Reaction</option>
-                        <option className="bg-gray-800">Informative</option>
-                        <option className="bg-gray-800">Esports</option>
+                        <option value="Gameplay" className="bg-gray-800">
+                          Gameplay
+                        </option>
+                        <option value={"Reaction"} className="bg-gray-800">
+                          Reaction
+                        </option>
+                        <option value={"Informative"} className="bg-gray-800">
+                          Informative
+                        </option>
+                        <option value={"Esports"} className="bg-gray-800">
+                          Esports
+                        </option>
                       </select>
                     </div>
                     <span
@@ -171,4 +180,4 @@ const goLive = ({ go_live }) => {
   );
 };
 
-export default goLive;
+export default GoLive;
