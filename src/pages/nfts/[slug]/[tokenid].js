@@ -71,7 +71,7 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
               <div className="shop__details-model d-flex align-items-center">
                 <p className="model m-0">Tags:</p>
                 <ul className="list-wrap d-flex align-items-center">
-                  <li className="active">Esports</li>
+                  <li className="active">{nft_data?.ipfsData.tag}</li>
                 </ul>
               </div>
               <div className="trendingNft__item-avatar mb-4">
