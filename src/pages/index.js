@@ -12,6 +12,7 @@ import thetalogo from "../../public/theta.webp";
 import ProfileCard from "@/components/cards/ProfileCard";
 import Loader from "@/components/Loader";
 import NftCard from "@/components/cards/NftCard";
+import Head from "next/head";
 
 export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
   const [videos, set_videos] = useState([]);
@@ -51,6 +52,15 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
 
   return (
     <>
+      <Head>
+        <title>GamerX - A platform for gamers</title>
+        <meta
+          name="description"
+          content="GamerX is a platform for gamers to share their content, launch their NFT collections, find gaming jobs, and a lot more stuff at one place"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {/* hero section  */}
       <section className="slider__area slider__bg" id="HeroMain">
         <div className="slider-activee">
@@ -62,8 +72,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                     <h6 className="sub-title">Gamerx.Space</h6>
                     <h2 className="title">Here Gamers Live!!</h2>
                     <p style={{ fontSize: "15px" }}>
-                      Watch content from your favourite <br /> gamers and Trade
-                      their NFTs..
+                      Connect with other gamers 🎮 <br /> Launch your NFT Collections on Theta 🎨 <br />Get incentivize for sharing your gaming content 💰
                     </p>
                     <div className="slider__btn">
                       <Link
@@ -102,7 +111,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
             <ul className="slider__brand-list list-wrap">
               <li style={{ marginTop: "30px" }}>
                 <h2 style={{ fontSize: "12px" }}>Powered By</h2>
-                <Link href="#">
+                <Link href="https://thetatoken.org/" target="_blank">
                   <Image
                     src={thetalogo}
                     style={{
@@ -343,31 +352,49 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                   <div className="col-xl-5 col-lg-6">
                     <div className="roadMap__content">
                       <h2 className="title">a look into our roadmap</h2>
-                      <p>Our future roadmap</p>
+                      <p>Our development roadmap from the very beginning...</p>
                       <a
-                        href="#"
+                        href="/about"
                         className="tg-btn-1"
                         style={{ textDecoration: "none" }}
                       >
-                        <span>roadmap</span>
+                        <span>About Us</span>
                       </a>
                     </div>
                   </div>
                   <div className="col-xl-7 col-lg-6">
                     <div className="roadMap__steps-wrap">
                       <div className="roadMap__steps-item active">
-                        <h3 className="title">Q1 2023</h3>
+                        <h3 className="title">Q2 2023</h3>
                         <ul className="roadMap__list list-wrap">
                           <li className="text-gray-400 ready style2 active">
-                            Initial Development
+                            Started GamerX Development at Theta Hack 2023
+                          </li>
+                          <li className="text-gray-400 ready style2 active">
+                            Introduced Live stream feature
+                          </li>
+                          <li className="text-gray-400 ready style2 active">
+                            Introduced create NFT collections feature
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Introduce create gaming job feature
                           </li>
                         </ul>
                       </div>
                       <div className="roadMap__steps-item">
-                        <h3 className="title">Q2 2023</h3>
+                        <h3 className="title">Q3 2023</h3>
                         <ul className="roadMap__list list-wrap">
-                          <li className="text-gray-400 ready style2 active">
-                            Coming soon..
+                          <li className="text-gray-400 ready style2">
+                            Introduce buy and sell gaming accounts feature
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Introduce organise tournaments feature
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Mainnet Deployment on Theta Chain
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Coming Soon..
                           </li>
                         </ul>
                       </div>

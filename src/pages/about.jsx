@@ -7,10 +7,21 @@ import demIMG from "../../public/services_img02.jpg"
 
 import ani from "../../public/ani.jpg"
 import shravan from "../../public/srhavan.jpeg"
+import Link from 'next/link'
+import Head from 'next/head'
 
 const about = () => {
     return (
         <>
+            <Head>
+                <title>About - GamerX</title>
+                <meta
+                    name="description"
+                    content="About GamerX"
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.png" />
+            </Head>
             {/* intro  */}
             <section className="about__area-three section-pt-130 section-pb-130 ">
                 <div className="container mt-12">
@@ -63,8 +74,8 @@ const about = () => {
                                     </svg>
                                 </div>
                             </div>
-                            <div style={{ backgroundColor: "#10181F" }}>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum incidunt, sequi facere, est praesentium odio at alias molestiae rem quo unde doloribus. Sint labore vero nihil debitis iusto obcaecati, reprehenderit in laboriosam sed minima hic quas sapiente ullam molestias commodi ex officia consequuntur placeat consequatur eum expedita iure at nobis tenetur. Quam neque minima dicta totam qui! Magnam deserunt, adipisci distinctio perferendis ea eaque, ullam illum earum labore, quo eius?</p>
+                            <div style={{ backgroundColor: "#10181F", marginTop: "15px" }}>
+                                <p>GamerX is a platform which is build by gamers for gamers. Connect with other gamers, generate revenue by sharing content and live streaming, launch your official NFT collections, post your gaming jobs or get other jobs done, and many other things at one place. In short words GamerX is an ultimate platform for gamers...</p>
                             </div>
                         </div>
                     </div>
@@ -87,8 +98,8 @@ const about = () => {
                                         <i className="flaticon-diamond"></i>
                                     </div>
                                     <div className="services__content">
-                                        <h4 className="title"><a href="">Share Content</a></h4>
-                                        <p>Lorem ipsum dolor sitamet const adipiscng Duis eletum sollicitudin is yaugue euismods</p>
+                                        <h4 className="title"><Link href="/content/uploadVideo" style={{ textDecoration: "none" }}>Share Content</Link></h4>
+                                        <p>Upload your gaming content on GamerX to gain followers and earn TFUEL tokens</p>
                                     </div>
                                 </div>
                                 <div className="services__item">
@@ -96,8 +107,8 @@ const about = () => {
                                         <i className="flaticon-user-profile"></i>
                                     </div>
                                     <div className="services__content">
-                                        <h4 className="title"><a href="">Go Live</a></h4>
-                                        <p>Lorem ipsum dolor sitamet const adipiscng Duis eletum sollicitudin is yaugue euismods</p>
+                                        <h4 className="title"><Link href="/content/goLive" style={{ textDecoration: "none" }}>Stream Gaming Content</Link></h4>
+                                        <p>Live stream your gaming content on GamerX, Engage with your followers in a better way</p>
                                     </div>
                                 </div>
                                 <div className="services__item">
@@ -105,8 +116,8 @@ const about = () => {
                                         <i className="flaticon-ethereum"></i>
                                     </div>
                                     <div className="services__content">
-                                        <h4 className="title"><a href="">Sell Gaming NFTs</a></h4>
-                                        <p>Lorem ipsum dolor sitamet const adipiscng Duis eletum sollicitudin is yaugue euismods</p>
+                                        <h4 className="title"><Link href="/nfts/createNFT" style={{ textDecoration: "none" }}>Sell Gaming NFTs</Link></h4>
+                                        <p>Launch your official gaming NFT collections, let your followers trade your NFTs</p>
                                     </div>
                                 </div>
                                 <div className="services__item active">
@@ -114,8 +125,8 @@ const about = () => {
                                         <i className="flaticon-settings-1"></i>
                                     </div>
                                     <div className="services__content">
-                                        <h4 className="title"><a href="">Connect With Gamers</a></h4>
-                                        <p>Lorem ipsum dolor sitamet const adipiscng Duis eletum sollicitudin is yaugue euismods</p>
+                                        <h4 className="title"><Link href="/profile/exploreGamers" style={{ textDecoration: "none" }}>Connect With Gamers</Link></h4>
+                                        <p>Chat with other gamers, get teammates, collab and create awesome content</p>
                                     </div>
                                 </div>
                             </div>

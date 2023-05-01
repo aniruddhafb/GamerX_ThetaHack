@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import moment from "moment/moment";
 import Loader from "@/components/Loader";
+import Head from "next/head";
 
 const Video = ({ get_video_data, post_comment }) => {
   const router = useRouter();
@@ -33,6 +34,15 @@ const Video = ({ get_video_data, post_comment }) => {
 
   return (
     <main className="main--area" id="pageBG">
+      <Head>
+        <title>{data?.name}- GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ? (
         <div className="pt-[300px] pb-[300px]">
           <Loader />

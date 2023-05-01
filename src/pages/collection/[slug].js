@@ -5,6 +5,8 @@ import { MdVerified } from "react-icons/md";
 import axios from "axios";
 import NftCard from "@/components/cards/NftCard";
 import Loader from "@/components/Loader";
+import Head from "next/head";
+
 const CollectionPage = ({ fetch_collection_data, polybase }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -99,6 +101,15 @@ const CollectionPage = ({ fetch_collection_data, polybase }) => {
 
   return (
     <div>
+      <Head>
+        <title>NFT Collection - GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ?
         <div className="pt-[300px] pb-[300px]" id="pageBG">
           <Loader />

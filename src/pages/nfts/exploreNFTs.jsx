@@ -1,5 +1,6 @@
 import Loader from "@/components/Loader";
 import NftCard from "@/components/cards/NftCard";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -21,6 +22,15 @@ const ExploreNFTs = ({ fetch_all_nfts }) => {
   }, []);
   return (
     <section className="shop-area" id="pageBG">
+      <Head>
+        <title>Explore NFTs - GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ?
         <div className="pt-[250px] pb-[250px]">
           <Loader />

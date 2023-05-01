@@ -7,6 +7,7 @@ import NftCard from "@/components/cards/NftCard";
 import VideoCard from "@/components/cards/VideoCard";
 import LiveStream from "../content/live/[slug]";
 import LiveVideoCard from "@/components/cards/LiveVideoCard";
+import Head from "next/head";
 
 const GamerProfile = ({
   get_gamer,
@@ -60,6 +61,15 @@ const GamerProfile = ({
 
   return (
     <div id="pageBG">
+      <Head>
+        <title>Profile - GamerX</title>
+        <meta
+          name="description"
+          content="Gamers profile on GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ? (
         <div className="pt-[400px] pb-[400px]">
           <Loader />
@@ -124,6 +134,13 @@ const GamerProfile = ({
                           </li>
                         </ol>
                       </nav>
+                      <p className="mt-[8px] text-wheat">228 Followers</p>
+                      <button class=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2">
+                        Follow
+                      </button>
+                      <button class=" hover:bg-[#faa706] text-[#faa706] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2 ml-4">
+                        Following
+                      </button>
                     </div>
                   </div>
                   <div className="col-xl-6 col-lg-5 position-relative d-none d-lg-block">
@@ -154,7 +171,7 @@ const GamerProfile = ({
                     <div className="team__info-discord">
                       <div className="team__info-item">
                         <div className="team__info-icon">
-                          <Image src={heroLogo} alt="img" />
+                          <Image src={heroLogo} alt="img" height={100} width={100} className="h-[60px] w-[60px]" />
                         </div>
                         <div className="team__info-content">
                           <span className="sub" style={{ fontSize: "16px" }}>
@@ -199,7 +216,7 @@ const GamerProfile = ({
           </section>
 
           {/* tabs area  */}
-          <div className="w-[100%] h-[100%] flex justify-center align-middle py-4 cursor-pointer">
+          <div className="w-[100%] h-[100%] flex justify-center align-middle py-4 cursor-pointer" style={{ overflow: "auto", whiteSpace: "nowrap" }}>
             <div
               onClick={() => (
                 showVideos(false),
@@ -207,9 +224,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(true)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                NFTs && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"
+                }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -231,9 +247,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                videos && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"
+                }`}
             >
               <h4>Videos</h4>
               <></>
@@ -246,9 +261,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                lives && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"
+                }`}
             >
               <h4>Live Streams</h4>
             </div>
@@ -260,9 +274,8 @@ const GamerProfile = ({
                 showJobs(true),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                jobs && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"
+                }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -280,79 +293,95 @@ const GamerProfile = ({
 
           {/* tab info area  */}
           {NFTs && (
-            <div className="h-[400px] flex justify-center align-middle w-full">
-              {!user_nfts?.length && <h3 className="mt-16">No NFTs Found!</h3>}
-              <div className="flex flex-wrap gap-3">
-                {user_nfts?.map((e, index) => (
-                  <NftCard
-                    key={index}
-                    nftName={e.ipfsData.title}
-                    isListed={e.isListed}
-                    nftID={e.tokenId}
-                    nftCollection={e.ipfsData.collection_address}
-                    nftImage={e.ipfsData.image.replace(
-                      "ipfs://",
-                      "https://gateway.ipfscdn.io/ipfs/"
-                    )}
-                  />
-                ))}
+            <div className=" flex justify-center align-middle">
+              <div className="container mt-12 mb-12">
+                {!user_nfts?.length && <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No NFTs Found!</h3>}
+                <div className="row justify-content-center">
+                  <div className="flex flex-wrap justify-around align-middle">
+                    {user_nfts?.map((e, index) => (
+                      <NftCard
+                        key={index}
+                        nftName={e.ipfsData.title}
+                        isListed={e.isListed}
+                        nftID={e.tokenId}
+                        nftCollection={e.ipfsData.collection_address}
+                        nftImage={e.ipfsData.image.replace(
+                          "ipfs://",
+                          "https://gateway.ipfscdn.io/ipfs/"
+                        )}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}
           {videos && (
-            <div className="h-[400px] flex justify-center align-middle">
-              {!user_videos.length && (
-                <h3 className="mt-16">No Content Found!</h3>
-              )}
-              <div className="flex flex-wrap gap-3">
-                {user_videos?.map((e) => {
-                  const d = new Date();
-                  let time;
-                  if (e.video.upload_date) {
-                    time = `${d.getDate(e.video.upload_date)}/${
-                      d.getMonth(e.video.upload_date) + 1
-                    }/${d.getFullYear(e.video.upload_date)}`;
-                  }
-                  return (
-                    <VideoCard
-                      title={e.video.name}
-                      thumbnail={e.video.thumbnail}
-                      creatorAddress={e.owner.id}
-                      creatorImage={e.owner.profile_image}
-                      creatorName={e.owner.username}
-                      videoDate={time}
-                      videoID={e.video.id}
-                      key={e.video.id}
-                    />
-                  );
-                })}
+            <div className=" flex justify-center align-middle">
+              <div className="container mt-12 mb-12">
+                {!user_videos.length && (
+                  <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No Content Found!</h3>
+                )}
+                <div className="row justify-content-center">
+                  <div className="flex flex-wrap justify-around align-middle">
+                    {user_videos?.map((e) => {
+                      const d = new Date();
+                      let time;
+                      if (e.video.upload_date) {
+                        time = `${d.getDate(e.video.upload_date)}/${d.getMonth(e.video.upload_date) + 1
+                          }/${d.getFullYear(e.video.upload_date)}`;
+                      }
+                      return (
+                        <VideoCard
+                          title={e.video.name}
+                          thumbnail={e.video.thumbnail}
+                          creatorAddress={e.owner.id}
+                          creatorImage={e.owner.profile_image}
+                          creatorName={e.owner.username}
+                          videoDate={time}
+                          videoID={e.video.id}
+                          key={e.video.id}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           )}
           {lives && (
-            <div className="h-[400px] flex justify-center align-middle">
-              {!livestream.length && (
-                <h3 className="mt-16">No Live Streams!</h3>
-              )}
-              <div className="flex flex-wrap gap-3">
-                {livestream?.map((e) => {
-                  return (
-                    <LiveVideoCard
-                      liveID={e.livestream.id}
-                      liveTitle={e.livestream.title}
-                      thumbnail={e.livestream.thumbnail}
-                      ownerAddress={e.owner.id}
-                      ownerProfileImg={e.owner.profile_image}
-                      ownerUsername={e.owner.username}
-                    />
-                  );
-                })}
+            <div className=" flex justify-center align-middle">
+              <div className="container mt-12 mb-12">
+                {!livestream.length && (
+                  <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No Live Streams!</h3>
+                )}
+                <div className="row justify-content-center">
+                  <div className="flex flex-wrap justify-around align-middle">
+                    {livestream?.map((e) => {
+                      return (
+                        <LiveVideoCard
+                          liveID={e.livestream.id}
+                          liveTitle={e.livestream.title}
+                          thumbnail={e.livestream.thumbnail}
+                          ownerAddress={e.owner.id}
+                          ownerProfileImg={e.owner.profile_image}
+                          ownerUsername={e.owner.username}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           )}
           {jobs && (
-            <div className="h-[400px] flex justify-center align-middle">
-              <h3 className="mt-16">No Jobs Found!</h3>
+            <div className=" flex justify-center align-middle">
+              <div className="container mt-12 mb-12">
+                <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No Jobs Found!</h3>
+                <div className="row justify-content-center">
+                  {/* loop jobs here */}
+                </div>
+              </div>
             </div>
           )}
         </div>
