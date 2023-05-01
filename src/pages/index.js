@@ -343,31 +343,49 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                   <div className="col-xl-5 col-lg-6">
                     <div className="roadMap__content">
                       <h2 className="title">a look into our roadmap</h2>
-                      <p>Our future roadmap</p>
+                      <p>Our development roadmap from the very beginning...</p>
                       <a
-                        href="#"
+                        href="/about"
                         className="tg-btn-1"
                         style={{ textDecoration: "none" }}
                       >
-                        <span>roadmap</span>
+                        <span>About Us</span>
                       </a>
                     </div>
                   </div>
                   <div className="col-xl-7 col-lg-6">
                     <div className="roadMap__steps-wrap">
                       <div className="roadMap__steps-item active">
-                        <h3 className="title">Q1 2023</h3>
+                        <h3 className="title">Q2 2023</h3>
                         <ul className="roadMap__list list-wrap">
                           <li className="text-gray-400 ready style2 active">
-                            Initial Development
+                            Started GamerX Development at Theta Hack 2023
+                          </li>
+                          <li className="text-gray-400 ready style2 active">
+                            Introduced Live stream feature
+                          </li>
+                          <li className="text-gray-400 ready style2 active">
+                            Introduced create NFT collections feature
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Introduce create gaming job feature
                           </li>
                         </ul>
                       </div>
                       <div className="roadMap__steps-item">
-                        <h3 className="title">Q2 2023</h3>
+                        <h3 className="title">Q3 2023</h3>
                         <ul className="roadMap__list list-wrap">
-                          <li className="text-gray-400 ready style2 active">
-                            Coming soon..
+                          <li className="text-gray-400 ready style2">
+                            Introduce buy and sell gaming accounts feature
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Introduce organise tournaments feature
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Mainnet Deployment on Theta Chain
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Coming Soon..
                           </li>
                         </ul>
                       </div>

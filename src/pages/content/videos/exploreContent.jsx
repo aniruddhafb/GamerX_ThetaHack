@@ -12,6 +12,7 @@ const ExploreContent = ({ fetch_videos }) => {
     setLoading(true);
     const data = await fetch_videos();
     set_videos(data);
+    console.log({ viddata: data })
     setLoading(false);
   };
   useEffect(() => {
@@ -61,7 +62,7 @@ const ExploreContent = ({ fetch_videos }) => {
                         creatorImage={e.owner.profile_image}
                         creatorName={e.owner.username}
                         creatorAddress={e.owner.id}
-                        videoDate={"8/12/2023"}
+                        videoDate={e.video.upload_date}
                         videoID={e.video.id}
                       />
                     );

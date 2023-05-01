@@ -14,7 +14,7 @@ const uploadVideo = ({ upload_video }) => {
 
   const handle_submit = async (e) => {
     e.preventDefault();
-    upload_video(data);
+    await upload_video(data);
   };
 
   return (

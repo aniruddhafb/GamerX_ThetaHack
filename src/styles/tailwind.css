@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Sigmar&display=swap");
 @font-face {
   font-family: "berlin_sans_fb_demibold";
   src: url("../fonts/berlin_sans.woff") format("woff");
@@ -8,6 +10,7 @@
 :root {
   --tg-body-font-family: "Poppins", sans-serif;
   --tg-heading-font-family: "Barlow", sans-serif;
+  --tg-new-font-family: "Sigmar", cursive;
   --tg-berlin-font-family: "berlin_sans_fb_demibold";
   --tg-icon-font-family: "Font Awesome 5 Free";
   --tg-body-font-size: 16px;
@@ -2419,35 +2422,36 @@ html.show-preloader body {
 }
 .slider__content .title {
   margin: 0 0 21px 0;
-  font-size: 50px;
-  font-family: var(--tg-berlin-font-family);
+  font-size: 45px;
+  font-family: var(--tg-new-font-family);
+  /* font-family: var(--tg-berlin-font-family); */
   line-height: 0.8;
   text-shadow: -1px 5px 0px rgba(69, 248, 130, 0.66);
 }
 @media (max-width: 1500px) {
   .slider__content .title {
-    font-size: 50px;
+    font-size: 45px;
   }
 }
 @media (max-width: 1199.98px) {
   .slider__content .title {
-    font-size: 50px;
+    font-size: 45px;
   }
 }
 @media (max-width: 991.98px) {
   .slider__content .title {
-    font-size: 50px;
+    font-size: 45px;
   }
 }
 @media (max-width: 767.98px) {
   .slider__content .title {
-    font-size: 18vw;
+    font-size: 14vw;
     text-shadow: -1px 3px 0px rgba(69, 248, 130, 0.66);
   }
 }
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .slider__content .title {
-    font-size: 17vw;
+    font-size: 10vw;
     text-shadow: -1px 5px 0px rgba(69, 248, 130, 0.66);
   }
 }

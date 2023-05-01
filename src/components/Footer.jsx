@@ -13,15 +13,15 @@ const Footer = () => {
                         <div className="col-xl-4 col-lg-5 col-md-7">
                             <div className="footer-widget">
                                 <div className="footer-logo logo">
-                                    <Link href="#"><Image
+                                    <Link href="/"><Image
                                         src={gamerXlogo} alt="Logo" /></Link>
                                 </div>
                                 <div className="footer-text">
-                                    <p className="desc">An ultimate platform for gamers and influencers</p>
+                                    <p className="desc">An ultimate platform for gamers</p>
                                     <p className="social-title">Grow <span>With Us <i
                                         className="fas fa-angle-double-right"></i></span></p>
                                     <div className="footer-social">
-                                        <a href="https://github.com/aniruddhafb/GamerX_ThetaHack" target='_blank'>
+                                        <a href="https://twitter.com/platform28465" target='_blank'>
                                             <svg
                                                 className="h-5 w-5 fill-white hover:fill-green-400"
                                                 role="img"
@@ -48,10 +48,10 @@ const Footer = () => {
                             <div className="footer-widget widget_nav_menu">
                                 <h4 className="fw-title">Quick Links</h4>
                                 <ul className="list-wrap menu">
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Top Gamers</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Trade NFTs</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Watch Livestreams</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Explore Content</Link></li>
+                                    <li><Link href="/profile/exploreGamers" style={{ textDecoration: "none" }}>Top Gamers</Link></li>
+                                    <li><Link href="/nfts/exploreNFTs" style={{ textDecoration: "none" }}>Trade NFTs</Link></li>
+                                    <li><Link href="/content/live/exploreLiveContent" style={{ textDecoration: "none" }}>Watch Livestreams</Link></li>
+                                    <li><Link href="/content/videos/exploreContent" style={{ textDecoration: "none" }}>Explore Content</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -59,8 +59,8 @@ const Footer = () => {
                             <div className="footer-widget widget_nav_menu">
                                 <h4 className="fw-title">Other</h4>
                                 <ul className="list-wrap menu">
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>About Us</Link></li>
-                                    <li><Link href="#" style={{ textDecoration: "none" }}>Help</Link></li>
+                                    <li><Link href="/about" style={{ textDecoration: "none" }}>About Us</Link></li>
+                                    <li><Link href="/about" style={{ textDecoration: "none" }}>Help</Link></li>
                                 </ul>
                             </div>
                         </div>
@@ -69,7 +69,7 @@ const Footer = () => {
                                 <h4 className="fw-title">Newsletter</h4>
                                 <div className="footer-newsletter">
                                     <p>Subscribe to our newsletter to get latest updates on GamerX</p>
-                                    <form action="#"
+                                    <form action="#!"
                                         className="footer-newsletter-form">
                                         <input type="email" placeholder="Your email address" />
                                         <button type="submit"><i className="flaticon-paper-plane"></i></button>
