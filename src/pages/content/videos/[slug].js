@@ -97,6 +97,10 @@ const Video = ({ get_video_data, post_comment }) => {
                         </li>
                       </ul>
                     </div>
+                    {/* tip video  */}
+                    <button class=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2">
+                      Tip Video
+                    </button>
                     <h2 className="title">{data?.name}</h2>
                     <p>{data?.description}</p>
 
