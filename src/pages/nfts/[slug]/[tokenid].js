@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 
-const NftPage = ({ fetch_NFT_info, list_nft, signerAddress }) => {
+const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
   const [loading, isLoading] = useState(true);
   const [props, showProps] = useState(true);
   const [otherInfo, showOtherInfo] = useState(false);
   const [nft_data, set_nft_data] = useState({});
+
+  const [listing_price, set_listing_price] = useState(0);
 
   const router = useRouter();
   const { slug, tokenid } = router.query;
@@ -22,7 +24,12 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress }) => {
   };
 
   const sell_nft = async (tokenId, price, collection_address) => {
-    const res = await list_nft(tokenId, price, collection_address);
+    console.log({ listing_price });
+    const res = await list_nft(tokenId, listing_price, collection_address);
+  };
+
+  const buy_nft = async () => {
+    const res = await executeSale(tokenid, slug, nft_data.listingPrice);
   };
 
   useEffect(() => {
@@ -116,7 +123,12 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress }) => {
                 )}
                 {nft_data?.isListed ? (
                   <div className="cart-plus-minus d-flex flex-wrap align-items-center">
-                    <button className="shop__details-cart-btn">Buy</button>
+                    <button
+                      onClick={buy_nft}
+                      className="shop__details-cart-btn"
+                    >
+                      Buy
+                    </button>
                   </div>
                 ) : (
                   <div className="cart-plus-minus d-flex flex-wrap align-items-center">
@@ -125,12 +137,23 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress }) => {
                     </button>
                   </div>
                 )}
-                <button
-                  className="text-white"
-                  onClick={() => sell_nft(tokenid, "0.1", slug)}
-                >
-                  list nft
-                </button>
+                {nft_data?.user_id === signerAddress && (
+                  <div>
+                    <input
+                      type="text"
+                      name="listing_price"
+                      id=""
+                      placeholder="enter your listing price"
+                      onChange={(e) => set_listing_price(e.target.value)}
+                    />
+                    <button
+                      className="text-white"
+                      onClick={() => sell_nft(tokenid, listing_price, slug)}
+                    >
+                      list nft
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="shop__details-bottom">
                 <div className="product_share">

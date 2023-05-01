@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 //CONTRACTS
 import NFTCollection from "../../artifacts/contracts/NFTCollection.sol/NFTCollection.json";
 import Collection_Factory from "../../artifacts/contracts/CollectionFactory.sol/CollectionFactory.json";
+import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -40,7 +41,7 @@ const db = getFirestore(app);
 
 const default_nft_collection = "0x6E3249530dd3791Eafc61e320ebCef04116714cb";
 const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
-const marketplace = "0x9b964836d15266447308D82e90cB62517A080439";
+const marketplace_address = "0x9b964836d15266447308D82e90cB62517A080439";
 
 export default function App({ Component, pageProps }) {
   const [provider, set_provider] = useState("");
@@ -59,6 +60,8 @@ export default function App({ Component, pageProps }) {
   const connect_wallet = async () => {
     // delete_users("0xfD2958c381aE4fAaF77ed06F619d2246a8a3dB60");
     // delete_video("video_y4wtagafu2vvy1tzascigwca3k");
+    // create_user();
+
     try {
       if (window.ethereum == null) {
         console.log("MetaMask not installed; using read-only defaults");
@@ -100,6 +103,14 @@ export default function App({ Component, pageProps }) {
     } catch (error) {
       console.log({ connect_wallet: error.message });
     }
+  };
+
+  const create_user = async (video) => {
+    const db = polybase();
+    const res = await db
+      .collection("User")
+      .create([marketplace_address, "", "", "", "", "", [], ""]);
+    console.log(res.data);
   };
 
   const delete_video = async (video) => {
@@ -683,7 +694,7 @@ export default function App({ Component, pageProps }) {
 
   const marketplace = () => {
     const marketplace_contract = new ethers.Contract(
-      marketplaceAddress,
+      marketplace_address,
       NFTMarketplace.abi,
       signer
     );
@@ -696,7 +707,7 @@ export default function App({ Component, pageProps }) {
     const collection_contract = gamerX_collection(collection_address, signer);
     try {
       const txnApproval = await collection_contract.setApprovalForAll(
-        marketplace,
+        marketplace_address,
         true
       );
       await txnApproval.wait();
@@ -720,8 +731,7 @@ export default function App({ Component, pageProps }) {
           .record(`${collection_address}/${tokenId}`)
           .call("listNFT", [
             ethers.utils.parseEther(price).toString(),
-            chainIdMain.toString(),
-            db.collection("User").record(marketplace.toLowerCase()),
+            db.collection("User").record(marketplace_address),
           ]);
         console.log({ polybaseres: res });
         sendNFTListNoti(tokenId, price);
@@ -751,9 +761,10 @@ export default function App({ Component, pageProps }) {
         const res = await db
           .collection("NFT")
           .record(`${collection_address}/${tokenId}`)
-          .call("executeSale", [db.collection("User").record(signer_address)]);
+          .call("executeSale", [db.collection("User").record(signerAddress)]);
       }
-      sendNFTSaleNoti(tokenId, listing_price);
+      console.log(res.data);
+      // sendNFTSaleNoti(tokenId, listing_price);
     } catch (error) {
       console.log(error.message);
     }
@@ -800,6 +811,7 @@ export default function App({ Component, pageProps }) {
         get_user_videos={get_user_videos}
         list_nft={list_nft}
         get_user_livestream={get_user_livestream}
+        executeSale={executeSale}
       />
       <Footer />
     </>
