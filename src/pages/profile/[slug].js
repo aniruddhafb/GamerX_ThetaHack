@@ -4,12 +4,16 @@ import heroLogo from "../../../public/favicon.png";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import NftCard from "@/components/cards/NftCard";
+import VideoCard from "@/components/cards/VideoCard";
+import LiveStream from "../content/live/[slug]";
+import LiveVideoCard from "@/components/cards/LiveVideoCard";
 
 const GamerProfile = ({
   get_gamer,
   fetch_nfts_from_user_wallet,
   signerAddress,
   get_user_videos,
+  get_user_livestream,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -22,6 +26,8 @@ const GamerProfile = ({
   const [jobs, showJobs] = useState(false);
 
   const [user_nfts, set_user_nfts] = useState([]);
+  const [user_videos, set_user_videos] = useState([]);
+  const [livestream, set_livestream] = useState([]);
 
   const fetch_gamer = async () => {
     isLoading(true);
@@ -37,13 +43,19 @@ const GamerProfile = ({
 
   const get_videos = async () => {
     const res = await get_user_videos(signerAddress);
-    console.log(res);
+    set_user_videos(res);
+  };
+
+  const get_livestream = async () => {
+    const res = await get_user_livestream();
+    set_livestream(res);
   };
   useEffect(() => {
     if (!slug && !signerAddress) return;
     fetch_gamer();
     get_nfts();
-    // get_videos();
+    get_videos();
+    get_livestream();
   }, [slug, signerAddress]);
 
   return (
@@ -224,6 +236,7 @@ const GamerProfile = ({
               }`}
             >
               <h4>Videos</h4>
+              <></>
             </div>
 
             <div
@@ -288,12 +301,53 @@ const GamerProfile = ({
           )}
           {videos && (
             <div className="h-[400px] flex justify-center align-middle">
-              <h3 className="mt-16">No Content Found!</h3>
+              {!user_videos.length && (
+                <h3 className="mt-16">No Content Found!</h3>
+              )}
+              <div className="flex flex-wrap gap-3">
+                {user_videos?.map((e) => {
+                  const d = new Date();
+                  let time;
+                  if (e.video.upload_date) {
+                    time = `${d.getDate(e.video.upload_date)}/${
+                      d.getMonth(e.video.upload_date) + 1
+                    }/${d.getFullYear(e.video.upload_date)}`;
+                  }
+                  return (
+                    <VideoCard
+                      title={e.video.name}
+                      thumbnail={e.video.thumbnail}
+                      creatorAddress={e.owner.id}
+                      creatorImage={e.owner.profile_image}
+                      creatorName={e.owner.username}
+                      videoDate={time}
+                      videoID={e.video.id}
+                      key={e.video.id}
+                    />
+                  );
+                })}
+              </div>
             </div>
           )}
           {lives && (
             <div className="h-[400px] flex justify-center align-middle">
-              <h3 className="mt-16">No Live Streams!</h3>
+              {!livestream.length && (
+                <h3 className="mt-16">No Live Streams!</h3>
+              )}
+              <div className="flex flex-wrap gap-3">
+                {livestream?.map((e) => {
+                  return (
+                    <LiveVideoCard
+                      liveID={e.livestream.id}
+                      liveTitle={e.livestream.title}
+                      thumbnail={e.livestream.thumbnail}
+                      ownerAddress={e.owner.id}
+                      ownerProfileImg={e.owner.profile_image}
+                      ownerUsername={e.owner.username}
+                    />
+                  );
+                })}
+              </div>
             </div>
           )}
           {jobs && (

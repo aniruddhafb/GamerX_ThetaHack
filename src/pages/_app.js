@@ -338,6 +338,28 @@ export default function App({ Component, pageProps }) {
     router.push(`/content/live/${res.data.stream_id}`);
   };
 
+  const get_user_livestream = async () => {
+    const db = polybase();
+    const res = await db
+      .collection("LiveStream")
+      .where("owner", "==", {
+        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
+        id: signerAddress,
+      })
+      .get();
+
+    const livestreams = [];
+    for (const e of res.data) {
+      let obj = {};
+      const owner = await db.collection("User").record(e.data.owner.id).get();
+      console.log({ owner });
+      obj = { owner: owner.data, livestream: e.data };
+      livestreams.push(obj);
+    }
+
+    return livestreams;
+  };
+
   const get_liveStream_data = async (stream_id) => {
     const db = polybase();
     const res = await db
@@ -389,7 +411,15 @@ export default function App({ Component, pageProps }) {
         id: signerAddress,
       })
       .get();
-    return res.data;
+    console.log({ res });
+    let videos = [];
+    for (const e of res.data) {
+      let obj = {};
+      let owner = await db.collection("User").record(e.data.owner.id).get();
+      obj = { owner: owner.data, video: e.data };
+      videos.push(obj);
+    }
+    return videos;
   };
 
   const post_comment = async (video_id, comment) => {
@@ -591,18 +621,6 @@ export default function App({ Component, pageProps }) {
     }
   };
 
-  const test = async () => {
-    const db = polybase();
-    //FOR FETCHING ALL OF THE VIDEOS
-    const res = await db.collection("Video").get();
-
-    //TO FETCH PARTICULAR DATA
-    const res2 = await db
-      .collection("Video")
-      .where("name", "==", "Counter Strike Gameplay")
-      .get();
-  };
-
   //FETCHES NFTS BY USER FROM POLYBASE
   const fetch_nfts_from_user_wallet = async (signerAddress) => {
     try {
@@ -661,6 +679,15 @@ export default function App({ Component, pageProps }) {
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  const marketplace = () => {
+    const marketplace_contract = new ethers.Contract(
+      marketplaceAddress,
+      NFTMarketplace.abi,
+      signer
+    );
+    return marketplace_contract;
   };
 
   // lsit nft for sale
@@ -772,6 +799,7 @@ export default function App({ Component, pageProps }) {
         fetch_nfts_from_user_wallet={fetch_nfts_from_user_wallet}
         get_user_videos={get_user_videos}
         list_nft={list_nft}
+        get_user_livestream={get_user_livestream}
       />
       <Footer />
     </>
