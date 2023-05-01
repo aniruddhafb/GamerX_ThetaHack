@@ -72,8 +72,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                     <h6 className="sub-title">Gamerx.Space</h6>
                     <h2 className="title">Here Gamers Live!!</h2>
                     <p style={{ fontSize: "15px" }}>
-                      Watch content from your favourite <br /> gamers and Trade
-                      their NFTs..
+                      Connect with other gamers 🎮 <br /> Launch your NFT Collections on Theta 🎨 <br />Get incentivize for sharing your gaming content 💰
                     </p>
                     <div className="slider__btn">
                       <Link
@@ -112,7 +111,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
             <ul className="slider__brand-list list-wrap">
               <li style={{ marginTop: "30px" }}>
                 <h2 style={{ fontSize: "12px" }}>Powered By</h2>
-                <Link href="#">
+                <Link href="https://thetatoken.org/" target="_blank">
                   <Image
                     src={thetalogo}
                     style={{

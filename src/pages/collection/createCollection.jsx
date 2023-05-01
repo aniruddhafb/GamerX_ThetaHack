@@ -20,10 +20,10 @@ const CreateCollection = ({ create_collection }) => {
     isLoading(true);
     e.preventDefault();
     await create_collection(data);
-    // setTimeout(() => {
-    //   router.push(`/profile/${signer_address}`);
-    // }, 1000);
     isLoading(false);
+    setTimeout(() => {
+      router.push(`/collection/exploreCollections`);
+    }, 1000);
   };
 
   return (

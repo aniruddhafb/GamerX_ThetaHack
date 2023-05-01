@@ -21,6 +21,9 @@ const uploadVideo = ({ upload_video }) => {
     e.preventDefault();
     await upload_video(data);
     isLoading(false);
+    setTimeout(() => {
+      router.push(`/content/videos/exploreContent`);
+    }, 1000);
   };
 
   return (

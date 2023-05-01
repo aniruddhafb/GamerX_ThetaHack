@@ -134,6 +134,13 @@ const GamerProfile = ({
                           </li>
                         </ol>
                       </nav>
+                      <p className="mt-[8px] text-wheat">228 Followers</p>
+                      <button class=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2">
+                        Follow
+                      </button>
+                      <button class=" hover:bg-[#faa706] text-[#faa706] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2 ml-4">
+                        Following
+                      </button>
                     </div>
                   </div>
                   <div className="col-xl-6 col-lg-5 position-relative d-none d-lg-block">
@@ -164,7 +171,7 @@ const GamerProfile = ({
                     <div className="team__info-discord">
                       <div className="team__info-item">
                         <div className="team__info-icon">
-                          <Image src={heroLogo} alt="img" />
+                          <Image src={heroLogo} alt="img" height={100} width={100} className="h-[60px] w-[60px]" />
                         </div>
                         <div className="team__info-content">
                           <span className="sub" style={{ fontSize: "16px" }}>
@@ -209,7 +216,7 @@ const GamerProfile = ({
           </section>
 
           {/* tabs area  */}
-          <div className="w-[100%] h-[100%] flex justify-center align-middle py-4 cursor-pointer">
+          <div className="w-[100%] h-[100%] flex justify-center align-middle py-4 cursor-pointer" style={{ overflow: "auto", whiteSpace: "nowrap" }}>
             <div
               onClick={() => (
                 showVideos(false),
