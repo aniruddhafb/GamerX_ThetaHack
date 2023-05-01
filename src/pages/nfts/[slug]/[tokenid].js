@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
+import Head from "next/head";
 
 const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
   const [loading, isLoading] = useState(true);
@@ -39,6 +40,15 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
 
   return (
     <section className="shop-area shop-details-area" id="pageBG">
+      <Head>
+        <title>NFT - GamerX</title>
+        <meta
+          name="description"
+          content="NFTs GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ? (
         <Loader />
       ) : (

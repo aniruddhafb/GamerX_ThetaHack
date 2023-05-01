@@ -1,5 +1,6 @@
 import Loader from "@/components/Loader";
 import VideoCard from "@/components/cards/VideoCard";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -20,6 +21,15 @@ const ExploreContent = ({ fetch_videos }) => {
   }, []);
   return (
     <section className="shop-area" id="pageBG">
+      <Head>
+        <title>Explore Content - GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       <div className="container mt-12">
         <div className="row justify-content-center">
           <div>

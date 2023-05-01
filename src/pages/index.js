@@ -12,6 +12,7 @@ import thetalogo from "../../public/theta.webp";
 import ProfileCard from "@/components/cards/ProfileCard";
 import Loader from "@/components/Loader";
 import NftCard from "@/components/cards/NftCard";
+import Head from "next/head";
 
 export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
   const [videos, set_videos] = useState([]);
@@ -51,6 +52,15 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
 
   return (
     <>
+      <Head>
+        <title>GamerX - A platform for gamers</title>
+        <meta
+          name="description"
+          content="GamerX is a platform for gamers to share their content, launch their NFT collections, find gaming jobs, and a lot more stuff at one place"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {/* hero section  */}
       <section className="slider__area slider__bg" id="HeroMain">
         <div className="slider-activee">

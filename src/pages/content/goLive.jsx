@@ -1,5 +1,9 @@
+import Loader from "@/components/Loader";
+import Head from "next/head";
 import React, { useState } from "react";
 const GoLive = ({ go_live }) => {
+
+  const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
     thumbnail: "",
     stream_id: "",
@@ -13,37 +17,164 @@ const GoLive = ({ go_live }) => {
     console.log(data);
   };
   const handle_submit = async (e) => {
+    isLoading(true);
     e.preventDefault();
-    go_live(data);
+    await go_live(data);
+    isLoading(false);
   };
 
   return (
     <div id="pageBG">
-      <section className="blog-area blog-details-area">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="blog-post-wrapper">
-              <div className="comment-respond" style={{ marginTop: "30px" }}>
-                <h3 className="comment-reply-title">Go Live</h3>
-                <form
-                  onSubmit={handle_submit}
-                  className="comment-form"
-                  action="#"
-                >
-                  <p className="comment-notes pb-4">
-                    Go live on gamerX in few easy steps
-                  </p>
-                  <div className="row">
+      <Head>
+        <title>Go Live - GamerX</title>
+        <meta
+          name="description"
+          content="Go Live On GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+      {loading ?
+        <div className="pt-[300px] pb-[300px]" id="pageBG">
+          <Loader />
+        </div>
+        :
+        <section className="blog-area blog-details-area">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="blog-post-wrapper">
+                <div className="comment-respond" style={{ marginTop: "30px" }}>
+                  <h3 className="comment-reply-title">Go Live</h3>
+                  <form
+                    onSubmit={handle_submit}
+                    className="comment-form"
+                    action="#"
+                  >
+                    <p className="comment-notes pb-4">
+                      Go live on gamerX in few easy steps
+                    </p>
+                    <div className="row">
+                      <div className="col-sm-6 relative">
+                        <div className="form-grp ">
+                          <input
+                            name="thumbnail"
+                            onChange={(e) =>
+                              set_data({ ...data, thumbnail: e.target.files[0] })
+                            }
+                            type="file"
+                            required
+                          />
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Live Thumbnail*
+                        </span>
+                      </div>
+
+                      {/* stream id  */}
+                      <div className="col-sm-6 relative">
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="stream_id"
+                            onChange={handle_change}
+                            placeholder="Enter your stream ID"
+                            required
+                          />
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Stream ID*
+                        </span>
+                      </div>
+
+                      {/* title  */}
+                      <div className="relative mt-4">
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="title"
+                            onChange={handle_change}
+                            placeholder="Give a title to your live"
+                            required
+                          />
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Stream Title*
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* desc  */}
+                    <div className=" relative mt-4">
+                      <div className="form-grp">
+                        <textarea
+                          name="description"
+                          onChange={handle_change}
+                          placeholder="Add a description for your live"
+                        ></textarea>
+                      </div>
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "-30px",
+                          color: "white",
+                          fontFamily: "berlin_sans_fb_demibold",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Stream Description*
+                      </span>
+                    </div>
+
+                    {/* stream tag  */}
                     <div className="col-sm-6 relative">
-                      <div className="form-grp ">
-                        <input
-                          name="thumbnail"
+                      <div className="form-grp">
+                        <select
                           onChange={(e) =>
-                            set_data({ ...data, thumbnail: e.target.files[0] })
+                            set_data({
+                              ...data,
+                              tag: e.target.value,
+                            })
                           }
-                          type="file"
-                          required
-                        />
+                          name="Tag"
+                          style={{ marginTop: "55px" }}
+                        >
+                          <option value="Gameplay" className="bg-gray-800">
+                            Gameplay
+                          </option>
+                          <option value={"Reaction"} className="bg-gray-800">
+                            Reaction
+                          </option>
+                          <option value={"Informative"} className="bg-gray-800">
+                            Informative
+                          </option>
+                          <option value={"Esports"} className="bg-gray-800">
+                            Esports
+                          </option>
+                        </select>
                       </div>
                       <span
                         style={{
@@ -54,128 +185,18 @@ const GoLive = ({ go_live }) => {
                           textTransform: "uppercase",
                         }}
                       >
-                        Live Thumbnail*
+                        Stream Tag*{" "}
                       </span>
                     </div>
 
-                    {/* stream id  */}
-                    <div className="col-sm-6 relative">
-                      <div className="form-grp">
-                        <input
-                          type="text"
-                          name="stream_id"
-                          onChange={handle_change}
-                          placeholder="Enter your stream ID"
-                          required
-                        />
-                      </div>
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "-30px",
-                          color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Stream ID*
-                      </span>
-                    </div>
-
-                    {/* title  */}
-                    <div className="relative mt-4">
-                      <div className="form-grp">
-                        <input
-                          type="text"
-                          name="title"
-                          onChange={handle_change}
-                          placeholder="Give a title to your live"
-                          required
-                        />
-                      </div>
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "-30px",
-                          color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Stream Title*
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* desc  */}
-                  <div className=" relative mt-4">
-                    <div className="form-grp">
-                      <textarea
-                        name="description"
-                        onChange={handle_change}
-                        placeholder="Add a description for your live"
-                      ></textarea>
-                    </div>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "-30px",
-                        color: "white",
-                        fontFamily: "berlin_sans_fb_demibold",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Stream Description*
-                    </span>
-                  </div>
-
-                  {/* stream tag  */}
-                  <div className="col-sm-6 relative">
-                    <div className="form-grp">
-                      <select
-                        onChange={(e) =>
-                          set_data({
-                            ...data,
-                            tag: e.target.value,
-                          })
-                        }
-                        name="Tag"
-                        style={{ marginTop: "55px" }}
-                      >
-                        <option value="Gameplay" className="bg-gray-800">
-                          Gameplay
-                        </option>
-                        <option value={"Reaction"} className="bg-gray-800">
-                          Reaction
-                        </option>
-                        <option value={"Informative"} className="bg-gray-800">
-                          Informative
-                        </option>
-                        <option value={"Esports"} className="bg-gray-800">
-                          Esports
-                        </option>
-                      </select>
-                    </div>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "-30px",
-                        color: "white",
-                        fontFamily: "berlin_sans_fb_demibold",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Stream Tag*{" "}
-                    </span>
-                  </div>
-
-                  <button type="submit">Start Streaming</button>
-                </form>
+                    <button type="submit">Start Streaming</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      }
     </div>
   );
 };

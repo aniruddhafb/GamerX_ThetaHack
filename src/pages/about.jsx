@@ -8,10 +8,20 @@ import demIMG from "../../public/services_img02.jpg"
 import ani from "../../public/ani.jpg"
 import shravan from "../../public/srhavan.jpeg"
 import Link from 'next/link'
+import Head from 'next/head'
 
 const about = () => {
     return (
         <>
+            <Head>
+                <title>About - GamerX</title>
+                <meta
+                    name="description"
+                    content="About GamerX"
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.png" />
+            </Head>
             {/* intro  */}
             <section className="about__area-three section-pt-130 section-pb-130 ">
                 <div className="container mt-12">

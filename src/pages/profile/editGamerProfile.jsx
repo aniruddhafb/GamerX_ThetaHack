@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import Loader from "@/components/Loader";
+import Head from "next/head";
 
 const EditGamerProfile = ({ update_profile, user_data }) => {
   const [data, set_data] = useState({
@@ -29,11 +30,12 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
   const handle_submit = async (e) => {
     isLoading(true);
     e.preventDefault();
-    update_profile(data);
+    await update_profile(data);
     isLoading(false);
   };
 
   useEffect(() => {
+    isLoading(true);
     if (!user_data) return;
     set_data({
       ...user_data,
@@ -47,12 +49,24 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
         ? user_data.favourite_game
         : "Axie Infinity",
     });
+    isLoading(false);
   }, [user_data]);
 
   return (
     <main className="pt-[5.5rem] lg:pt-24" id="pageBG">
+      <Head>
+        <title>Edit profile - GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ?
-        <Loader />
+        <div className="pt-[300px] pb-[300px]" id="pageBG">
+          <Loader />
+        </div>
         :
         <form onSubmit={handle_submit}>
           <div className="relative">

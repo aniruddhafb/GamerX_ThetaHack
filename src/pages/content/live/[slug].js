@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import Link from "next/link";
 import Loader from "@/components/Loader";
+import Head from "next/head";
 
 const LiveStream = ({
   get_liveStream_data,
@@ -91,6 +92,15 @@ const LiveStream = ({
 
   return (
     <section className="blog-area blog-details-area" id="pageBG">
+      <Head>
+        <title>{data?.stream_data.title} - GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ? (
         <div className="pt-[300px] pb-[300px]">
           <Loader />

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { MdVerified } from "react-icons/md";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import Loader from "@/components/Loader";
+import Head from "next/head";
 
 const ExploreCollections = ({ get_all_collections }) => {
   const [collections, set_collections] = useState([]);
@@ -23,6 +24,15 @@ const ExploreCollections = ({ get_all_collections }) => {
 
   return (
     <section className="shop-area" id="pageBG">
+      <Head>
+        <title>Explore Collections - GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ?
         <div className="pt-[250px] pb-[250px]">
           <Loader />

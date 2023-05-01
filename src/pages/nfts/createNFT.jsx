@@ -1,4 +1,5 @@
 import Loader from "@/components/Loader";
+import Head from "next/head";
 import Link from "next/link";
 import { React, useState, useEffect } from "react";
 
@@ -61,6 +62,15 @@ const CreateNFT = ({
 
   return (
     <div id="pageBG">
+      <Head>
+        <title>Create NFT - GamerX</title>
+        <meta
+          name="description"
+          content="About GamerX"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
       {loading ?
         <div className="pt-[300px] pb-[300px]" id="pageBG">
           <Loader />
