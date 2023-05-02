@@ -71,13 +71,10 @@ const LiveStream = ({
     );
     const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
       let messages = [];
-      snapshot.forEach(async (doc) => {
-        let user = doc.data();
-        const user_detail = await user_info(user.user);
+      snapshot.forEach((doc) => {
         messages.push({
           ...doc.data(),
           id: doc.id,
-          profile_image: user_detail.profile_image,
         });
       });
       set_messages(messages);
@@ -94,10 +91,7 @@ const LiveStream = ({
     <section className="blog-area blog-details-area" id="pageBG">
       <Head>
         <title>{data?.stream_data.title} - GamerX</title>
-        <meta
-          name="description"
-          content="About GamerX"
-        />
+        <meta name="description" content="About GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
@@ -265,8 +259,9 @@ const LiveStream = ({
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
-                            }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
+                            e.user === signerAddress && "ml-auto justify-end"
+                          }`}
                         >
                           {/* <Image
                             // src={e.profile_image?.replace(
@@ -279,14 +274,17 @@ const LiveStream = ({
                             className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 mt-4"
                           ></Image> */}
                           <div>
-                            <Link href={`/profile/${e.user}`} style={{ textDecoration: "none" }} className="text-xs text-gray-500 leading-none">
-                              {e.user.slice(0, 5) +
-                                "..." +
-                                e.user.slice(38)}
+                            <Link
+                              href={`/profile/${e.user}`}
+                              style={{ textDecoration: "none" }}
+                              className="text-xs text-gray-500 leading-none"
+                            >
+                              {e.user.slice(0, 5) + "..." + e.user.slice(38)}
                             </Link>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
-                                }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
+                                e.user === signerAddress && "bg-green-600"
+                              }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>

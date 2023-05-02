@@ -33,6 +33,7 @@ const GamerProfile = ({
   const fetch_gamer = async () => {
     isLoading(true);
     const res = await get_gamer(slug);
+    console.log({ res });
     set_data(res);
     isLoading(false);
   };
@@ -63,10 +64,7 @@ const GamerProfile = ({
     <div id="pageBG">
       <Head>
         <title>Profile - GamerX</title>
-        <meta
-          name="description"
-          content="Gamers profile on GamerX"
-        />
+        <meta name="description" content="Gamers profile on GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
@@ -171,7 +169,13 @@ const GamerProfile = ({
                     <div className="team__info-discord">
                       <div className="team__info-item">
                         <div className="team__info-icon">
-                          <Image src={heroLogo} alt="img" height={100} width={100} className="h-[60px] w-[60px]" />
+                          <Image
+                            src={heroLogo}
+                            alt="img"
+                            height={100}
+                            width={100}
+                            className="h-[60px] w-[60px]"
+                          />
                         </div>
                         <div className="team__info-content">
                           <span className="sub" style={{ fontSize: "16px" }}>
@@ -192,7 +196,7 @@ const GamerProfile = ({
                             </div>
                             <div className="team__info-content">
                               <span className="sub">Pro Gamer At</span>
-                              <h5 className="title">Pubg Mobile</h5>
+                              <h5 className="title">{data?.favourite_game}</h5>
                             </div>
                           </div>
                         </li>
@@ -216,7 +220,10 @@ const GamerProfile = ({
           </section>
 
           {/* tabs area  */}
-          <div className="w-[100%] h-[100%] flex justify-center align-middle py-4 cursor-pointer" style={{ overflow: "auto", whiteSpace: "nowrap" }}>
+          <div
+            className="w-[100%] h-[100%] flex justify-center align-middle py-4 cursor-pointer"
+            style={{ overflow: "auto", whiteSpace: "nowrap" }}
+          >
             <div
               onClick={() => (
                 showVideos(false),
@@ -224,8 +231,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(true)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                NFTs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -247,8 +255,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                videos && "border-b-green-500"
+              }`}
             >
               <h4>Videos</h4>
               <></>
@@ -261,8 +270,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                lives && "border-b-green-500"
+              }`}
             >
               <h4>Live Streams</h4>
             </div>
@@ -274,8 +284,9 @@ const GamerProfile = ({
                 showJobs(true),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                jobs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -295,7 +306,11 @@ const GamerProfile = ({
           {NFTs && (
             <div className=" flex justify-center align-middle">
               <div className="container mt-12 mb-12">
-                {!user_nfts?.length && <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No NFTs Found!</h3>}
+                {!user_nfts?.length && (
+                  <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
+                    No NFTs Found!
+                  </h3>
+                )}
                 <div className="row justify-content-center">
                   <div className="flex flex-wrap justify-around align-middle">
                     {user_nfts?.map((e, index) => (
@@ -320,7 +335,9 @@ const GamerProfile = ({
             <div className=" flex justify-center align-middle">
               <div className="container mt-12 mb-12">
                 {!user_videos.length && (
-                  <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No Content Found!</h3>
+                  <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
+                    No Content Found!
+                  </h3>
                 )}
                 <div className="row justify-content-center">
                   <div className="flex flex-wrap justify-around align-middle">
@@ -328,8 +345,9 @@ const GamerProfile = ({
                       const d = new Date();
                       let time;
                       if (e.video.upload_date) {
-                        time = `${d.getDate(e.video.upload_date)}/${d.getMonth(e.video.upload_date) + 1
-                          }/${d.getFullYear(e.video.upload_date)}`;
+                        time = `${d.getDate(e.video.upload_date)}/${
+                          d.getMonth(e.video.upload_date) + 1
+                        }/${d.getFullYear(e.video.upload_date)}`;
                       }
                       return (
                         <VideoCard
@@ -353,7 +371,9 @@ const GamerProfile = ({
             <div className=" flex justify-center align-middle">
               <div className="container mt-12 mb-12">
                 {!livestream.length && (
-                  <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No Live Streams!</h3>
+                  <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
+                    No Live Streams!
+                  </h3>
                 )}
                 <div className="row justify-content-center">
                   <div className="flex flex-wrap justify-around align-middle">
@@ -377,7 +397,9 @@ const GamerProfile = ({
           {jobs && (
             <div className=" flex justify-center align-middle">
               <div className="container mt-12 mb-12">
-                <h3 className="mt-16 mb-16" style={{ textAlign: 'center' }}>No Jobs Found!</h3>
+                <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
+                  No Jobs Found!
+                </h3>
                 <div className="row justify-content-center">
                   {/* loop jobs here */}
                 </div>

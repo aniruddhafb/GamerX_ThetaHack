@@ -6,10 +6,17 @@ import moment from "moment/moment";
 import Loader from "@/components/Loader";
 import Head from "next/head";
 
-const Video = ({ get_video_data, post_comment }) => {
+const Video = ({
+  get_video_data,
+  post_comment,
+  tip_video,
+  fetch_video_tips,
+}) => {
   const router = useRouter();
   const { slug } = router.query;
   const [comments_length, set_comments_length] = useState(0);
+  const [tip_amount, set_tip_amount] = useState(0);
+  const [tips, set_tips] = useState([]);
 
   const [loading, isLoading] = useState();
   const [data, set_data] = useState();
@@ -18,6 +25,15 @@ const Video = ({ get_video_data, post_comment }) => {
   const do_comment = async (e) => {
     e.preventDefault();
     await post_comment(slug, comment);
+  };
+
+  const make_tip = async () => {
+    await tip_video(slug, tip_amount, data.owner.id);
+  };
+
+  const get_tips = async () => {
+    const tips = await fetch_video_tips();
+    set_tips(tips);
   };
 
   useEffect(() => {
@@ -30,16 +46,14 @@ const Video = ({ get_video_data, post_comment }) => {
 
     if (!slug) return;
     video_data();
+    get_tips();
   }, [slug]);
 
   return (
     <main className="main--area" id="pageBG">
       <Head>
         <title>{data?.name}- GamerX</title>
-        <meta
-          name="description"
-          content="About GamerX"
-        />
+        <meta name="description" content="About GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
@@ -93,7 +107,18 @@ const Video = ({ get_video_data, post_comment }) => {
                         </li>
                         <li>
                           <i className="far fa-comments"></i>
-                          {data?.comments.length} comments
+                          {data?.comments.length - 1} comments
+                        </li>
+                        <li>
+                          <i className="far fa-comments"></i>
+                          <input
+                            type="number"
+                            name="tip"
+                            id="tip"
+                            step="any"
+                            onChange={(e) => set_tip_amount(e.target.value)}
+                          />
+                          <button onClick={make_tip}>tip</button>
                         </li>
                       </ul>
                     </div>
@@ -145,8 +170,9 @@ const Video = ({ get_video_data, post_comment }) => {
                     const d = new Date();
                     let time;
                     if (e.comment.data?.date) {
-                      time = `${d.getDate(e.comment.data?.date)}/${d.getMonth(e.comment.data?.date) + 1
-                        }/${d.getFullYear(e.comment.data?.date)}`;
+                      time = `${d.getDate(e.comment.data?.date)}/${
+                        d.getMonth(e.comment.data?.date) + 1
+                      }/${d.getFullYear(e.comment.data?.date)}`;
                     }
                     return (
                       e.owner && (
@@ -171,7 +197,10 @@ const Video = ({ get_video_data, post_comment }) => {
                                     <h6 className="name">
                                       {e.owner.data?.username}
                                     </h6>
-                                    <span className="date text-white" style={{ fontSize: "13px" }}>
+                                    <span
+                                      className="date text-white"
+                                      style={{ fontSize: "13px" }}
+                                    >
                                       {time}
                                     </span>
                                   </div>
