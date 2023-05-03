@@ -15,7 +15,7 @@ const LiveVideoCard = ({
     <Link
       href={`/content/live/${liveID}`}
       className="col-xxl-4 col-xl-5 col-lg-6 col-md-9"
-      style={{ textDecoration: "none" }}
+      style={{ textDecoration: "none", margin: "8px" }}
     >
       <div className="nft-item__box" style={{ backgroundColor: "transparent" }}>
         <div className="nft-item__content">
