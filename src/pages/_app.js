@@ -41,7 +41,7 @@ const db = getFirestore(app);
 
 const default_nft_collection = "0x6E3249530dd3791Eafc61e320ebCef04116714cb";
 const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
-const marketplace_address = "0x9b964836d15266447308D82e90cB62517A080439";
+const marketplace_address = "0x29dB031d70B16837e8a0C922603A918C35cCF95A";
 
 export default function App({ Component, pageProps }) {
   const [provider, set_provider] = useState("");
@@ -141,6 +141,41 @@ export default function App({ Component, pageProps }) {
         "Theta Chain Image",
         "365",
       ]);
+  };
+
+  const tip_video = async (video_id, tip_amount, recipient) => {
+    console.log({ video_id, tip_amount, recipient });
+    try {
+      const contract = marketplace();
+      const db = polybase();
+      const res = await contract.tip_creator(video_id, recipient, {
+        value: ethers.utils.parseEther(tip_amount),
+      });
+      console.log(res);
+      const tip_res = await contract.tips(video_id);
+      console.log({ tip_res });
+      const db_tip = await db
+        .collection("Tip")
+        .create([
+          uuidv4(),
+          db.collection("User").record(signerAddress),
+          ethers.utils.parseEther(tip_amount).toString(),
+          db.collection("Video").record(video_id),
+        ]);
+      console.log({ db_tip });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const fetch_video_tips = async (video_id) => {
+    const db = polybase();
+    const res = await db
+      .collection("Tip")
+      .where("videoId", "==", video_id)
+      .get();
+    console.log({ tips: res.data });
+    return res.data;
   };
 
   const gamerX_collection = (collection_address, signer) => {
@@ -248,6 +283,7 @@ export default function App({ Component, pageProps }) {
           res4.data.body.videos[0].state,
           thumbnail_ipfs,
           Date.now().toString(),
+          data.tag,
         ]);
 
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
@@ -693,6 +729,7 @@ export default function App({ Component, pageProps }) {
   };
 
   const marketplace = () => {
+    console.log({ marketplace_address });
     const marketplace_contract = new ethers.Contract(
       marketplace_address,
       NFTMarketplace.abi,
@@ -812,6 +849,8 @@ export default function App({ Component, pageProps }) {
         list_nft={list_nft}
         get_user_livestream={get_user_livestream}
         executeSale={executeSale}
+        tip_video={tip_video}
+        fetch_video_tips={fetch_video_tips}
       />
       <Footer />
     </>

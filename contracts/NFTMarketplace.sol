@@ -20,6 +20,14 @@ contract NFTMarketplace {
         bool currentlyListed;
     }
 
+    struct Tip{
+        string video_id;
+        uint256 total_tip;
+        address recipient;
+    }
+
+    mapping(string => Tip) public tips;
+
     event TokenListedSuccess(
         uint256 nftId,
         uint256 tokenId,
@@ -34,6 +42,18 @@ contract NFTMarketplace {
 
     constructor() {
         owner = payable(msg.sender);
+    }
+
+    function tip_creator(string memory _video_id, address payable _recipient) public payable{
+        require(msg.value > 0, "Please send a valid value");
+        uint256 total_tip = tips[_video_id].total_tip;
+        Tip memory tip = Tip(
+            _video_id,
+            total_tip + msg.value,
+            _recipient
+        );
+        tips[_video_id] = tip;
+        payable(_recipient).transfer(msg.value);
     }
 
     function ListToken(
@@ -181,4 +201,6 @@ contract NFTMarketplace {
     function getCurrentToken() public view returns (uint256) {
         return _nftId.current();
     }
+
+    receive() external payable {}
 }
