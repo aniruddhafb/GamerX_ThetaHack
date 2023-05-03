@@ -180,10 +180,22 @@ const Video = ({
                       </div>
                     }
 
-
-
                     <h2 className="title">{data?.name}</h2>
                     <p>{data?.description}</p>
+
+                    <div style={{ borderTop: "2px solid #19222b", paddingTop: "25px" }}>
+                      <h4 className="title" style={{ fontSize: "16px", display: "flex" }}>Tipping History
+                        <Image
+                          src="../../tfuel.png"
+                          height={100}
+                          width={100}
+                          className="h-[18px] w-[18px] ml-[5px] mt-[2px]"
+                        /></h4>
+                      <p>
+                        {/* loop here  */}
+                        <span> | <a href="/" style={{ textDecoration: "none" }}>0x7326...233</a> has tipped 2 TFUEL Tokens </span>
+                      </p>
+                    </div>
 
                     <div className="blog-details-bottom">
                       <div className="row">
