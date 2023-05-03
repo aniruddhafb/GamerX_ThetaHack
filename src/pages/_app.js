@@ -283,6 +283,7 @@ export default function App({ Component, pageProps }) {
           res4.data.body.videos[0].state,
           thumbnail_ipfs,
           Date.now().toString(),
+          data.tag,
         ]);
 
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);

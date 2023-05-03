@@ -167,13 +167,12 @@ const Video = ({
                     {data?.comments.length - 1} Comments
                   </h4>
                   {data?.comments.map((e, index) => {
-                    const d = new Date();
-                    let time;
-                    if (e.comment.data?.date) {
-                      time = `${d.getDate(e.comment.data?.date)}/${
-                        d.getMonth(e.comment.data?.date) + 1
-                      }/${d.getFullYear(e.comment.data?.date)}`;
-                    }
+                    const date = new Date(parseInt(e.comment.data?.date));
+                    const year = date.getFullYear(); // returns the year (e.g. 2023)
+                    const month = date.getMonth(); // returns the month (0-11; 0=January, 1=February, etc.)
+                    const day = date.getDate();
+
+                    const time = `${day}/${month}/${year}`;
                     return (
                       e.owner && (
                         <div key={index} className="latest-comments">

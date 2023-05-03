@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
+import moment from "moment";
 const VideoCard = ({
   thumbnail,
   title,
@@ -11,11 +11,12 @@ const VideoCard = ({
   videoDate,
   videoID,
 }) => {
-  const d = new Date();
-  let time = `${d.getDate(videoDate)}/${
-    d.getMonth(videoDate) + 1
-  }/${d.getFullYear(videoDate)}`;
+  const date = new Date(parseInt(videoDate));
+  const year = date.getFullYear(); // returns the year (e.g. 2023)
+  const month = date.getMonth(); // returns the month (0-11; 0=January, 1=February, etc.)
+  const day = date.getDate();
 
+  const time = `${day}/${month}/${year}`;
   return (
     <div
       className="nft-item__box m-4 w-[340px]"
