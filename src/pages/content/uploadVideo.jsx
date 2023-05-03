@@ -107,7 +107,9 @@ const uploadVideo = ({ upload_video }) => {
                           Video Thumbnail*
                         </span>
                       </div>
-                      <div className="relative mt-4">
+
+                      {/* vid title  */}
+                      <div className="relative mt-4 mb-[-25px]">
                         <div className="form-grp">
                           <input
                             type="text"
@@ -130,89 +132,9 @@ const uploadVideo = ({ upload_video }) => {
                         </span>
                       </div>
                     </div>
-                    <div className="col-sm-6 relative">
-                      <div className="form-grp">
-                        <select
-                          onChange={(e) =>
-                            set_data({
-                              ...data,
-                              tag: e.target.value,
-                            })
-                          }
-                          name="Tag"
-                          style={{ marginTop: "55px" }}
-                        >
-                          <option
-                            selected={data.tag === "P2E Game"}
-                            className="bg-gray-800"
-                            value="P2E Game"
-                          >
-                            P2E Game
-                          </option>
-                          <option
-                            selected={data.tag === "Music NFT"}
-                            value="Music NFT"
-                            className="bg-gray-800"
-                          >
-                            Music NFT
-                          </option>
-                          <option
-                            selected={data.tag === "NFT Ticket"}
-                            value="NFT Ticket"
-                            className="bg-gray-800"
-                          >
-                            NFT Ticket
-                          </option>
-                          <option
-                            selected={data.tag === "Collectibles"}
-                            value="Collectibles"
-                            className="bg-gray-800"
-                          >
-                            Collectibles
-                          </option>
-                          <option
-                            selected={data.tag === "Avatar"}
-                            value="Avatar"
-                            className="bg-gray-800"
-                          >
-                            Avatar
-                          </option>
-                          <option
-                            selected={data.tag === "Art"}
-                            value="Art"
-                            className="bg-gray-800"
-                          >
-                            Art
-                          </option>
-                          <option
-                            selected={data.tag === "Game Skins"}
-                            value="Game Skins"
-                            className="bg-gray-800"
-                          >
-                            Game Skins
-                          </option>
-                          <option
-                            selected={data.tag === "Game Account"}
-                            value="Game Account"
-                            className="bg-gray-800"
-                          >
-                            Game Account
-                          </option>
-                        </select>
-                      </div>
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "-30px",
-                          color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        NFT Tag*{" "}
-                      </span>
-                    </div>
-                    <div className=" relative mt-4">
+
+                    {/* vid desc  */}
+                    <div className=" relative mt-16">
                       <div className="form-grp">
                         <textarea
                           name="description"
@@ -232,6 +154,63 @@ const uploadVideo = ({ upload_video }) => {
                         Video Description*
                       </span>
                     </div>
+
+                    {/* tags  */}
+                    <div className="col-sm-6 relative">
+                      <div className="form-grp">
+                        <select
+                          onChange={(e) =>
+                            set_data({
+                              ...data,
+                              tag: e.target.value,
+                            })
+                          }
+                          name="Tag"
+                          style={{ marginTop: "55px" }}
+                        >
+                          <option
+                            selected={data.tag === "Gameplay"}
+                            className="bg-gray-800"
+                            value="Gameplay"
+                          >
+                            Gameplay
+                          </option>
+                          <option
+                            selected={data.tag === "Informative"}
+                            className="bg-gray-800"
+                            value="Informative"
+                          >
+                            Informative
+                          </option>
+                          <option
+                            selected={data.tag === "Tips & tricks"}
+                            className="bg-gray-800"
+                            value="Tips & tricks"
+                          >
+                            Tips & tricks
+                          </option>
+                          <option
+                            selected={data.tag === "Product Launch"}
+                            className="bg-gray-800"
+                            value="Product Launch"
+                          >
+                            Product Launch
+                          </option>
+                        </select>
+                      </div>
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "-30px",
+                          color: "white",
+                          fontFamily: "berlin_sans_fb_demibold",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Video Tag*{" "}
+                      </span>
+                    </div>
+
                     <button type="submit">Upload</button>
                   </form>
                 </div>
