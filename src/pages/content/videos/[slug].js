@@ -25,6 +25,7 @@ const Video = ({
   const do_comment = async (e) => {
     e.preventDefault();
     await post_comment(slug, comment);
+    await video_data();
   };
 
   const make_tip = async () => {
@@ -35,17 +36,17 @@ const Video = ({
     const tips = await fetch_video_tips();
     set_tips(tips);
   };
+  const video_data = async () => {
+    isLoading(true);
+    const res = await get_video_data(slug);
+    set_data(res);
+    isLoading(false);
+  };
 
   useEffect(() => {
-    const video_data = async () => {
-      isLoading(true);
-      const res = await get_video_data(slug);
-      set_data(res);
-      isLoading(false);
-    };
-
     if (!slug) return;
     video_data();
+    console.log("render");
     get_tips();
   }, [slug]);
 
