@@ -48,10 +48,7 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
     <section className="shop-area shop-details-area" id="pageBG">
       <Head>
         <title>NFT - GamerX</title>
-        <meta
-          name="description"
-          content="NFTs GamerX"
-        />
+        <meta name="description" content="NFTs GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
@@ -300,19 +297,25 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
                   <div className={`tab-pane ${props && "active"}`}>
                     <div className="rounded-t-2lg rounded-b-2lg rounded-tl-none p-6 dark:border-jacarta-600 dark:bg-jacarta-700 md:p-10">
                       <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4">
-                        {nft_data?.ipfsData?.properties.map((e) => (
-                          <a
-                            style={{ textDecoration: "none", color: "#198754" }}
-                            className="imageBck flex flex-col rounded-lg p-3 py-4 text-center transition-shadow hover:shadow-xl"
-                          >
-                            <span className="text-sm uppercase text-accent">
-                              {e.type}
-                            </span>
-                            <span className="text-base text-jacarta-700 dark:text-white pt-[5px]">
-                              {e.value}
-                            </span>
-                          </a>
-                        ))}
+                        {nft_data?.ipfsData?.properties.map(
+                          (e) =>
+                            e.type && (
+                              <a
+                                style={{
+                                  textDecoration: "none",
+                                  color: "#198754",
+                                }}
+                                className="imageBck flex flex-col rounded-lg p-3 py-4 text-center transition-shadow hover:shadow-xl"
+                              >
+                                <span className="text-sm uppercase text-accent">
+                                  {e.type}
+                                </span>
+                                <span className="text-base text-jacarta-700 dark:text-white pt-[5px]">
+                                  {e.value}
+                                </span>
+                              </a>
+                            )
+                        )}
                       </div>
                       {nft_data?.ipfsData?.properties.length <= 0 && (
                         <h5 scope="row" style={{ color: "#adb0bc" }}>

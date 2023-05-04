@@ -55,6 +55,7 @@ const Video = ({
 
     if (!slug) return;
     video_data();
+    console.log("render");
     get_tips();
   }, [slug]);
 
