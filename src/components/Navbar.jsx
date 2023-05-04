@@ -5,6 +5,8 @@ import Link from "next/link";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 import { useRouter } from "next/router";
+import * as PushAPI from "@pushprotocol/restapi";
+
 
 const Navbar = ({ connect_wallet, signerAddress, signer_bal, chainID, setChainID }) => {
   const router = useRouter();

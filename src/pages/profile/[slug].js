@@ -8,6 +8,9 @@ import VideoCard from "@/components/cards/VideoCard";
 import LiveStream from "../content/live/[slug]";
 import LiveVideoCard from "@/components/cards/LiveVideoCard";
 import Head from "next/head";
+import * as PushAPI from "@pushprotocol/restapi";
+import { Chat } from "@pushprotocol/uiweb";
+
 
 const GamerProfile = ({
   get_gamer,
@@ -16,6 +19,13 @@ const GamerProfile = ({
   get_user_videos,
   get_user_livestream,
 }) => {
+  const theme = {
+    btnColorPrimary: "#198754",
+    bgColorSecondary: "#198754",
+    moduleColor: "#f0f0f0",
+    textColorSecondary: "#ffffff"
+  };
+
   const router = useRouter();
   const { slug } = router.query;
   const [data, set_data] = useState([]);
@@ -231,9 +241,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(true)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                NFTs && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"
+                }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -255,9 +264,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                videos && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"
+                }`}
             >
               <h4>Videos</h4>
               <></>
@@ -270,9 +278,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                lives && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"
+                }`}
             >
               <h4>Live Streams</h4>
             </div>
@@ -284,9 +291,8 @@ const GamerProfile = ({
                 showJobs(true),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                jobs && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"
+                }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -345,9 +351,8 @@ const GamerProfile = ({
                       const d = new Date();
                       let time;
                       if (e.video.upload_date) {
-                        time = `${d.getDate(e.video.upload_date)}/${
-                          d.getMonth(e.video.upload_date) + 1
-                        }/${d.getFullYear(e.video.upload_date)}`;
+                        time = `${d.getDate(e.video.upload_date)}/${d.getMonth(e.video.upload_date) + 1
+                          }/${d.getFullYear(e.video.upload_date)}`;
                       }
                       return (
                         <VideoCard
@@ -405,6 +410,22 @@ const GamerProfile = ({
                 </div>
               </div>
             </div>
+          )}
+        </div>
+      )}
+
+      {signerAddress !== slug && (
+        <div>
+          {signerAddress && (
+            <Chat
+              account={signerAddress}
+              supportAddress={slug}
+              apiKey={process.env.NEXT_PUBLIC_PUSH_API_KEY}
+              env="staging"
+              greetingMsg={`Hey, I am available to chat`}
+              modalTitle={`chat with ${data.username}`}
+              theme={theme}
+            />
           )}
         </div>
       )}
