@@ -49,7 +49,7 @@ export default function App({ Component, pageProps }) {
   const [signerAddress, setSignerAddress] = useState();
   const [signer_bal, set_signer_bal] = useState(0);
   const [format_signer_bal, set_format_signer_bal] = useState(0);
-  const [current_chainId, set_current_chainId] = useState(0);
+  const [current_chainId, set_current_chainId] = useState("");
 
   const [user_data, set_user_data] = useState();
   const storage = new ThirdwebStorage();
@@ -817,6 +817,8 @@ export default function App({ Component, pageProps }) {
         signer={signer}
         signerAddress={signerAddress}
         signer_bal={format_signer_bal}
+        chainID={current_chainId}
+        setChainID={set_current_chainId}
       />
       <Component
         {...pageProps}

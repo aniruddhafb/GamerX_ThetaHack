@@ -25,6 +25,48 @@
     flex-direction: column;
   }
 }
+
+.networkCustom {
+  margin-right: 12px;
+  margin-left: 150px;
+}
+
+.notifiCustom {
+  margin-left: 140px;
+  margin-right: -105px;
+}
+
+.faviconCustom {
+  margin-left: 320px;
+}
+
+@media only screen and (max-width: 1403px) {
+  .networkCustom {
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (max-width: 1205px) {
+  .networkCustom {
+    display: none;
+  }
+  .notifiCustom {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .navHeadCustom {
+    padding-top: 27px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .faviconCustom {
+    margin-left: 240px;
+  }
+}
+
 .custom-shape-divider-bottom-1681979696 {
   position: absolute;
   bottom: 0;

@@ -259,9 +259,8 @@ const LiveStream = ({
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
-                            e.user === signerAddress && "ml-auto justify-end"
-                          }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
+                            }`}
                         >
                           {/* <Image
                             // src={e.profile_image?.replace(
@@ -282,9 +281,8 @@ const LiveStream = ({
                               {e.user.slice(0, 5) + "..." + e.user.slice(38)}
                             </Link>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
-                                e.user === signerAddress && "bg-green-600"
-                              }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
+                                }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>
@@ -321,32 +319,34 @@ const LiveStream = ({
                   <div className="rc__post-wrapper">
                     {videoData.map((e, index) => {
                       return (
-                        <div className="rc__post-item" key={index}>
-                          <div className="rc__post-thumb">
-                            <Link href={`/content/videos/${e.video.id}`}>
-                              <Image
-                                src={e.video.thumbnail?.replace(
-                                  "ipfs://",
-                                  "https://gateway.ipfscdn.io/ipfs/"
-                                )}
-                                height={100}
-                                width={100}
-                                alt="img"
-                              />
-                            </Link>
-                          </div>
-                          <div className="rc__post-content">
-                            <h6 className="title">
-                              <Link
-                                href={`/content/videos/${e.video.id}`}
-                                style={{ textDecoration: "none" }}
-                              >
-                                {e.video.name}
+                        index < 5 && (
+                          <div className="rc__post-item" key={index}>
+                            <div className="rc__post-thumb">
+                              <Link href={`/content/videos/${e.video.id}`}>
+                                <Image
+                                  src={e.video.thumbnail?.replace(
+                                    "ipfs://",
+                                    "https://gateway.ipfscdn.io/ipfs/"
+                                  )}
+                                  height={100}
+                                  width={100}
+                                  alt="img"
+                                />
                               </Link>
-                            </h6>
-                            <span className="date">aug 19, 2023</span>
+                            </div>
+                            <div className="rc__post-content">
+                              <h6 className="title">
+                                <Link
+                                  href={`/content/videos/${e.video.id}`}
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  {e.video.name}
+                                </Link>
+                              </h6>
+                              <span className="date">aug 19, 2023</span>
+                            </div>
                           </div>
-                        </div>
+                        )
                       );
                     })}
                   </div>

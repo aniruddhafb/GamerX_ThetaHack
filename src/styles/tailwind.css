@@ -1794,6 +1794,11 @@ html.show-preloader body {
   visibility: visible;
   transform: scale(1);
 }
+.tgmenu__navbar-wrap ul li:focus > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
 .tgmenu__navbar-wrap > ul > li > a::before {
   content: "";
   position: absolute;

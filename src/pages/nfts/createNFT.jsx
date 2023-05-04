@@ -2,6 +2,7 @@ import Loader from "@/components/Loader";
 import Head from "next/head";
 import Link from "next/link";
 import { React, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 const CreateNFT = ({
   default_nft_collection,
@@ -9,6 +10,7 @@ const CreateNFT = ({
   get_my_collections,
   signer,
 }) => {
+  const router = useRouter();
   const [loading, isLoading] = useState(false);
   const [propModel, setPropModel] = useState(false);
   const [my_collections, set_my_collections] = useState([]);

@@ -8,7 +8,8 @@ import coin2 from "../../public/slider_shape02.png";
 import coin3 from "../../public/slider_shape03.png";
 import coin4 from "../../public/slider_shape04.png";
 
-import thetalogo from "../../public/theta.webp";
+import thetalogo from "../../public/theta.png";
+import thetaText from "../../public/thetaplain.png";
 import ProfileCard from "@/components/cards/ProfileCard";
 import Loader from "@/components/Loader";
 import NftCard from "@/components/cards/NftCard";
@@ -111,12 +112,20 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
             <ul className="slider__brand-list list-wrap">
               <li style={{ marginTop: "30px" }}>
                 <h2 style={{ fontSize: "12px" }}>Powered By</h2>
-                <Link href="https://thetatoken.org/" target="_blank">
+                <Link href="https://thetatoken.org/" target="_blank" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                   <Image
                     src={thetalogo}
                     style={{
                       height: "23px",
-                      width: "120px",
+                      width: "25px",
+                    }}
+                    alt="brand"
+                  />
+                  <Image
+                    src={thetaText}
+                    style={{
+                      height: "38px",
+                      width: "110px",
                       filter: "invert(1)",
                     }}
                     alt="brand"
