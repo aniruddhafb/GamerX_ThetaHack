@@ -212,11 +212,13 @@ export default function App({ Component, pageProps }) {
             _tokenURI.title,
             _tokenURI.tag,
           ]);
+
+        console.log(res.data);
       });
 
       const txn = await gamerX.createToken(tokenURI);
       await txn.wait();
-      // console.log({ txn });
+      console.log({ txn });
     } catch (error) {
       console.log(error);
     }
@@ -349,7 +351,7 @@ export default function App({ Component, pageProps }) {
       .record(polybase_video.data.owner.id)
       .get();
 
-    let comments = [{ owner: "", comment: "" }];
+    let comments = [];
     for (const e of res.data[0].data.comments) {
       const comment = await db.collection("Comment").record(e.id).get();
       const owner = await db
@@ -364,6 +366,7 @@ export default function App({ Component, pageProps }) {
       comments,
       owner: video_owner.data,
     };
+    console.log(obj);
     return obj;
   };
 
@@ -481,12 +484,14 @@ export default function App({ Component, pageProps }) {
         db.collection("User").record(signer_address),
       ]);
 
-    const save_comment = db
+    const save_comment = await db
       .collection("Video")
       .record(video_id)
       .call("post_comment", [
         db.collection("Comment").record(upload_comment.data.id),
       ]);
+
+    console.log({ save_comment });
   };
 
   const fetch_videos = async () => {
@@ -772,7 +777,7 @@ export default function App({ Component, pageProps }) {
           ]);
         console.log({ polybaseres: res });
         sendNFTListNoti(tokenId, price);
-        router.reload();
+        // router.reload();
       }
     } catch (error) {
       console.log(error.message);

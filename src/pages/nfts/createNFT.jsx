@@ -52,9 +52,9 @@ const CreateNFT = ({
     isLoading(true);
     await create_token(data);
     isLoading(false);
-    setTimeout(() => {
-      router.push(`/nfts/exploreNFTs`);
-    }, 1000);
+    // setTimeout(() => {
+    router.push(`/nfts/exploreNFTs`);
+    // }, 1000);
   };
 
   useEffect(() => {
@@ -69,18 +69,15 @@ const CreateNFT = ({
     <div id="pageBG">
       <Head>
         <title>Create NFT - GamerX</title>
-        <meta
-          name="description"
-          content="About GamerX"
-        />
+        <meta name="description" content="About GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      {loading ?
+      {loading ? (
         <div className="pt-[300px] pb-[300px]" id="pageBG">
           <Loader />
         </div>
-        :
+      ) : (
         <section className="blog-area blog-details-area">
           <div className="container">
             <div className="row justify-content-center">
@@ -386,7 +383,10 @@ const CreateNFT = ({
                                       height="24"
                                       className="h-6 w-6 fill-white dark:fill-jacarta-300"
                                     >
-                                      <path fill="none" d="M0 0h24v24H0z"></path>
+                                      <path
+                                        fill="none"
+                                        d="M0 0h24v24H0z"
+                                      ></path>
                                       <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"></path>
                                     </svg>
                                   </button>
@@ -439,7 +439,7 @@ const CreateNFT = ({
             </div>
           </div>
         </section>
-      }
+      )}
     </div>
   );
 };
