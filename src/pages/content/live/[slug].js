@@ -38,6 +38,7 @@ const LiveStream = ({
     isLoading(true);
     const res = await get_liveStream_data(slug);
     set_data(res);
+    console.log({ streaRws: res })
     const videoRes = await fetch_videos();
     setVideoData(videoRes);
     isLoading(false);

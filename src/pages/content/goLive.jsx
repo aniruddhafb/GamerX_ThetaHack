@@ -21,9 +21,9 @@ const GoLive = ({ go_live }) => {
     e.preventDefault();
     await go_live(data);
     isLoading(false);
-    setTimeout(() => {
-      router.push(`/content/live/exploreLiveContent`);
-    }, 1000);
+    // setTimeout(() => {
+    //   router.push(`/content/live/exploreLiveContent`);
+    // }, 1000);
   };
 
   return (
