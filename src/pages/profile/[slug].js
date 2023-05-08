@@ -11,7 +11,6 @@ import Head from "next/head";
 import * as PushAPI from "@pushprotocol/restapi";
 import { Chat } from "@pushprotocol/uiweb";
 
-
 const GamerProfile = ({
   get_gamer,
   fetch_nfts_from_user_wallet,
@@ -23,7 +22,7 @@ const GamerProfile = ({
     btnColorPrimary: "#198754",
     bgColorSecondary: "#198754",
     moduleColor: "#f0f0f0",
-    textColorSecondary: "#ffffff"
+    textColorSecondary: "#ffffff",
   };
 
   const router = useRouter();
@@ -40,12 +39,36 @@ const GamerProfile = ({
   const [user_videos, set_user_videos] = useState([]);
   const [livestream, set_livestream] = useState([]);
 
+  const [followers, set_followers] = useState(["a", "b", "c"]);
+  const [isFollowing, set_is_following] = useState(false);
+
   const fetch_gamer = async () => {
     isLoading(true);
     const res = await get_gamer(slug);
     console.log({ res });
     set_data(res);
     isLoading(false);
+  };
+
+  const toggle_follow = (current_user) => {
+    let found = false;
+    for (let index = 0; index < followers.length; index++) {
+      if (followers[index] === current_user) {
+        followers.splice(index, 1);
+        found = true;
+        set_is_following(false);
+
+        console.log({ followers });
+        break;
+      }
+    }
+
+    if (!found) {
+      followers.push(current_user);
+      set_is_following(true);
+
+      console.log({ followers });
+    }
   };
 
   const get_nfts = async () => {
@@ -143,8 +166,11 @@ const GamerProfile = ({
                         </ol>
                       </nav>
                       <p className="mt-[8px] text-wheat">228 Followers</p>
-                      <button class=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2">
-                        Follow
+                      <button
+                        onClick={(e) => toggle_follow("a")}
+                        class=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2"
+                      >
+                        {isFollowing ? "unFollow" : "Follow"}
                       </button>
                       <button class=" hover:bg-[#faa706] text-[#faa706] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2 ml-4">
                         Following
@@ -241,8 +267,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(true)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                NFTs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -264,8 +291,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                videos && "border-b-green-500"
+              }`}
             >
               <h4>Videos</h4>
               <></>
@@ -278,8 +306,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                lives && "border-b-green-500"
+              }`}
             >
               <h4>Live Streams</h4>
             </div>
@@ -291,8 +320,9 @@ const GamerProfile = ({
                 showJobs(true),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                jobs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -351,8 +381,9 @@ const GamerProfile = ({
                       const d = new Date();
                       let time;
                       if (e.video.upload_date) {
-                        time = `${d.getDate(e.video.upload_date)}/${d.getMonth(e.video.upload_date) + 1
-                          }/${d.getFullYear(e.video.upload_date)}`;
+                        time = `${d.getDate(e.video.upload_date)}/${
+                          d.getMonth(e.video.upload_date) + 1
+                        }/${d.getFullYear(e.video.upload_date)}`;
                       }
                       return (
                         <VideoCard

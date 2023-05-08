@@ -30,13 +30,14 @@ const Video = ({
     isCompLoad(true);
     e.preventDefault();
     await post_comment(slug, comment);
+    await video_data();
     isCompLoad(false);
-    router.reload();
   };
 
   const make_tip = async () => {
     isCompLoad(true);
     await tip_video(slug, tip_amount, data.owner.id);
+    get_tips();
     isCompLoad(false);
   };
 
@@ -46,15 +47,15 @@ const Video = ({
     set_tips(tips);
   };
 
-  useEffect(() => {
-    const video_data = async () => {
-      isLoading(true);
-      const res = await get_video_data(slug);
-      set_data(res);
-      console.log({ videodata: res });
-      isLoading(false);
-    };
+  const video_data = async () => {
+    isLoading(true);
+    const res = await get_video_data(slug);
+    set_data(res);
+    console.log({ videodata: res });
+    isLoading(false);
+  };
 
+  useEffect(() => {
     if (!slug) return;
     video_data();
     console.log("render");

@@ -22,6 +22,7 @@ const LiveStream = ({
   signerAddress,
   fetch_videos,
   get_user_data,
+  end_livestream,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -31,14 +32,14 @@ const LiveStream = ({
   const [loading, isLoading] = useState(false);
   const [messages, set_messages] = useState([]);
   const [new_message, set_message_data] = useState("");
-
   const messagesRef = collection(db, "messages");
 
   const stream_video = async () => {
     isLoading(true);
     const res = await get_liveStream_data(slug);
+    console.log({ stream: res });
     set_data(res);
-    console.log({ streaRws: res })
+    console.log({ streaRws: res });
     const videoRes = await fetch_videos();
     setVideoData(videoRes);
     isLoading(false);
@@ -61,10 +62,14 @@ const LiveStream = ({
     return res;
   };
 
+  const end_stream = async () => {
+    await end_livestream(slug);
+    router.reload();
+  };
+
   useEffect(() => {
     if (!slug) return;
     stream_video();
-
     const queryMessages = query(
       messagesRef,
       where("room", "==", slug),
@@ -81,10 +86,6 @@ const LiveStream = ({
       set_messages(messages);
     });
 
-    // if(signerAddress === )
-    // router.events.on("routeChangeStart", () => {
-    //   alert("are you sure you wanna exit?");
-    // });
     return () => unsubscribe();
   }, [slug]);
 
@@ -107,13 +108,21 @@ const LiveStream = ({
               {/* blog main section  */}
               <div className="blog-post-item">
                 <div className="blog-post-thumb">
-                  <iframe
-                    width="100%"
-                    height="500px"
-                    src={`https://edge-player-beta.thetatoken.org/?streamId=${slug}`}
-                    allowFullScreen
-                  ></iframe>
+                  {data?.stream_data?.isActive ? (
+                    <iframe
+                      width="100%"
+                      height="500px"
+                      src={`https://edge-player-beta.thetatoken.org/?streamId=${slug}`}
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <div className="text-white">LiveStream Ended</div>
+                  )}
                 </div>
+                {data?.owner.id === signerAddress && (
+                  <button onClick={end_stream}>End Stream</button>
+                )}
+
                 <div className="blog-post-content blog-details-content">
                   <div className="blog-post-meta">
                     <ul className="list-wrap">
@@ -260,8 +269,9 @@ const LiveStream = ({
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
-                            }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
+                            e.user === signerAddress && "ml-auto justify-end"
+                          }`}
                         >
                           {/* <Image
                             // src={e.profile_image?.replace(
@@ -282,8 +292,9 @@ const LiveStream = ({
                               {e.user.slice(0, 5) + "..." + e.user.slice(38)}
                             </Link>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
-                                }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
+                                e.user === signerAddress && "bg-green-600"
+                              }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>

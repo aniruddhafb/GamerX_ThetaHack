@@ -44,7 +44,6 @@ const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
 const marketplace_address = "0x29dB031d70B16837e8a0C922603A918C35cCF95A";
 
 export default function App({ Component, pageProps }) {
-
   const GAMERX_CHANNEL_ADDRESS = "0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861";
   const [provider, set_provider] = useState("");
   const [signer, set_signer] = useState("");
@@ -388,6 +387,21 @@ export default function App({ Component, pageProps }) {
         data.tag,
       ]);
     router.push(`/content/live/${res.data.stream_id}`);
+  };
+
+  const end_livestream = async (stream_id) => {
+    const db = polybase();
+    const res = await db
+      .collection("LiveStream")
+      .where("stream_id", "==", stream_id)
+      .get();
+
+    console.log(res.data[0].data.id);
+    const end_stream = await db
+      .collection("LiveStream")
+      .record(res.data[0].data.id)
+      .call("deactivate_livestream");
+
   };
 
   const get_user_livestream = async () => {
@@ -861,6 +875,7 @@ export default function App({ Component, pageProps }) {
         executeSale={executeSale}
         tip_video={tip_video}
         fetch_video_tips={fetch_video_tips}
+        end_livestream={end_livestream}
       />
       <Footer />
     </>
