@@ -401,7 +401,6 @@ export default function App({ Component, pageProps }) {
       .collection("LiveStream")
       .record(res.data[0].data.id)
       .call("deactivate_livestream");
-
   };
 
   const get_user_livestream = async () => {
@@ -798,6 +797,22 @@ export default function App({ Component, pageProps }) {
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const create_job = async (data) => {
+    const db = polybase();
+    const res = await db
+      .collection("Job")
+      .create([
+        uuidv4(),
+        db.collection("User").record(signerAddress),
+        data.title,
+        data.description,
+        data.min_salary,
+        data.max_salary,
+        data.organization,
+      ]);
+    console.log(res.data);
   };
 
   // execute sales
