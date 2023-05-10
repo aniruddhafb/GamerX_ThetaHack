@@ -159,6 +159,9 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                           <li>
                             <Link href="/content/videos/exploreContent" style={{ textDecoration: "none" }}>Explore Content</Link>
                           </li>
+                          <li>
+                            <Link href="/jobs/postedJobs" style={{ textDecoration: "none" }}>Posted Jobs</Link>
+                          </li>
                         </ul>
                         <div className="dropdown-btn">
                           <span className="plus-line"></span>

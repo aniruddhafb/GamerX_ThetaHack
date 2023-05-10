@@ -154,7 +154,7 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
                         Buying
                         <svg
                           aria-hidden="true"
-                          class="w-5 h-5 mr-2 ml-2 mt-1 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          className="w-5 h-5 mr-2 ml-2 mt-1 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                           viewBox="0 0 100 101"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -220,11 +220,11 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
                         />
                         <div className="absolute inset-y-0 right-0 flex items-center">
                           {compLoading ? (
-                            <button class="flex bg-[#68fb9a] text-[black] font-semibold hover:text-black py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2">
+                            <button className="flex bg-[#68fb9a] text-[black] font-semibold hover:text-black py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2">
                               Listing
                               <svg
                                 aria-hidden="true"
-                                class="w-5 h-5 mr-2 ml-2 mt-1 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                                className="w-5 h-5 mr-2 ml-2 mt-1 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                                 viewBox="0 0 100 101"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -244,7 +244,7 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
                               onClick={() =>
                                 sell_nft(tokenid, listing_price, slug)
                               }
-                              class="bg-[#68fb9a] text-[black] font-semibold hover:text-black py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2"
+                              className="bg-[#68fb9a] text-[black] font-semibold hover:text-black py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2"
                             >
                               List NFT
                             </button>

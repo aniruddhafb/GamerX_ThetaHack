@@ -136,7 +136,7 @@ const Video = ({
                     {!showTip ? (
                       <button
                         onClick={() => isShowTip(true)}
-                        class=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8"
+                        className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8"
                       >
                         Add a Tip
                       </button>
@@ -171,11 +171,11 @@ const Video = ({
                           />
                           <div className="absolute inset-y-0 right-0 flex items-center">
                             {compLoad ? (
-                              <button class="flex bg-[#198754] text-[white] font-semibold hover:text-white py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2">
+                              <button className="flex bg-[#198754] text-[white] font-semibold hover:text-white py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2">
                                 Sending
                                 <svg
                                   aria-hidden="true"
-                                  class="w-5 h-5 mr-2 ml-2 mt-1 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                                  className="w-5 h-5 mr-2 ml-2 mt-1 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                                   viewBox="0 0 100 101"
                                   fill="none"
                                   xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +193,7 @@ const Video = ({
                             ) : (
                               <button
                                 onClick={make_tip}
-                                class="bg-[#198754] text-[white] font-semibold hover:text-white py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2"
+                                className="bg-[#198754] text-[white] font-semibold hover:text-white py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2"
                               >
                                 Send Tip
                               </button>
@@ -357,7 +357,7 @@ const Video = ({
                         Posting
                         <svg
                           aria-hidden="true"
-                          class="w-6 h-6 mr-2 ml-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          className="w-6 h-6 mr-2 ml-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                           viewBox="0 0 100 101"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
