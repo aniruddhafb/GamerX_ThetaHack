@@ -37,7 +37,7 @@ const Video = ({
   const make_tip = async () => {
     isCompLoad(true);
     await tip_video(slug, tip_amount, data.owner.id);
-    get_tips();
+    await get_tips();
     isCompLoad(false);
   };
 
