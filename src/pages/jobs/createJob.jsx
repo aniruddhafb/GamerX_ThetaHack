@@ -36,9 +36,9 @@ const CreateJob = () => {
                     </p>
                     <div className="row">
                       <div className="col-sm-6 relative">
-                        <div className="form-grp ">
+                        <div className="form-grp">
                           <input
-                            name="thumbnail"
+                            name="logo"
                             type="file"
                             required
                           />
@@ -52,17 +52,17 @@ const CreateJob = () => {
                             textTransform: "uppercase",
                           }}
                         >
-                          Live Thumbnail*
+                          Company Logo*
                         </span>
                       </div>
 
-                      {/* stream id  */}
+                      {/* company name  */}
                       <div className="col-sm-6 relative">
                         <div className="form-grp">
                           <input
                             type="text"
-                            name="stream_id"
-                            placeholder="Enter your stream ID"
+                            name="companyName"
+                            placeholder="Enter your company name"
                             required
                           />
                         </div>
@@ -75,7 +75,116 @@ const CreateJob = () => {
                             textTransform: "uppercase",
                           }}
                         >
-                          Stream ID*
+                          Company Name*
+                        </span>
+                      </div>
+
+                      {/* job location */}
+                      <div className="col-sm-6 relative" style={{ marginTop: "20px" }}>
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="jobLocation"
+                            placeholder="Enter your company location"
+                            required
+                          />
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Job Location*
+                        </span>
+                      </div>
+
+                      {/* Job Type  */}
+                      <div className="col-sm-6 relative" style={{ marginTop: "20px" }}>
+                        <div className="form-grp">
+                          <select
+                            name="jobType"
+                          >
+                            <option value="Remote" className="bg-gray-800">
+                              Remote
+                            </option>
+                            <option value="inPerson" className="bg-gray-800">
+                              In-Person
+                            </option>
+                            <option value="Flexible" className="bg-gray-800">
+                              Flexible
+                            </option>
+                          </select>
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Job Type*{" "}
+                        </span>
+                      </div>
+
+                      {/* job salary */}
+                      <div className="col-sm-6 relative" style={{ marginTop: "20px" }}>
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="jobSalary"
+                            placeholder="Payout Package"
+                            required
+                          />
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Job Package*
+                        </span>
+                      </div>
+
+                      {/* Job Contract  */}
+                      <div className="col-sm-6 relative" style={{ marginTop: "20px" }}>
+                        <div className="form-grp">
+                          <select
+                            name="contractDuration"
+                          >
+                            <option value="1 Year" className="bg-gray-800">
+                              1 Year
+                            </option>
+                            <option value="2 Year" className="bg-gray-800">
+                              2 Year
+                            </option>
+                            <option value="3 Year" className="bg-gray-800">
+                              3 Year
+                            </option>
+                            <option value="No Contract" className="bg-gray-800">
+                              No Contract
+                            </option>
+                          </select>
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontFamily: "berlin_sans_fb_demibold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Contract Duration*{" "}
                         </span>
                       </div>
 
@@ -84,8 +193,8 @@ const CreateJob = () => {
                         <div className="form-grp">
                           <input
                             type="text"
-                            name="title"
-                            placeholder="Give a title to your live"
+                            name="jobTitle"
+                            placeholder="Give a title to your Job"
                             required
                           />
                         </div>
@@ -98,7 +207,7 @@ const CreateJob = () => {
                             textTransform: "uppercase",
                           }}
                         >
-                          Stream Title*
+                          Job Title*
                         </span>
                       </div>
                     </div>
@@ -108,7 +217,7 @@ const CreateJob = () => {
                       <div className="form-grp">
                         <textarea
                           name="description"
-                          placeholder="Add a description for your live"
+                          placeholder="Add a long description explaining the work, office culture"
                         ></textarea>
                       </div>
                       <span
@@ -120,7 +229,28 @@ const CreateJob = () => {
                           textTransform: "uppercase",
                         }}
                       >
-                        Stream Description*
+                        Job Description*
+                      </span>
+                    </div>
+
+                    {/* requirements  */}
+                    <div className="relative mt-4">
+                      <div className="form-grp">
+                        <textarea
+                          name="jobRequirements"
+                          placeholder="Add few requirements and tech stack"
+                        ></textarea>
+                      </div>
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: "-30px",
+                          color: "white",
+                          fontFamily: "berlin_sans_fb_demibold",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Job Requirements / TechStack*
                       </span>
                     </div>
 
@@ -128,20 +258,11 @@ const CreateJob = () => {
                     <div className="col-sm-6 relative">
                       <div className="form-grp">
                         <select
-                          name="Tag"
+                          name="jobRole"
                           style={{ marginTop: "55px" }}
                         >
-                          <option value="Gameplay" className="bg-gray-800">
-                            Gameplay
-                          </option>
-                          <option value={"Reaction"} className="bg-gray-800">
-                            Reaction
-                          </option>
-                          <option value={"Informative"} className="bg-gray-800">
-                            Informative
-                          </option>
-                          <option value={"Esports"} className="bg-gray-800">
-                            Esports
+                          <option value="Blockchain Developer" className="bg-gray-800">
+                            Blockchain Developer
                           </option>
                         </select>
                       </div>
@@ -154,7 +275,7 @@ const CreateJob = () => {
                           textTransform: "uppercase",
                         }}
                       >
-                        Stream Tag*{" "}
+                        Job Role*{" "}
                       </span>
                     </div>
 
