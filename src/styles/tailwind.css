@@ -1715,7 +1715,6 @@ html.show-preloader body {
 }
 .tgmenu__navbar-wrap ul li .sub-menu {
   position: absolute;
-  left: 0;
   top: 100%;
   min-width: 230px;
   border: 1px solid var(--tg-border-2);
@@ -1742,6 +1741,11 @@ html.show-preloader body {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
+}
+@media only screen and (max-width: 1800px) {
+  .tgmenu__navbar-wrap ul li .sub-menu {
+    right: 0;
+  }
 }
 .tgmenu__navbar-wrap ul li .sub-menu .sub-menu {
   right: auto;

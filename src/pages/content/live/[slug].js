@@ -30,6 +30,7 @@ const LiveStream = ({
   const [data, set_data] = useState();
   const [videoData, setVideoData] = useState([]);
   const [loading, isLoading] = useState(false);
+  const [streamStatusLoading, isStreamStatusLoading] = useState(false);
   const [messages, set_messages] = useState([]);
   const [new_message, set_message_data] = useState("");
   const messagesRef = collection(db, "messages");
@@ -63,7 +64,9 @@ const LiveStream = ({
   };
 
   const end_stream = async () => {
+    isStreamStatusLoading(true);
     await end_livestream(slug);
+    isStreamStatusLoading(false);
     router.reload();
   };
 
@@ -116,13 +119,14 @@ const LiveStream = ({
                       allowFullScreen
                     ></iframe>
                   ) : (
-                    <div className="text-white">LiveStream Ended</div>
+                    <iframe
+                      width="100%"
+                      height="500px"
+                      src={`https://player.thetavideoapi.com/video/video_mi79cukj468ps518fbsvnkf81q`}
+                      allowFullScreen
+                    ></iframe>
                   )}
                 </div>
-                {data?.owner.id === signerAddress && (
-                  <button onClick={end_stream}>End Stream</button>
-                )}
-
                 <div className="blog-post-content blog-details-content">
                   <div className="blog-post-meta">
                     <ul className="list-wrap">
@@ -140,6 +144,26 @@ const LiveStream = ({
                       </li>
                     </ul>
                   </div>
+                  {data?.owner.id === signerAddress &&
+                    (streamStatusLoading ?
+                      <button
+                        className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8"
+                      >
+                        Ending Stream
+                      </button>
+                      :
+                      <button
+                        onClick={end_stream}
+                        className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8"
+                      >
+                        {data?.stream_data?.isActive ?
+                          "End Live Stream"
+                          :
+                          "You Have Ended This Stream"
+                        }
+                      </button>
+                    )
+                  }
                   <h2 className="title">{data?.stream_data.title}</h2>
                   <p>{data?.stream_data.description}</p>
                   <div className="blog-details-bottom">
@@ -269,9 +293,8 @@ const LiveStream = ({
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
-                            e.user === signerAddress && "ml-auto justify-end"
-                          }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
+                            }`}
                         >
                           {/* <Image
                             // src={e.profile_image?.replace(
@@ -292,9 +315,8 @@ const LiveStream = ({
                               {e.user.slice(0, 5) + "..." + e.user.slice(38)}
                             </Link>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
-                                e.user === signerAddress && "bg-green-600"
-                              }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
+                                }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>
