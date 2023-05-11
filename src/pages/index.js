@@ -167,7 +167,8 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                         title={e.video.name}
                         creatorImage={e.owner.profile_image}
                         creatorName={e.owner.username}
-                        videoDate={"8/12/2023"}
+                        creatorAddress={e.owner.id}
+                        videoDate={e.video.upload_date}
                         videoID={e.video.id}
                       />
                     )

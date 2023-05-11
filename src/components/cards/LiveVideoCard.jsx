@@ -7,6 +7,7 @@ const LiveVideoCard = ({
   liveID,
   thumbnail,
   liveTitle,
+  liveStatus,
   ownerUsername,
   ownerProfileImg,
   ownerAddress,
@@ -39,10 +40,17 @@ const LiveVideoCard = ({
             <div className="absolute top-[30%] right-[46%]">
               <i className="flaticon-play text-white text-4xl hover:text-green-500"></i>
             </div>
-            <span className="flex text-red-400 mb-[-27px] mt-[12px]">
-              <RiLiveFill className="mt-[6px]" />
-              <p className="ml-1 mt-[4px] text-[13px]">Live Now</p>
-            </span>
+            {liveStatus ?
+              <span className="flex text-red-400 mb-[-27px] mt-[12px]">
+                <RiLiveFill className="mt-[6px]" />
+                <p className="ml-1 mt-[4px] text-[13px]">Live Now</p>
+              </span>
+              :
+              <span className="flex text-red-400 mb-[-27px] mt-[12px]">
+                <RiLiveFill className="mt-[6px]" />
+                <p className="ml-1 mt-[4px] text-[13px]">Live Has Ended</p>
+              </span>
+            }
             <h4 className="title mt-4">{liveTitle}</h4>
           </div>
 

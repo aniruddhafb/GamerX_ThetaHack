@@ -13,6 +13,7 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
   const get_livestreams = async () => {
     setLoading(true);
     const res = await get_all_livestreams();
+    console.log({ streamres: res })
     set_data(res);
     setLoading(false);
   };
@@ -67,6 +68,7 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
                   <LiveVideoCard
                     key={index}
                     liveID={e.livestream.stream_id}
+                    liveStatus={e.livestream.isActive}
                     liveTitle={e.livestream.title}
                     ownerProfileImg={e.owner.data.profile_image}
                     ownerUsername={e.owner.data.username}
