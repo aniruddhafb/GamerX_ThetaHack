@@ -1,49 +1,63 @@
+import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const jobID = () => {
     return (
         <section className="tournament__details-area" id='pageBG'>
-            <div className="container">
+            <div className="container mt-[60px]">
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <div className="blog-post-wrapper">
                         <div className="tournament__details-content" style={{ marginRight: "32px" }}>
-                            <h2 className="title">zombie land TOURNAMENT max</h2>
+                            {/* job title  */}
+                            <h2 className="title">Software Devx</h2>
+
+                            {/* employer data  */}
                             <div className="blog-post-meta">
-                                <ul className="list-wrap">
-                                    <li>By<a href="tournament-details.html#">Admin</a></li>
+                                <ul className="list-wrap" style={{ color: "white" }}>
+                                    <li>Posted By<a href="#!" style={{ textDecoration: "none" }}>Admin</a></li>
                                     <li><i className="far fa-calendar-alt"></i> Aug 16, 2023</li>
-                                    <li><i className="far fa-comments"></i><a href="tournament-details.html#">No comments</a></li>
+                                    <li>Payout : <a href="#!" style={{ textDecoration: "none", color: "#68fb9a" }}>$34000</a></li>
                                 </ul>
                             </div>
-                            <p>Excepteur sint occaecat atat non proident, sunt in culpa qui officia deserunt mollit anim id est labor umLor em ipsum dolor amet consteur adiscing Duis elentum solliciin is yaugue euismods Nulla ullaorper. Ipsum is simply dummy text of  printing and typeetting industry. Lorem Ipsum has been the industry's standsaard sipiscing Duis elementum solliciin. Duis aute irure dolor in repderit in voluptate velit esse cillum dolorliq commodo consequat.</p>
-                            <blockquote>
-                                <p>Duis elentum solliciin is yaugue euismods Nulla ullaorper. Ipsum is simply dummy text of printing and typeetting industry.</p>
-                            </blockquote>
-                            <p>Axcepteur sint occaecat atat non proident, sunt in culpa qui officia deserunt mollit anim id est labor umLor em ipsum dolor amet, consteur adiscing Duis elentum solliciin is yaugue euismods Nulla ullaorper. Ipsum is simply dummy text of  printing and typeetting industry. Lorem Ipsum has been the industry's standsaard sipiscing Duis elementum.</p>
-                            <div className="tournament__details-video position-relative">
-                                <img src="./MYKD - eSports and Gaming NFT Template_files/blog_post03.jpg" alt="img" />
-                                <a href="https://www.youtube.com/watch?v=_SAlU-hu8M0" className="popup-video"><i className="flaticon-play"></i></a>
+
+                            {/* job description  */}
+                            <h4 className="tournament__details-form-title mt-2">Job Description</h4>
+                            <p style={{ marginBottom: "35px" }}>Excepteur sint occaecat atat non proident, sunt in culpa qui officia deserunt mollit anim id est labor umLor em ipsum dolor amet consteur adiscing Duis elentum solliciin is yaugue euismods Nulla ullaorper. Ipsum is simply dummy text of  printing and typeetting industry. Lorem Ipsum has been the industry's standsaard sipiscing Duis elementum solliciin. Duis aute irure dolor in repderit in voluptate velit esse cillum dolorliq commodo consequat.</p>
+
+                            {/* job tech stack  */}
+                            <h4 className="tournament__details-form-title">Teck stack and requirements</h4>
+                            <p style={{ marginBottom: "35px" }}>Axcepteur sint occaecat atat non proident, sunt in culpa qui officia deserunt mollit anim id est labor umLor em ipsum dolor amet, consteur adiscing Duis elentum solliciin is yaugue euismods Nulla ullaorper. Ipsum is simply dummy text of  printing and typeetting industry. Lorem Ipsum has been the industry's standsaard sipiscing Duis elementum.</p>
+
+                            {/* job company Info  */}
+                            <h4 className="tournament__details-form-title">Important Info</h4>
+                            <div className="blog-post-meta">
+                                <ul className="list-wrap" style={{ color: "white", marginTop: "15px" }}>
+                                    <li>Company Name : Uniqdevs</li>
+                                    <li>Job Type : Remote</li>
+                                    <li>Contract : 1 Year</li>
+                                    <li><i className="far fa-comments"></i>3 Applicants</li>
+                                </ul>
                             </div>
-                            <p>Axcepteur sint occaecat atat non proident, sunt in culpa qui officia deserunt mollit anim id est labor umLor em ipsum dolor amet, consteur adiscing Duis elentum solliciin is yaugue euismods Nulla ullaorper. Ipsum is simply dummy text of printing.</p>
+
+                            {/* apply for role  */}
                             <div className="tournament__details-form">
-                                <h4 className="tournament__details-form-title">join nft games android</h4>
-                                <p>Simply dummy text of printing and typeetting industry been the industry's</p>
+                                <h4 className="tournament__details-form-title">Apply for this post</h4>
+                                <p>If you think you fit into this job role fill the below form and apply</p>
                                 <form action="tournament-details.html#">
-                                    <input type="text" placeholder="Name *" fdprocessedid="ayw3ub" />
-                                    <input type="text" placeholder="Player ID *" required="" fdprocessedid="be5to" />
-                                    <input type="email" placeholder="Email *" required="" fdprocessedid="0as0rg" />
-                                    <button className="tournament__details-form-btn" fdprocessedid="zi62r">Join Now</button>
+                                    <input type="text" placeholder="Your Name *" required />
+                                    <input type="email" placeholder="Your Email *" required />
+                                    <button className="tournament__details-form-btn" fdprocessedid="zi62r">Apply</button>
                                 </form>
                             </div>
                             <div className="blog-details-bottom">
                                 <div className="row">
                                     <div className="col-xl-6 col-md-7">
                                         <div className="tg-post-tags">
+                                            {/* job tag */}
                                             <h5 className="tags-title">tags :</h5>
                                             <ul className="list-wrap d-flex flex-wrap align-items-center m-0">
-                                                <li><a href="tournament-details.html#">Esports</a>,</li>
-                                                <li><a href="tournament-details.html#">Fantasy</a>,</li>
-                                                <li><a href="tournament-details.html#">game</a></li>
+                                                <li><a href="#!" style={{ textDecoration: "none" }}>Esports</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -51,9 +65,9 @@ const jobID = () => {
                                         <div className="blog-post-share justify-content-start justify-content-md-end">
                                             <h5 className="share">share :</h5>
                                             <ul className="list-wrap">
-                                                <li><a href="tournament-details.html#"><i className="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="tournament-details.html#"><i className="fab fa-twitter"></i></a></li>
-                                                <li><a href="tournament-details.html#"><i className="fab fa-linkedin-in"></i></a></li>
+                                                <li><a href="#!"><i className="fab fa-facebook-f"></i></a></li>
+                                                <li><a href="#!"><i className="fab fa-twitter"></i></a></li>
+                                                <li><a href="#!"><i className="fab fa-linkedin-in"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -63,6 +77,7 @@ const jobID = () => {
                     </div>
                     <div className="blog-post-sidebar">
                         <div className="blog-sidebar tournament__sidebar">
+                            {/* search bar  */}
                             <div className="shop__widget">
                                 <h4 className="shop__widget-title">search</h4>
                                 <div className="shop__widget-inner">
@@ -72,60 +87,30 @@ const jobID = () => {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* similar jobs  */}
                             <div className="shop__widget">
-                                <h4 className="shop__widget-title">TRENDING MATCHES</h4>
+                                <h4 className="shop__widget-title">Similar Opportunities</h4>
                                 <div className="shop__widget-inner">
                                     <div className="trending__matches-list">
+                                        {/* loop other jobs here max 10 */}
                                         <div className="trending__matches-item">
                                             <div className="trending__matches-thumb">
-                                                <a href="tournament-details.html#"><img src="./MYKD - eSports and Gaming NFT Template_files/trend_match01.png" alt="img" /></a>
+                                                <Link href="#!" style={{ textDecoration: "none" }}><Image src={`../../nftCard1.jpg`} height={100} width={100} alt="img" /></Link>
                                             </div>
                                             <div className="trending__matches-content">
                                                 <div className="info">
-                                                    <h5 className="title"><a href="tournament-details.html#">FoxTie Max</a></h5>
-                                                    <span className="price">$ 7500</span>
+                                                    <h5 className="title"><Link href="#!" style={{ textDecoration: "none" }}>FoxTie Max</Link></h5>
+                                                    <div className='flex justify-center align-middle'>
+                                                        <span className="price">$ 7500</span>
+                                                        <span className="ml-[6px] text-[white] text-[15px]">Full Stack</span>
+                                                    </div>
                                                 </div>
                                                 <div className="play">
-                                                    <a href="https://www.youtube.com/watch?v=a3_o4SpV1vI" className="popup-video"><i className="far fa-play-circle"></i></a>
+                                                    <Link href="#!" className="popup-video"><i className="far fa-play-circle"></i></Link>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="trending__matches-item">
-                                            <div className="trending__matches-thumb">
-                                                <a href="tournament-details.html#"><img src="./MYKD - eSports and Gaming NFT Template_files/trend_match02.png" alt="img" /></a>
-                                            </div>
-                                            <div className="trending__matches-content">
-                                                <div className="info">
-                                                    <h5 className="title"><a href="tournament-details.html#">hatax ninja</a></h5>
-                                                    <span className="price">$ 5500</span>
-                                                </div>
-                                                <div className="play">
-                                                    <a href="https://www.youtube.com/watch?v=a3_o4SpV1vI" className="popup-video"><i className="far fa-play-circle"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="trending__matches-item">
-                                            <div className="trending__matches-thumb">
-                                                <a href="tournament-details.html#"><img src="./MYKD - eSports and Gaming NFT Template_files/trend_match03.png" alt="img" /></a>
-                                            </div>
-                                            <div className="trending__matches-content">
-                                                <div className="info">
-                                                    <h5 className="title"><a href="tournament-details.html#">spartan ii</a></h5>
-                                                    <span className="price">$ 3500</span>
-                                                </div>
-                                                <div className="play">
-                                                    <a href="https://www.youtube.com/watch?v=a3_o4SpV1vI" className="popup-video"><i className="far fa-play-circle"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="shop__widget">
-                                <h4 className="shop__widget-title">ADVERTISEMENT</h4>
-                                <div className="shop__widget-inner">
-                                    <div className="tournament__advertisement">
-                                        <a href="tournament-details.html#"><img src="./MYKD - eSports and Gaming NFT Template_files/tournament_ad.jpg" alt="img" /></a>
                                     </div>
                                 </div>
                             </div>

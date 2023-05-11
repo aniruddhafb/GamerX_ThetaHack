@@ -1,5 +1,6 @@
 import Loader from '@/components/Loader'
 import Head from 'next/head'
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
@@ -57,7 +58,7 @@ const postedJobs = () => {
                                                         </svg>
                                                         <div className="tournament__list-content">
                                                             <div className="tournament__list-thumb">
-                                                                <a href="tournament-details.html"><img src="./MYKD - eSports and Gaming NFT Template_files/tournament_thumb01.png" alt="thumb" /></a>
+                                                                <Link href="#!"><Image src={`../../nftCard1.jpg`} height={100} width={100} alt="thumbMain" style={{ borderRadius: "50%", height: "74px", width: "80px" }} /></Link>
                                                             </div>
                                                             <div className="tournament__list-name">
                                                                 <h6 className="title">Role</h6>
