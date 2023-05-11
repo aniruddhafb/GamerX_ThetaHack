@@ -74,7 +74,7 @@ const uploadVideo = ({ upload_video }) => {
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -100,7 +100,7 @@ const uploadVideo = ({ upload_video }) => {
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -124,7 +124,7 @@ const uploadVideo = ({ upload_video }) => {
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -147,7 +147,7 @@ const uploadVideo = ({ upload_video }) => {
                           position: "absolute",
                           top: "-30px",
                           color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
+                          fontWeight: "bold",
                           textTransform: "uppercase",
                         }}
                       >
@@ -203,7 +203,7 @@ const uploadVideo = ({ upload_video }) => {
                           position: "absolute",
                           top: "-30px",
                           color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
+                          fontWeight: "bold",
                           textTransform: "uppercase",
                         }}
                       >

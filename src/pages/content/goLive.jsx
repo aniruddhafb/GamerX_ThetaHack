@@ -73,7 +73,7 @@ const GoLive = ({ go_live }) => {
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -97,7 +97,7 @@ const GoLive = ({ go_live }) => {
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -121,7 +121,7 @@ const GoLive = ({ go_live }) => {
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -144,7 +144,7 @@ const GoLive = ({ go_live }) => {
                           position: "absolute",
                           top: "-30px",
                           color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
+                          fontWeight: "bold",
                           textTransform: "uppercase",
                         }}
                       >
@@ -184,7 +184,7 @@ const GoLive = ({ go_live }) => {
                           position: "absolute",
                           top: "-30px",
                           color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
+                          fontWeight: "bold",
                           textTransform: "uppercase",
                         }}
                       >

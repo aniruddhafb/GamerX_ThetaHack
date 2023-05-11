@@ -109,7 +109,7 @@ const CreateNFT = ({
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -149,7 +149,7 @@ const CreateNFT = ({
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -180,7 +180,7 @@ const CreateNFT = ({
                             position: "absolute",
                             top: "-30px",
                             color: "white",
-                            fontFamily: "berlin_sans_fb_demibold",
+                            fontWeight: "bold",
                             textTransform: "uppercase",
                           }}
                         >
@@ -203,7 +203,7 @@ const CreateNFT = ({
                           position: "absolute",
                           top: "-30px",
                           color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
+                          fontWeight: "bold",
                           textTransform: "uppercase",
                         }}
                       >
@@ -287,7 +287,7 @@ const CreateNFT = ({
                           position: "absolute",
                           top: "-30px",
                           color: "white",
-                          fontFamily: "berlin_sans_fb_demibold",
+                          fontWeight: "bold",
                           textTransform: "uppercase",
                         }}
                       >
@@ -314,7 +314,7 @@ const CreateNFT = ({
                             <span
                               style={{
                                 color: "white",
-                                fontFamily: "berlin_sans_fb_demibold",
+                                fontWeight: "bold",
                                 textTransform: "uppercase",
                               }}
                             >

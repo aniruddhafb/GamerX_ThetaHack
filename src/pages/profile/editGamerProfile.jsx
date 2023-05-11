@@ -133,7 +133,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     <label
                       htmlFor="profile-username"
                       style={{
-                        fontFamily: "berlin_sans_fb_demibold",
+                        fontWeight: "bold",
                         textTransform: "uppercase",
                       }}
                       className="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
@@ -157,7 +157,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     <label
                       htmlFor="profile-bio"
                       style={{
-                        fontFamily: "berlin_sans_fb_demibold",
+                        fontWeight: "bold",
                         textTransform: "uppercase",
                       }}
                       className="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
@@ -180,7 +180,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     <label
                       htmlFor="profile-email"
                       style={{
-                        fontFamily: "berlin_sans_fb_demibold",
+                        fontWeight: "bold",
                         textTransform: "uppercase",
                       }}
                       className="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
@@ -204,7 +204,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     <label
                       htmlFor="profile-email"
                       style={{
-                        fontFamily: "berlin_sans_fb_demibold",
+                        fontWeight: "bold",
                         textTransform: "uppercase",
                       }}
                       className="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
@@ -269,7 +269,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                     <label
                       htmlFor="profile-email"
                       style={{
-                        fontFamily: "berlin_sans_fb_demibold",
+                        fontWeight: "bold",
                         textTransform: "uppercase",
                       }}
                       className="mb-1 block font-display text-sm text-jacarta-700 dark:text-white"
