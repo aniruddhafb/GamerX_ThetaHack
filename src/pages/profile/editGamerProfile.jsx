@@ -146,7 +146,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                       type="text"
                       value={data.username}
                       id="profile-username"
-                      className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500"
+                      className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500 text-jacarta-700"
                       placeholder="Enter username"
                       required
                     />
@@ -169,7 +169,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                       onChange={handle_change}
                       id="profile-bio"
                       value={data.bio}
-                      className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500"
+                      className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500 text-jacarta-700"
                       required
                       placeholder="Tell the world your story!"
                     ></textarea>
@@ -193,7 +193,7 @@ const EditGamerProfile = ({ update_profile, user_data }) => {
                       name="email"
                       value={data.email}
                       onChange={handle_change}
-                      className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500"
+                      className="w-full rounded-sm border-jacarta-100 py-2.5 px-2 focus:ring-accent bg-transparent border-2 border-gray-500 text-jacarta-700"
                       placeholder="Enter email"
                       required
                     />

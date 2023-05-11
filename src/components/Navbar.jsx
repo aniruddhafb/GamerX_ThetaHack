@@ -6,7 +6,7 @@ import { AiOutlineCaretDown } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 import { useRouter } from "next/router";
 import * as PushAPI from "@pushprotocol/restapi";
-import { MdOutlineWork, MdOutlineWorkOutline } from "react-icons/md";
+import { MdOutlineWorkOutline } from "react-icons/md";
 
 
 const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, setChainID, GAMERX_CHANNEL_ADDRESS }) => {
@@ -65,8 +65,43 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
     }
   };
 
+  const switchPolygonChain = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x13881" }],
+      });
+      chainSwitchReload("80001");
+    } catch (error) {
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x13881",
+                chainName: "Mumbai",
+                nativeCurrency: {
+                  name: "Polygon",
+                  symbol: "MATIC",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://polygonscan.com/"],
+                rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
+              },
+            ],
+          });
+          chainSwitchReload("80001");
+        } catch (addError) {
+          console.error(addError);
+        }
+      }
+    }
+  };
+
   // optin for push noti
   const optInToChannel = async () => {
+    await switchPolygonChain();
     await PushAPI.channels.subscribe({
       env: "staging",
       signer: signer,
@@ -105,6 +140,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
     getNotifications();
     setShowProfileDrop(false);
     setNavDrop(false);
+    SetShowNotifications(false);
   }, [router.pathname])
 
   return (
@@ -256,13 +292,13 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                           </button>
                         </div>
 
-                        {/* {showNotifications && (
-                          <div className="absolute right-[-50px] z-20 w-64 mt-6 overflow-hidden origin-top-right bg-white rounded-md shadow-xl sm:w-80 dark:bg-gray-800">
+                        {showNotifications && (
+                          <div className="notifiBackMain absolute left-[-140px] z-20 w-64 mt-6 overflow-hidden origin-top-right bg-white shadow-xl sm:w-80 dark:bg-gray-800">
                             {notificationData && notificationData?.map((e, i) => {
                               return (
-                                i < 6 &&
-                                e.app === "RarX Marketplace" && (
-                                  <div key={e.sid}>
+                                i < 4 &&
+                                e.app === "GamerX" && (
+                                  <div key={e.sid} className="notifiBack">
                                     <a
                                       href={e.cta}
                                       rel="noreferrer"
@@ -294,8 +330,8 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                 )
                               );
                             })}
-                            {notificationData && notificationData[0]?.app != "RarX Marketplace" && (
-                              <div className="h-[135px]">
+                            {notificationData && notificationData[0]?.app != "GamerX" && (
+                              <div className="notifiBack h-[175px]">
                                 <a
                                   href="#"
                                   rel="noreferrer"
@@ -308,7 +344,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                       rel="noreferrer"
                                     >
                                       No Notifications yet! click below button to
-                                      susbcribe the rarx marketplace notification
+                                      subscribe the GamerX notification
                                       channel, ignore if already subscribed
                                     </a>
                                     {optedIn ? (
@@ -335,7 +371,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                             )}
                             {notificationData && notificationData.length === 0 &&
                               nullNotification == true && (
-                                <div className="h-[135px]">
+                                <div className="notifiBack h-[165px]">
                                   <a
                                     href="#"
                                     rel="noreferrer"
@@ -348,7 +384,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                         rel="noreferrer"
                                       >
                                         No Notifications yet! click below button to
-                                        susbcribe the rarx marketplace notification
+                                        subscribe the GamerX notification
                                         channel, ignore if already subscribed
                                       </a>
                                       {optedIn ? (
@@ -374,7 +410,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                 </div>
                               )}
                           </div>
-                        )} */}
+                        )}
                       </div>
 
                       {/* // profile dropdown */}

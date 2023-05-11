@@ -132,9 +132,14 @@ const Footer = () => {
             <div className="col-md-7">
               <div className="copyright__text">
                 <p>
-                  Copyright © 2023 - All Rights Reserved By <span>GamerX</span>
+                  © 2023 GamerX - Built During <a href="https://theta2023.devpost.com/?ref_content=online-hackathons&ref_feature=challenge&ref_medium=blockchain-channel" target="_blank" style={{ textDecoration: "none" }}><span>Theta Network 2023 Hackathon</span></a>
                 </p>
               </div>
+              {/* <div className="copyright__text">
+                <p>
+                  Copyright © 2023 - All Rights Reserved By <span>GamerX</span>
+                </p>
+              </div> */}
             </div>
           </div>
         </div>

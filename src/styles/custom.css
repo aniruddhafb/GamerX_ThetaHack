@@ -40,6 +40,34 @@
   margin-left: 320px;
 }
 
+.notifiBackMain {
+  border: 1px solid #22292f;
+}
+
+.notifiBack {
+  background-color: #182029;
+}
+
+.notifiBack a {
+  text-decoration: none;
+  border-bottom: 1px solid #4b4b4b;
+}
+
+.notifiBack a:hover {
+  background-color: #1b2027;
+}
+
+.notifiBack a p a {
+  text-decoration: none;
+  color: #fff;
+  border-bottom: none;
+}
+
+.notifiBack a p span {
+  text-decoration: none;
+  color: #e5e5e5;
+}
+
 @media only screen and (max-width: 1403px) {
   .networkCustom {
     margin-left: 10px;
