@@ -244,7 +244,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                             <p className="pl-2 pr-2 mt-1 font-bold ">
                               Theta Testnet
                             </p>
-                            <BsChevronDown className="h-3 w-3 2xl:h-3 2xl:w-3 mt-[10px] hover:text-blue-400 " />
+                            <BsChevronDown className="h-3 w-3 2xl:h-3 2xl:w-3 mt-[10px] text-blue-400" />
                           </>
                         )}
 
@@ -254,7 +254,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                             <p className="pl-2 pr-2 mt-1 font-bold" onClick={() => switchThetaChain()}>
                               Unsupported Chain
                             </p>
-                            <BsChevronDown className="h-3 w-3 2xl:h-3 2xl:w-3 mt-[10px] hover:text-blue-400 " />
+                            <BsChevronDown className="h-3 w-3 2xl:h-3 2xl:w-3 mt-[10px] text-blue-400" />
                           </>
                         )}
                       </div>

@@ -27,7 +27,6 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
   const sell_nft = async (tokenId, price, collection_address) => {
     isCompLoading(true);
     const res = await list_nft(tokenId, listing_price, collection_address);
-    // console.log(res);
     isCompLoading(false);
     // router.reload();
   };
@@ -76,7 +75,11 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
               </div>
             </div>
             <div className="shop__details-content">
-              {/* <h2 className="mb-2 text-[15px] text-[#45f882]">{nft_data?.collection_name}</h2> */}
+              <h2 className="mb-2 text-[15px] text-[#45f882]">
+                <a href={`/collection/${nft_data?.collection_id}`} style={{ textDecoration: "none" }}>
+                  {nft_data?.collection_name}
+                </a>
+              </h2>
 
               <h2 className="title">{nft_data?.ipfsData?.title}</h2>
 
@@ -92,26 +95,26 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
               <div className="trendingNft__item-avatar mb-4">
                 {/* owner  */}
                 <div className="image">
-                  <a href="#">
+                  <a href={`/profile/${nft_data?.nft_owner}`}>
                     <img src="../../nft_avatar01.png" alt="img" />
                   </a>
                 </div>
                 <div className="info">
                   <h6 className="name">Owner</h6>
                   <a
-                    href={`/profile/${nft_data?.user_id}`}
+                    href={`/profile/${nft_data?.nft_owner}`}
                     className="userName"
                     style={{ textDecoration: "none" }}
                   >
-                    {nft_data?.user_id.slice(0, 5) +
+                    {nft_data?.nft_owner.slice(0, 5) +
                       "..." +
-                      nft_data?.user_id.slice(38)}
+                      nft_data?.nft_owner.slice(38)}
                   </a>
                 </div>
 
                 {/* creator  */}
                 <div className="phoneGayab image ml-10">
-                  <a href="#">
+                  <a href={`/profile/${nft_data?.user_id}`}>
                     <img src="../../nft_avatar01.png" alt="img" />
                   </a>
                 </div>

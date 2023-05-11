@@ -44,7 +44,7 @@ const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
 const marketplace_address = "0x29dB031d70B16837e8a0C922603A918C35cCF95A";
 
 export default function App({ Component, pageProps }) {
-  const GAMERX_CHANNEL_ADDRESS = "0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861";
+  const GAMERX_CHANNEL_ADDRESS = "0x392021135a39786167d85a4BFDAa791fea7877Db";
   const [provider, set_provider] = useState("");
   const [signer, set_signer] = useState("");
   const [signerAddress, setSignerAddress] = useState();

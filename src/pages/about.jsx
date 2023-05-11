@@ -98,8 +98,8 @@ const about = () => {
                                         <i className="flaticon-diamond"></i>
                                     </div>
                                     <div className="services__content">
-                                        <h4 className="title"><Link href="/content/uploadVideo" style={{ textDecoration: "none" }}>Share Content</Link></h4>
-                                        <p>Upload your gaming content on GamerX to gain followers and earn TFUEL tokens</p>
+                                        <h4 className="title"><Link href="/content/uploadVideo" style={{ textDecoration: "none" }}>Stream Gaming Content</Link></h4>
+                                        <p>Upload and stream your gaming content on GamerX to gain followers and earn TFUEL tokens</p>
                                     </div>
                                 </div>
                                 <div className="services__item">
@@ -107,8 +107,8 @@ const about = () => {
                                         <i className="flaticon-user-profile"></i>
                                     </div>
                                     <div className="services__content">
-                                        <h4 className="title"><Link href="/content/goLive" style={{ textDecoration: "none" }}>Stream Gaming Content</Link></h4>
-                                        <p>Live stream your gaming content on GamerX, Engage with your followers in a better way</p>
+                                        <h4 className="title"><Link href="/content/goLive" style={{ textDecoration: "none" }}>Find Jobs</Link></h4>
+                                        <p>Find suitable gaming jobs for you on GamerX, you can also post jobs and make people work for you </p>
                                     </div>
                                 </div>
                                 <div className="services__item">

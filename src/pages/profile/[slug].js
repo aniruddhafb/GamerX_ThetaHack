@@ -243,7 +243,7 @@ const GamerProfile = ({
                             </div>
                             <div className="team__info-content">
                               <span className="sub">Tournaments won</span>
-                              <h5 className="title">04 Times</h5>
+                              <h5 className="title">00 Times</h5>
                             </div>
                           </div>
                         </li>

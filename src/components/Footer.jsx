@@ -73,6 +73,14 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link
+                      href="/collection/exploreCollections"
+                      style={{ textDecoration: "none" }}
+                    >
+                      Explore Collections
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
                       href="/content/live/exploreLiveContent"
                       style={{ textDecoration: "none" }}
                     >
@@ -94,6 +102,11 @@ const Footer = () => {
               <div className="footer-widget widget_nav_menu">
                 <h4 className="fw-title">Other</h4>
                 <ul className="list-wrap menu">
+                  <li>
+                    <Link href="/jobs/postedJobs" style={{ textDecoration: "none" }}>
+                      Find Jobs
+                    </Link>
+                  </li>
                   <li>
                     <Link href="/about" style={{ textDecoration: "none" }}>
                       About Us
