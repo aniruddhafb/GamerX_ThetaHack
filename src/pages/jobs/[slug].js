@@ -5,6 +5,15 @@ import React from 'react'
 const jobID = () => {
     return (
         <section className="tournament__details-area" id='pageBG'>
+            <Head>
+                <title>Gaming Job - GamerX</title>
+                <meta
+                    name="description"
+                    content="Job On GamerX"
+                />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.png" />
+            </Head>
             <div className="container mt-[60px]">
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <div className="blog-post-wrapper">

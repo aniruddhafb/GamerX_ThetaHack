@@ -237,43 +237,109 @@ const LiveStream = ({
                 </div>
               </div>
 
-              {/* comments  */}
+              {/* fetch superchats  */}
               {/* <div className="comments-wrap">
-              <h4 className="comments-wrap-title">3 Comments</h4>
-              <div className="latest-comments">
-                <ul className="list-wrap">
-                  <li>
-                    <div className="comments-box">
-                      <div className="comments-avatar">
-                        <img src="./#/comment03.png" alt="img" />
+                <h4 className="comments-wrap-title">
+                  {data?.comments.length} Comments
+                </h4>
+                {data?.comments.map((e, index) => {
+                  const date = new Date(parseInt(e.comment.data?.date));
+                  const year = date.getFullYear(); // returns the year (e.g. 2023)
+                  const month = date.getMonth(); // returns the month (0-11; 0=January, 1=February, etc.)
+                  const day = date.getDate();
+
+                  const time = `${day}/${month}/${year}`;
+                  return (
+                    e.owner && (
+                      <div key={index} className="latest-comments">
+                        <ul className="list-wrap">
+                          <li>
+                            <div className="comments-box">
+                              <div className="comments-avatar">
+                                <Image
+                                  src={e.owner.data?.profile_image.replace(
+                                    "ipfs://",
+                                    "https://gateway.ipfscdn.io/ipfs/"
+                                  )}
+                                  alt="img"
+                                  width={100}
+                                  height={100}
+                                  className="h-[100px] w-[100px]"
+                                />
+                              </div>
+                              <div className="comments-text">
+                                <div className="avatar-name">
+                                  <Link
+                                    href={`/profile/${e.comment.data?.owner.id}`}
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    <h6 className="name">
+                                      {e.owner.data?.username}
+                                    </h6>
+                                  </Link>
+                                  <span
+                                    className="date text-white"
+                                    style={{ fontSize: "13px" }}
+                                  >
+                                    {time}
+                                  </span>
+                                </div>
+                                <p>{e.comment.data?.comment_data}</p>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
                       </div>
-                      <div className="comments-text">
-                        <div className="avatar-name">
-                          <h6 className="name">Luna Rose <a href="#" className="comment-reply-link"><i className="fas fa-reply"></i> Reply</a></h6>
-                          <span className="date">September 6, 2023</span>
-                        </div>
-                        <p>Axcepteur sint occaecat atat non proident, sunt culpa officia deserunt mollit anim id est labor umLor emdolor eam enim ad minim veniam quis nostrud today.</p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="comment-respond">
-              <h3 className="comment-reply-title">Leave a Comment</h3>
-              <form className="comment-form" action="#">
-                <p className="comment-notes">The comments are visible event after live stream ends *</p>
-                <div className="form-grp">
-                  <textarea
-                    name="message"
-                    onChange={(e) => set_comment(e.target.value)}
-                    placeholder="Write a Comment *"
-                    spellCheck="false"
-                  ></textarea>
+                    )
+                  );
+                })}
+              </div> */}
+
+              {/* post superchat  */}
+              <div className="comment-respond">
+                <h3 className="comment-reply-title">Send a superchat</h3>
+                <div className="comment-form" action="#!">
+                  <div className="form-grp">
+                    <input
+                      placeholder="Amount In TFUEL Tokens *"
+                      type="number"
+                      name="superchatAmount"
+                      step="any"
+                      required
+                    />
+                    <textarea
+                      name="message"
+                      // onChange={(e) => set_comment(e.target.value)}
+                      placeholder="Write a Comment *"
+                      spellCheck="false"
+                      required
+                    ></textarea>
+                  </div>
+                  {loading ? (
+                    <button type="button" className="flex">
+                      Sending
+                      <svg
+                        aria-hidden="true"
+                        className="w-6 h-6 mr-2 ml-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </button>
+                  ) : (
+                    <button type="submit">Send Superchat </button>
+                  )}
                 </div>
-                <button type="submit">Post Comment</button>
-              </form>
-            </div> */}
+              </div>
             </div>
 
             {/* right section  */}
