@@ -271,6 +271,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                           <button
                             onClick={() => (
                               getNotifications(),
+                              setShowProfileDrop(false),
                               SetShowNotifications(!showNotifications)
                             )}
                             className="hidden text-gray-400 mt-[5px] transition-colors duration-300 transform lg:block hover:text-gray-600 text-base text-jacarta-700"
@@ -418,7 +419,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                         <ul className="navigation">
                           <li className="menu-item-has-children">
 
-                            <div className="bg-slate-700 p-[10px] rounded-[50%] cursor-pointer border-1 border-green-400" onClick={() => setShowProfileDrop(!showProfileDrop)}>
+                            <div className="bg-slate-700 p-[10px] rounded-[50%] cursor-pointer border-1 border-green-400" onClick={() => (SetShowNotifications(false), setShowProfileDrop(!showProfileDrop))}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
