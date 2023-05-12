@@ -570,6 +570,7 @@ export default function App({ Component, pageProps }) {
       console.log(error.message);
     }
   };
+
   // deploy collections
   const collection_contract_factory = (signer) => {
     const collection_factory = new ethers.Contract(
@@ -688,6 +689,16 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  const toggle_follow = async (userId) => {
+    const db = polybase();
+    const res = await db
+      .collection("User")
+      .record(userId)
+      .call("toggle_follow", [db.collection("User").record(signerAddress)]);
+
+    console.log(res.data);
+  };
+
   //FETCHES NFTS BY USER FROM POLYBASE
   const fetch_nfts_from_user_wallet = async (signerAddress) => {
     try {
@@ -801,18 +812,37 @@ export default function App({ Component, pageProps }) {
 
   const create_job = async (data) => {
     const db = polybase();
+    const logo_url = await storage.upload(data.logo);
     const res = await db
       .collection("Job")
       .create([
         uuidv4(),
         db.collection("User").record(signerAddress),
+        logo_url,
+        data.name,
+        data.location,
+        data.type,
+        data.duration,
         data.title,
         data.description,
         data.min_salary,
         data.max_salary,
-        data.organization,
+        data.role,
+        data.requirements,
       ]);
     console.log(res.data);
+  };
+
+  const get_all_jobs = async () => {
+    const db = polybase();
+    const res = await db.collection("Job").get();
+    return res.data;
+  };
+
+  const get_job_byId = async (id) => {
+    const db = polybase();
+    const res = await db.collection("Job").record(id).get();
+    return res.data;
   };
 
   // execute sales
@@ -859,6 +889,10 @@ export default function App({ Component, pageProps }) {
       />
       <Component
         {...pageProps}
+        get_job_byId={get_job_byId}
+        get_all_jobs={get_all_jobs}
+        create_job={create_job}
+        toggle_follow={toggle_follow}
         upload_video={upload_video}
         get_video_data={get_video_data}
         post_comment={post_comment}
