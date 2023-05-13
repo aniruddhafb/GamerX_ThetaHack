@@ -1,8 +1,10 @@
 import Loader from "@/components/Loader";
 import Head from "next/head";
+import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
 
 const CreateJob = ({ create_job }) => {
+  const router = useRouter();
   const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
     logo: "",
@@ -23,10 +25,15 @@ const CreateJob = ({ create_job }) => {
   };
 
   const handle_submit = async (e) => {
+    isLoading(true);
     e.preventDefault();
-    console.log(data);
-    create_job(data);
+    await create_job(data);
+    isLoading(false);
+    setTimeout(() => {
+      router.push(`/jobs/postedJobs`);
+    }, 1000);
   };
+
   return (
     <div id="pageBG">
       <Head>
@@ -162,31 +169,6 @@ const CreateJob = ({ create_job }) => {
                         </span>
                       </div>
 
-                      {/* job salary */}
-                      <div
-                        className="col-sm-6 relative"
-                        style={{ marginTop: "20px" }}
-                      >
-                        <div className="form-grp">
-                          <input
-                            type="text"
-                            name="min_salary"
-                            onChange={handle_change}
-                            placeholder="minimum salary"
-                            required
-                          />
-                        </div>
-                        <div className="form-grp">
-                          <input
-                            type="text"
-                            name="max_salary"
-                            onChange={handle_change}
-                            placeholder="maximum salary"
-                            required
-                          />
-                        </div>
-                      </div>
-
                       {/* Job Contract  */}
                       <div
                         className="col-sm-6 relative"
@@ -218,6 +200,129 @@ const CreateJob = ({ create_job }) => {
                           }}
                         >
                           Contract Duration*{" "}
+                        </span>
+                      </div>
+
+                      {/* stream tag  */}
+                      <div className="col-sm-6 relative">
+                        <div className="form-grp">
+                          <select
+                            onChange={handle_change}
+                            name="role"
+                            style={{ marginTop: "20px" }}
+                          >
+                            <option
+                              value="Blockchain Developer"
+                              className="bg-gray-800"
+                            >
+                              Blockchain Developer
+                            </option>
+                            <option
+                              value="Video Editor"
+                              className="bg-gray-800"
+                            >
+                              Video Editor
+                            </option>
+                            <option
+                              value="Game Developer"
+                              className="bg-gray-800"
+                            >
+                              Game Developer
+                            </option>
+                            <option
+                              value="Social Media Manager"
+                              className="bg-gray-800"
+                            >
+                              Social Media Manager
+                            </option>
+                            <option
+                              value="Marketing Head"
+                              className="bg-gray-800"
+                            >
+                              Marketing Head
+                            </option>
+                            <option
+                              value="NFT Artist"
+                              className="bg-gray-800"
+                            >
+                              NFT Artist
+                            </option>
+                            <option
+                              value="Community Manager"
+                              className="bg-gray-800"
+                            >
+                              Community Manager
+                            </option>
+                            <option
+                              value="Esports Player"
+                              className="bg-gray-800"
+                            >
+                              Esports Player
+                            </option>
+                          </select>
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-10px",
+                            color: "white",
+                            fontWeight: "bold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Job Role*{" "}
+                        </span>
+                      </div>
+
+                      {/* job salary */}
+                      <div
+                        className="col-sm-6 relative"
+                        style={{ marginTop: "20px" }}
+                      >
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="min_salary"
+                            onChange={handle_change}
+                            placeholder="Amount in $"
+                            required
+                          />
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontWeight: "bold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Minimum Salary*{" "}
+                        </span>
+                      </div>
+                      <div
+                        className="col-sm-6 relative"
+                        style={{ marginTop: "20px" }}
+                      >
+                        <div className="form-grp">
+                          <input
+                            type="text"
+                            name="max_salary"
+                            onChange={handle_change}
+                            placeholder="Amount in $"
+                            required
+                          />
+                        </div>
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "-30px",
+                            color: "white",
+                            fontWeight: "bold",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Maximum Salary*{" "}
                         </span>
                       </div>
 
@@ -287,35 +392,6 @@ const CreateJob = ({ create_job }) => {
                         }}
                       >
                         Job Requirements / TechStack*
-                      </span>
-                    </div>
-
-                    {/* stream tag  */}
-                    <div className="col-sm-6 relative">
-                      <div className="form-grp">
-                        <select
-                          onChange={handle_change}
-                          name="role"
-                          style={{ marginTop: "55px" }}
-                        >
-                          <option
-                            value="Blockchain Developer"
-                            className="bg-gray-800"
-                          >
-                            Blockchain Developer
-                          </option>
-                        </select>
-                      </div>
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "-30px",
-                          color: "white",
-                          fontWeight: "bold",
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Job Role*{" "}
                       </span>
                     </div>
 

@@ -9,9 +9,10 @@ const PostedJobs = ({ get_all_jobs }) => {
   const [jobs, set_jobs] = useState([]);
 
   const get_jobs = async () => {
+    setLoading(true);
     const jobs = await get_all_jobs();
-    console.log(jobs);
     set_jobs(jobs);
+    setLoading(false);
   };
 
   useEffect(() => {
