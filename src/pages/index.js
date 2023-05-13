@@ -366,7 +366,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                       <a
                         href="/about"
                         className="tg-btn-1"
-                        style={{ textDecoration: "none" }}
+                        style={{ textDecoration: "none", marginBottom: "33px" }}
                       >
                         <span>About Us</span>
                       </a>
