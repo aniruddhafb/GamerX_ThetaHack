@@ -30,7 +30,6 @@ const GamerProfile = ({
   const { slug } = router.query;
   const [data, set_data] = useState([]);
   const [loading, isLoading] = useState(false);
-
   const [NFTs, showNFTs] = useState(true);
   const [videos, showVideos] = useState(false);
   const [lives, showLives] = useState(false);
@@ -40,7 +39,6 @@ const GamerProfile = ({
   const [user_videos, set_user_videos] = useState([]);
   const [livestream, set_livestream] = useState([]);
 
-  const [followers, set_followers] = useState(["a", "b", "c"]);
   const [isFollowing, set_is_following] = useState(false);
 
   const fetch_gamer = async () => {
@@ -51,27 +49,21 @@ const GamerProfile = ({
     isLoading(false);
   };
 
-  // const toggle_follow = (current_user) => {
-  //   let found = false;
-  //   for (let index = 0; index < followers.length; index++) {
-  //     if (followers[index] === current_user) {
-  //       followers.splice(index, 1);
-  //       found = true;
-  //       set_is_following(false);
+  const handle_follow = async () => {
+    isLoading(true);
 
-  //       console.log({ followers });
-  //       break;
-  //     }
-  //   }
-
-  //   if (!found) {
-  //     followers.push(current_user);
-  //     set_is_following(true);
-
-  //     console.log({ followers });
-  //   }
-  // };
-
+    const res = await toggle_follow(slug);
+    res.user.followers.map((e) => {
+      if (e.id === signerAddress) {
+        console.log(true);
+        set_is_following(true);
+      } else {
+        console.log(false);
+        set_is_following(false);
+      }
+    });
+    fetch_gamer();
+  };
   const get_nfts = async () => {
     const res = await fetch_nfts_from_user_wallet(signerAddress);
     set_user_nfts(res);
@@ -86,6 +78,7 @@ const GamerProfile = ({
     const res = await get_user_livestream();
     set_livestream(res);
   };
+
   useEffect(() => {
     if (!slug && !signerAddress) return;
     fetch_gamer();
@@ -166,16 +159,22 @@ const GamerProfile = ({
                           </li>
                         </ol>
                       </nav>
-                      <p className="mt-[8px] text-wheat">228 Followers</p>
-                      <button
-                        onClick={(e) => toggle_follow(slug)}
-                        className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2"
-                      >
-                        {isFollowing ? "unFollow" : "Follow"}
-                      </button>
-                      <button className=" hover:bg-[#faa706] text-[#faa706] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2 ml-4">
-                        Following
-                      </button>
+                      <div>
+                        <div className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2">
+                          Followings: {data?.followers?.length}
+                        </div>
+                        <div className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2">
+                          Followers: {data?.followings?.length}
+                        </div>
+                      </div>
+                      {data.id !== signerAddress && (
+                        <button
+                          onClick={handle_follow}
+                          className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2"
+                        >
+                          {isFollowing ? "unFollow" : "Follow"}
+                        </button>
+                      )}
                     </div>
                   </div>
                   <div className="col-xl-6 col-lg-5 position-relative d-none d-lg-block">

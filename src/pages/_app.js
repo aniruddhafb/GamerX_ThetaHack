@@ -59,7 +59,7 @@ export default function App({ Component, pageProps }) {
   let wallet = new Wallet(process.env.NEXT_PUBLIC_PRIVATE_KEY);
 
   const connect_wallet = async () => {
-    // delete_users("0xfD2958c381aE4fAaF77ed06F619d2246a8a3dB60");
+    // delete_users("0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861");
     // delete_video("video_y4wtagafu2vvy1tzascigwca3k");
     // create_user();
 
@@ -106,11 +106,11 @@ export default function App({ Component, pageProps }) {
     }
   };
 
-  const create_user = async (video) => {
+  const create_user = async () => {
     const db = polybase();
     const res = await db
       .collection("User")
-      .create([marketplace_address, "", "", "", "", "", [], ""]);
+      .create([default_nft_collection, "", "", "", "", "", [], ""]);
     console.log(res.data);
   };
 
@@ -445,11 +445,11 @@ export default function App({ Component, pageProps }) {
     const livestreams = [];
     for (const e of res.data) {
       let obj = {};
-      if (e.data.isActive) {
-        const owner = await db.collection("User").record(e.data.owner.id).get();
-        obj = { owner, livestream: e.data };
-        livestreams.push(obj);
-      }
+      // if (e.data.isActive) {
+      const owner = await db.collection("User").record(e.data.owner.id).get();
+      obj = { owner, livestream: e.data };
+      livestreams.push(obj);
+      // }
     }
     return livestreams;
   };
@@ -694,9 +694,14 @@ export default function App({ Component, pageProps }) {
     const res = await db
       .collection("User")
       .record(userId)
-      .call("toggle_follow", [db.collection("User").record(signerAddress)]);
+      .call("handle_unfollow", [db.collection("User").record(signerAddress)]);
 
-    console.log(res.data);
+    const res2 = await db
+      .collection("User")
+      .record(signerAddress)
+      .call("handle_follow", [db.collection("User").record(userId)]);
+
+    return { user: res.data, signer: res2.data };
   };
 
   //FETCHES NFTS BY USER FROM POLYBASE
@@ -845,6 +850,23 @@ export default function App({ Component, pageProps }) {
     return res.data;
   };
 
+  const apply_to_job = async (job_id, data) => {
+    console.log(job_id);
+    const resume = await storage.upload(data.resume);
+    const db = polybase();
+    const res = await db
+      .collection("ApplyJob")
+      .create([
+        uuidv4(),
+        db.collection("Job").record(job_id),
+        data.name,
+        data.email,
+        resume,
+      ]);
+
+    console.log(res.data);
+  };
+
   // execute sales
   const executeSale = async (tokenId, collection_address, listing_price) => {
     console.log({ tokenId, collection_address, listing_price });
@@ -889,6 +911,7 @@ export default function App({ Component, pageProps }) {
       />
       <Component
         {...pageProps}
+        apply_to_job={apply_to_job}
         get_job_byId={get_job_byId}
         get_all_jobs={get_all_jobs}
         create_job={create_job}

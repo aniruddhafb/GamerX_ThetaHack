@@ -5,21 +5,36 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-const JobID = ({ get_job_byId }) => {
+const JobID = ({ get_job_byId, apply_to_job }) => {
   const router = useRouter();
   const { slug } = router.query;
 
   const [job, set_job] = useState({});
+
+  const [apply_job, set_apply_job] = useState({
+    name: "",
+    email: "",
+    resume: "",
+  });
 
   const get_job_data = async () => {
     const res = await get_job_byId(slug);
     console.log(res);
     set_job(res);
   };
+
+  const handle_submit = async (e) => {
+    e.preventDefault();
+    console.log(apply_job);
+    await apply_to_job(slug, apply_job);
+    router.push("/");
+  };
+
   useEffect(() => {
     if (!slug) return;
     get_job_data();
   }, [slug]);
+
   return (
     <section className="tournament__details-area" id="pageBG">
       <Head>
@@ -99,12 +114,39 @@ const JobID = ({ get_job_byId }) => {
                   If you think you fit into this job role fill the below form
                   and apply
                 </p>
-                <form action="tournament-details.html#">
-                  <input type="text" placeholder="Your Name *" required />
-                  <input type="email" placeholder="Your Email *" required />
+                <form
+                  onSubmit={handle_submit}
+                  action="tournament-details.html#"
+                >
+                  <input
+                    type="text"
+                    onChange={(e) =>
+                      set_apply_job({ ...apply_job, name: e.target.value })
+                    }
+                    placeholder="Your Name *"
+                    required
+                  />
+                  <input
+                    type="email"
+                    onChange={(e) =>
+                      set_apply_job({ ...apply_job, email: e.target.value })
+                    }
+                    placeholder="Your Email *"
+                    required
+                  />
+                  <label htmlFor="resume">Upload Resume</label>
+                  <input
+                    type="file"
+                    onChange={(e) =>
+                      set_apply_job({ ...apply_job, resume: e.target.value })
+                    }
+                    name="resume"
+                    required
+                  />
                   <button
                     className="tournament__details-form-btn"
                     fdprocessedid="zi62r"
+                    type="submit"
                   >
                     Apply
                   </button>
