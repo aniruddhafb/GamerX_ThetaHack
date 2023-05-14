@@ -245,7 +245,6 @@ const CollectionPage = ({ fetch_collection_data, polybase }) => {
                 >
                   <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
                     {nfts?.map((e, index) => {
-                      console.log(e);
                       return (
                         <NftCard
                           key={index}

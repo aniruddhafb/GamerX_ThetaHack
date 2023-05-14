@@ -6,11 +6,12 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 
-const JobID = ({ get_job_byId, apply_to_job }) => {
+const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
   const router = useRouter();
   const { slug } = router.query;
 
   const [job, set_job] = useState({});
+  const [jobs, set_jobs] = useState([]);
   const [loading, isLoading] = useState(false);
 
   const [apply_job, set_apply_job] = useState({
@@ -33,9 +34,18 @@ const JobID = ({ get_job_byId, apply_to_job }) => {
     isLoading(false);
   };
 
+  const get_jobs = async () => {
+    isLoading(true);
+    const jobs = await get_all_jobs();
+    console.log({ jobslist: jobs })
+    set_jobs(jobs);
+    isLoading(false);
+  };
+
   useEffect(() => {
     if (!slug) return;
     get_job_data();
+    get_jobs();
   }, [slug]);
 
   return (
@@ -66,24 +76,35 @@ const JobID = ({ get_job_byId, apply_to_job }) => {
                   <ul className="list-wrap" style={{ color: "white" }}>
                     <li>
                       Posted By
-                      <a href="#!" style={{ textDecoration: "none" }}>
-                        Admin
-                      </a>
+                      <Link href={`/profile/${job?.owner?.id}`} style={{ textDecoration: "none" }}>
+                        {job?.company_name}
+                      </Link>
                     </li>
                     <li>
                       <i className="far fa-calendar-alt"></i> Aug 16, 2023
                     </li>
                     <li>
-                      Payout :{" "}
+                      Min Payout :{" "}
                       <a
                         href="#!"
                         style={{ textDecoration: "none", color: "#68fb9a" }}
                       >
-                        $34000
+                        {job?.min_salary}
+                      </a>
+                    </li>
+                    <li>
+                      Max Payout :{" "}
+                      <a
+                        href="#!"
+                        style={{ textDecoration: "none", color: "#68fb9a" }}
+                      >
+                        {job?.max_salary}
                       </a>
                     </li>
                   </ul>
                 </div>
+
+                <p style={{ marginBottom: "15px" }}>Hiring for the role of {job?.job_role}</p>
 
                 {/* job description  */}
                 <h4 className="tournament__details-form-title mt-2">
@@ -126,23 +147,25 @@ const JobID = ({ get_job_byId, apply_to_job }) => {
                     onSubmit={handle_submit}
                     action="tournament-details.html#"
                   >
+                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>Your Name</label>
                     <input
                       type="text"
                       onChange={(e) =>
                         set_apply_job({ ...apply_job, name: e.target.value })
                       }
-                      placeholder="Your Name *"
+                      placeholder="Full Name *"
                       required
                     />
+                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>Your Email</label>
                     <input
                       type="email"
                       onChange={(e) =>
                         set_apply_job({ ...apply_job, email: e.target.value })
                       }
-                      placeholder="Your Email *"
+                      placeholder="Vaild Email *"
                       required
                     />
-                    <label htmlFor="resume">Upload Resume</label>
+                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>Your Resume</label>
                     <input
                       type="file"
                       onChange={(e) =>
@@ -169,7 +192,7 @@ const JobID = ({ get_job_byId, apply_to_job }) => {
                         <ul className="list-wrap d-flex flex-wrap align-items-center m-0">
                           <li>
                             <a href="#!" style={{ textDecoration: "none" }}>
-                              Esports
+                              {job?.job_role}
                             </a>
                           </li>
                         </ul>
@@ -222,38 +245,45 @@ const JobID = ({ get_job_byId, apply_to_job }) => {
                   <div className="shop__widget-inner">
                     <div className="trending__matches-list">
                       {/* loop other jobs here max 10 */}
-                      <div className="trending__matches-item">
-                        <div className="trending__matches-thumb">
-                          <Link href="#!" style={{ textDecoration: "none" }}>
-                            <Image
-                              src={`../../nftCard1.jpg`}
-                              height={100}
-                              width={100}
-                              alt="img"
-                            />
-                          </Link>
-                        </div>
-                        <div className="trending__matches-content">
-                          <div className="info">
-                            <h5 className="title">
-                              <Link href="#!" style={{ textDecoration: "none" }}>
-                                FoxTie Max
-                              </Link>
-                            </h5>
-                            <div className="flex justify-center align-middle">
-                              <span className="price">$ 7500</span>
-                              <span className="ml-[6px] text-[white] text-[15px]">
-                                Full Stack
-                              </span>
-                            </div>
-                          </div>
-                          <div className="play">
-                            <Link href="#!" className="popup-video">
-                              <i className="far fa-play-circle"></i>
+                      {jobs?.map((e) => (
+                        <div className="trending__matches-item" key={e.data.id}>
+                          <div className="trending__matches-thumb">
+                            <Link href={e.data.id} target="_blank" style={{ textDecoration: "none" }}>
+                              <Image
+                                src={e.data.company_logo.replace(
+                                  "ipfs://",
+                                  "https://gateway.ipfscdn.io/ipfs/"
+                                )}
+                                height={100}
+                                width={100}
+                                alt="img"
+                                style={{ height: "60px", width: '100%' }}
+                              />
                             </Link>
                           </div>
+                          <div className="trending__matches-content">
+                            <div className="info">
+                              <h5 className="title">
+                                <Link href={e.data.id} target="_blank" style={{ textDecoration: "none" }}>
+                                  {e.data.title}
+                                </Link>
+                              </h5>
+                              <div className="flex justify-center align-middle">
+                                <span className="price">{e.data.max_salary}</span>
+                                <span className="ml-[6px] text-[white] text-[15px]">
+                                  {e.data.job_role}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="play">
+                              <Link href={e.data.id} target="_blank" className="popup-video">
+                                <i className="far fa-play-circle"></i>
+                              </Link>
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ))}
+
                     </div>
                   </div>
                 </div>

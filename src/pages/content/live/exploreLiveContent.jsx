@@ -13,7 +13,6 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
   const get_livestreams = async () => {
     setLoading(true);
     const res = await get_all_livestreams();
-    console.log({ streamres: res })
     set_data(res);
     setLoading(false);
   };

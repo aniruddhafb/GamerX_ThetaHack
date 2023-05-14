@@ -111,19 +111,19 @@ export default function App({ Component, pageProps }) {
     const res = await db
       .collection("User")
       .create([default_nft_collection, "", "", "", "", "", [], ""]);
-    console.log(res.data);
+    // console.log(res.data);
   };
 
   const delete_video = async (video) => {
     const db = polybase();
     const res = await db.collection("Video").record(video).call("del");
-    console.log(res.data);
+    // console.log(res.data);
   };
 
   const delete_users = async (address) => {
     const db = polybase();
     const res = await db.collection("User").record(address).call("del");
-    console.log({ res });
+    // console.log({ res });
   };
 
   //USE ONLY FOR CREATING DEFAULT NFT COLLECTION
@@ -213,23 +213,18 @@ export default function App({ Component, pageProps }) {
             _tokenURI.title,
             _tokenURI.tag,
           ]);
-
-        console.log(res.data);
       });
 
       const txn = await gamerX.createToken(tokenURI);
       await txn.wait();
-      console.log({ txn });
     } catch (error) {
       console.log(error);
     }
   };
 
   const upload_video = async (data) => {
-    console.log("upload video called");
     try {
       const thumbnail_ipfs = await storage.upload(data.thumbnail);
-      console.log(thumbnail_ipfs);
       const res = await axios({
         url: "https://api.thetavideoapi.com/upload",
         method: "POST",
@@ -367,7 +362,6 @@ export default function App({ Component, pageProps }) {
       comments,
       owner: video_owner.data,
     };
-    console.log(obj);
     return obj;
   };
 
@@ -765,7 +759,6 @@ export default function App({ Component, pageProps }) {
   };
 
   const marketplace = () => {
-    console.log({ marketplace_address });
     const marketplace_contract = new ethers.Contract(
       marketplace_address,
       NFTMarketplace.abi,
@@ -776,7 +769,6 @@ export default function App({ Component, pageProps }) {
 
   // lsit nft for sale
   const list_nft = async (tokenId, price, collection_address) => {
-    console.log({ tokenId, price, collection_address, signer });
     const collection_contract = gamerX_collection(collection_address, signer);
     try {
       const txnApproval = await collection_contract.setApprovalForAll(
@@ -806,7 +798,6 @@ export default function App({ Component, pageProps }) {
             ethers.utils.parseEther(price).toString(),
             db.collection("User").record(marketplace_address),
           ]);
-        console.log({ polybaseres: res });
         sendNFTListNoti(tokenId, price);
         // router.reload();
       }
@@ -851,7 +842,6 @@ export default function App({ Component, pageProps }) {
   };
 
   const apply_to_job = async (job_id, data) => {
-    console.log(job_id);
     const resume = await storage.upload(data.resume);
     const db = polybase();
     const res = await db
@@ -863,8 +853,6 @@ export default function App({ Component, pageProps }) {
         data.email,
         resume,
       ]);
-
-    console.log(res.data);
   };
 
   // execute sales
@@ -888,7 +876,6 @@ export default function App({ Component, pageProps }) {
           .record(`${collection_address}/${tokenId}`)
           .call("executeSale", [db.collection("User").record(signerAddress)]);
       }
-      console.log(res.data);
       // sendNFTSaleNoti(tokenId, listing_price);
     } catch (error) {
       console.log(error.message);

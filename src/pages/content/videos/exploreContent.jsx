@@ -13,7 +13,6 @@ const ExploreContent = ({ fetch_videos }) => {
     setLoading(true);
     const data = await fetch_videos();
     set_videos(data);
-    console.log({ viddata: data })
     setLoading(false);
   };
   useEffect(() => {

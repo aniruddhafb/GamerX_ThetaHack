@@ -13,7 +13,6 @@ const ExploreCollections = ({ get_all_collections }) => {
   const all_collections = async () => {
     isLoading(true);
     const collections = await get_all_collections();
-    console.log({ collections: collections });
     set_collections(collections);
     isLoading(false);
   };
