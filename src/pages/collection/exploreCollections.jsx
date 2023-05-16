@@ -134,6 +134,9 @@ const ExploreCollections = ({ get_all_collections }) => {
                     </div>
                   </Link>
                 ))}
+                {collections?.length <= 0 &&
+                  <p style={{ marginTop: "52px", fontSize: "20px" }}>No NFT Collections Found</p>
+                }
               </div>
             </div>
           </div>

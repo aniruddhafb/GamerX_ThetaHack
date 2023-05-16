@@ -174,6 +174,9 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                     )
                   );
                 })}
+                {videos?.length <= 0 &&
+                  <p style={{ marginBottom: "32px", fontSize: "20px" }}>No Video Content Found</p>
+                }
               </div>
             )}
           </div>
@@ -321,6 +324,9 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                     />
                   )
               )}
+              {nfts?.length <= 0 &&
+                <p style={{ marginTop: "52px", fontSize: "20px" }}>No NFTs Found</p>
+              }
             </div>
           }
         </div>

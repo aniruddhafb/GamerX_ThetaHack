@@ -74,8 +74,12 @@ const ExploreContent = ({ fetch_videos }) => {
                         videoDate={e.video.upload_date}
                         videoID={e.video.id}
                       />
-                    );
+                    )
                   })}
+                  {
+                    videos?.length <= 0 &&
+                    <p style={{ marginTop: "52px", fontSize: "20px" }}>No Videos Found</p>
+                  }
                 </div>
               </div>
             )}

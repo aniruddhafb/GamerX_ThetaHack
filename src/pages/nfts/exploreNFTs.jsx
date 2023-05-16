@@ -77,6 +77,9 @@ const ExploreNFTs = ({ fetch_all_nfts }) => {
                     key={index}
                   />
                 ))}
+                {nfts?.length <= 0 &&
+                  <p style={{ marginTop: "52px", fontSize: "20px" }}>No NFTs Found</p>
+                }
               </div>
             </div>
           </div>
