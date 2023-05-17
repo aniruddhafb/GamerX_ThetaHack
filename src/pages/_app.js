@@ -882,6 +882,26 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  const send_superchat = async (video_id, recipient, amount, message) => {
+    // console.log({ video_id, recipient, amount, message, signerAddress });
+    // const contract = marketplace();
+    // const res = await contract.tip_creator(video_id, recipient, {
+    //   value: ethers.utils.parseEther(amount),
+    // });
+    const db = polybase();
+    const db_res = await db
+      .collection("Superchat")
+      .create([
+        uuidv4(),
+        db.collection("Video").record(video_id),
+        db.collection("User").record(signerAddress),
+        message,
+      ]);
+
+    console.log(db_res.data);
+    return db_res.data;
+  };
+
   useEffect(() => {
     connect_wallet();
   }, []);
@@ -898,6 +918,7 @@ export default function App({ Component, pageProps }) {
       />
       <Component
         {...pageProps}
+        send_superchat={send_superchat}
         apply_to_job={apply_to_job}
         get_job_byId={get_job_byId}
         get_all_jobs={get_all_jobs}

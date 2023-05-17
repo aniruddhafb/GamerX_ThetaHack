@@ -73,7 +73,9 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                     <h6 className="sub-title">Gamerx.Space</h6>
                     <h2 className="title">Here Gamers Live!!</h2>
                     <p style={{ fontSize: "15px" }}>
-                      Connect with other gamers 🎮 <br /> Launch your NFT Collections on Theta 🎨 <br />Get incentivize for sharing your gaming content 💰
+                      Connect with other gamers 🎮 <br /> Launch your NFT
+                      Collections on Theta 🎨 <br />
+                      Get incentivize for sharing your gaming content 💰
                     </p>
                     <div className="slider__btn">
                       <Link
@@ -112,7 +114,15 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
             <ul className="slider__brand-list list-wrap">
               <li style={{ marginTop: "30px" }}>
                 <h2 style={{ fontSize: "12px" }}>Powered By</h2>
-                <Link href="https://thetatoken.org/" target="_blank" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Link
+                  href="https://thetatoken.org/"
+                  target="_blank"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Image
                     src={thetalogo}
                     style={{
@@ -174,9 +184,11 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                     )
                   );
                 })}
-                {videos?.length <= 0 &&
-                  <p style={{ marginBottom: "32px", fontSize: "20px" }}>No Video Content Found</p>
-                }
+                {videos?.length <= 0 && (
+                  <p style={{ marginBottom: "32px", fontSize: "20px" }}>
+                    No Video Content Found
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -222,7 +234,9 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
               <div className="flex flex-wrap justify-around align-middle">
                 {gamers_data.map(
                   (e, index) =>
-                    index < 6 && (
+                    index < 6 &&
+                    e.data.cover_image &&
+                    e.data.profile_image && (
                       <ProfileCard
                         key={index}
                         coverImage={e.data.cover_image}
@@ -304,9 +318,9 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
               </div>
             </div>
           </div>
-          {nftLoading ?
+          {nftLoading ? (
             <Loader />
-            :
+          ) : (
             <div className="flex flex-wrap justify-around align-middle">
               {/* loop here  */}
               {nfts?.map(
@@ -324,11 +338,13 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
                     />
                   )
               )}
-              {nfts?.length <= 0 &&
-                <p style={{ marginTop: "52px", fontSize: "20px" }}>No NFTs Found</p>
-              }
+              {nfts?.length <= 0 && (
+                <p style={{ marginTop: "52px", fontSize: "20px" }}>
+                  No NFTs Found
+                </p>
+              )}
             </div>
-          }
+          )}
         </div>
       </section>
 
