@@ -19,16 +19,16 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
   const fetch_nft_data = async () => {
     isLoading(true);
     const res = await fetch_NFT_info(slug, tokenid);
-    console.log({ nftdata: res })
+    console.log({ nftdata: res });
     set_nft_data(res);
     isLoading(false);
   };
 
-  const sell_nft = async (tokenId, price, collection_address) => {
+  const sell_nft = async (tokenId, collection_address) => {
     isCompLoading(true);
     const res = await list_nft(tokenId, listing_price, collection_address);
+    // sendNFTListNoti(tokenId, signerAddress);
     isCompLoading(false);
-    // router.reload();
   };
 
   const buy_nft = async () => {

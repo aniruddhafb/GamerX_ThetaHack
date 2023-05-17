@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { v4 as uuidv4 } from "uuid";
+import * as PushAPI from "@pushprotocol/restapi";
 
 //firebase
 import { initializeApp } from "firebase/app";
@@ -902,62 +903,86 @@ export default function App({ Component, pageProps }) {
     return db_res.data;
   };
 
-  useEffect(() => {
-    connect_wallet();
-  }, []);
-  return (
-    <>
-      <Navbar
-        connect_wallet={connect_wallet}
-        signer={signer}
-        signerAddress={signerAddress}
-        signer_bal={format_signer_bal}
-        chainID={current_chainId}
-        setChainID={set_current_chainId}
-        GAMERX_CHANNEL_ADDRESS={GAMERX_CHANNEL_ADDRESS}
-      />
-      <Component
-        {...pageProps}
-        send_superchat={send_superchat}
-        apply_to_job={apply_to_job}
-        get_job_byId={get_job_byId}
-        get_all_jobs={get_all_jobs}
-        create_job={create_job}
-        toggle_follow={toggle_follow}
-        upload_video={upload_video}
-        get_video_data={get_video_data}
-        post_comment={post_comment}
-        update_profile={update_profile}
-        get_user_data={get_user_data}
-        user_data={user_data}
-        go_live={go_live}
-        get_liveStream_data={get_liveStream_data}
-        db={db}
-        signerAddress={signerAddress}
-        fetch_videos={fetch_videos}
-        fetch_gamers={fetch_gamers}
-        get_gamer={get_gamer}
-        get_all_livestreams={get_all_livestreams}
-        create_token={create_token}
-        default_nft_collection={default_nft_collection}
-        create_collection={create_collection}
-        get_my_collections={get_my_collections}
-        signer={signer}
-        fetch_all_nfts={fetch_all_nfts}
-        get_all_collections={get_all_collections}
-        fetch_NFT_info={fetch_NFT_info}
-        fetch_collection_data={fetch_collection_data}
-        polybase={polybase}
-        fetch_nfts_from_user_wallet={fetch_nfts_from_user_wallet}
-        get_user_videos={get_user_videos}
-        list_nft={list_nft}
-        get_user_livestream={get_user_livestream}
-        executeSale={executeSale}
-        tip_video={tip_video}
-        fetch_video_tips={fetch_video_tips}
-        end_livestream={end_livestream}
-      />
-      <Footer />
-    </>
-  );
+  const sendNFTListNoti = async ({ tokenId, signer_address }) => {
+    const signer = new ethers.Wallet(`${process.env.NEXT_PUBLIC_PRIVATE_KEY}`);
+    try {
+      const apiResponse = await PushAPI.payloads.sendNotification({
+        signer,
+        type: 3,
+        identityType: 2,
+        notification: {
+          title: `Your NFT with token ID ${tokenId} is listed for sale on GamerX`,
+          body: `Congratulations, you have successfully listed your NFT for sale`,
+        },
+        payload: {
+          title: `Your NFT with token ID ${tokenId} is listed for sale on GamerX`,
+          body: `Congratulations, you have successfully listed your NFT for sale`,
+        },
+        recipients: `eip155:80001:${signer_address}`,
+        channel: `eip155:80001:${GAMERX_CHANNEL_ADDRESS}`,
+        env: "staging",
+      });
+    } catch (err) {
+      console.error("Error: ", err);
+    }
+
+    useEffect(() => {
+      connect_wallet();
+    }, []);
+    return (
+      <>
+        <Navbar
+          connect_wallet={connect_wallet}
+          signer={signer}
+          signerAddress={signerAddress}
+          signer_bal={format_signer_bal}
+          chainID={current_chainId}
+          setChainID={set_current_chainId}
+          GAMERX_CHANNEL_ADDRESS={GAMERX_CHANNEL_ADDRESS}
+        />
+        <Component
+          {...pageProps}
+          send_superchat={send_superchat}
+          apply_to_job={apply_to_job}
+          get_job_byId={get_job_byId}
+          get_all_jobs={get_all_jobs}
+          create_job={create_job}
+          toggle_follow={toggle_follow}
+          upload_video={upload_video}
+          get_video_data={get_video_data}
+          post_comment={post_comment}
+          update_profile={update_profile}
+          get_user_data={get_user_data}
+          user_data={user_data}
+          go_live={go_live}
+          get_liveStream_data={get_liveStream_data}
+          db={db}
+          signerAddress={signerAddress}
+          fetch_videos={fetch_videos}
+          fetch_gamers={fetch_gamers}
+          get_gamer={get_gamer}
+          get_all_livestreams={get_all_livestreams}
+          create_token={create_token}
+          default_nft_collection={default_nft_collection}
+          create_collection={create_collection}
+          get_my_collections={get_my_collections}
+          signer={signer}
+          fetch_all_nfts={fetch_all_nfts}
+          get_all_collections={get_all_collections}
+          fetch_NFT_info={fetch_NFT_info}
+          fetch_collection_data={fetch_collection_data}
+          polybase={polybase}
+          fetch_nfts_from_user_wallet={fetch_nfts_from_user_wallet}
+          get_user_videos={get_user_videos}
+          list_nft={list_nft}
+          get_user_livestream={get_user_livestream}
+          executeSale={executeSale}
+          tip_video={tip_video}
+          fetch_video_tips={fetch_video_tips}
+          end_livestream={end_livestream}
+        />
+        <Footer />
+      </>
+    );
+  };
 }
