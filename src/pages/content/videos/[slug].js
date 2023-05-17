@@ -301,7 +301,7 @@ const Video = ({
                               <div className="comments-box">
                                 <div className="comments-avatar">
                                   <Image
-                                    src={e.owner.data?.profile_image.replace(
+                                    src={e.owner.data?.profile_image?.replace(
                                       "ipfs://",
                                       "https://gateway.ipfscdn.io/ipfs/"
                                     )}
