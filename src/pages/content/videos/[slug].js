@@ -297,16 +297,26 @@ const Video = ({
                             <li>
                               <div className="comments-box">
                                 <div className="comments-avatar">
-                                  <Image
-                                    src={e.owner.data?.profile_image.replace(
-                                      "ipfs://",
-                                      "https://gateway.ipfscdn.io/ipfs/"
-                                    )}
-                                    alt="img"
-                                    width={100}
-                                    height={100}
-                                    className="h-[100px] w-[100px]"
-                                  />
+                                  {e.owner.data?.profile_image ?
+                                    <Image
+                                      src={e.owner.data?.profile_image.replace(
+                                        "ipfs://",
+                                        "https://gateway.ipfscdn.io/ipfs/"
+                                      )}
+                                      alt="img"
+                                      width={100}
+                                      height={100}
+                                      className="h-[100px] w-[100px]"
+                                    />
+                                    :
+                                    <Image
+                                      src={`../../nft_avatar01.png`}
+                                      alt="img"
+                                      width={100}
+                                      height={100}
+                                      className="h-[100px] w-[100px]"
+                                    />
+                                  }
                                 </div>
                                 <div className="comments-text">
                                   <div className="avatar-name">

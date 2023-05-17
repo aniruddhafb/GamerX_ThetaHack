@@ -37,6 +37,9 @@ const help = () => {
                                     <h4 class="title" style={{ fontSize: "22px" }}>Step 3</h4>
                                     <p>Now you are ready to go, to start streaming first start streaming via OBS studio and then go live on GamerX by filling the appropiate details. <Link style={{ textDecoration: "none" }} href="/content/goLive">Click Here</Link> to visit the go live page.</p>
                                 </div>
+                                <Link href={`/content/goLive`} class="blog-details-inner-img">
+                                    <Image src="../../sc3.png" height={100} width={100} alt="img" style={{ height: "auto", width: "auto" }} />
+                                </Link>
                             </div>
                         </div>
                     </div>
