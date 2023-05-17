@@ -1,9 +1,11 @@
 import Loader from "@/components/Loader";
 import Head from "next/head";
+import { Router, useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
 const CreateCollection = ({ create_collection }) => {
 
+  const router = useRouter();
   const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
     name: "",

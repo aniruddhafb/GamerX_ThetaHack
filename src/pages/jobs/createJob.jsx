@@ -259,6 +259,12 @@ const CreateJob = ({ create_job }) => {
                             >
                               Esports Player
                             </option>
+                            <option
+                              value="Gamer Designer"
+                              className="bg-gray-800"
+                            >
+                              Gamer Designer
+                            </option>
                           </select>
                         </div>
                         <span

@@ -169,7 +169,7 @@ const GamerProfile = ({
                           onClick={handle_follow}
                           className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-2"
                         >
-                          {isFollowing ? "unFollow" : "Follow"}
+                          {isFollowing ? "Following" : "Follow"}
                         </button>
                       )}
                     </div>

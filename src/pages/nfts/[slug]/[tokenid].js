@@ -19,6 +19,7 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
   const fetch_nft_data = async () => {
     isLoading(true);
     const res = await fetch_NFT_info(slug, tokenid);
+    console.log({ nftdata: res })
     set_nft_data(res);
     isLoading(false);
   };
@@ -116,20 +117,20 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
 
                 {/* creator  */}
                 <div className="phoneGayab image ml-10">
-                  <a href={`/profile/${nft_data?.user_id}`}>
+                  <a href={`/profile/${nft_data?.collection_owner}`}>
                     <img src="../../nft_avatar01.png" alt="img" />
                   </a>
                 </div>
                 <div className="phoneGayab info">
                   <h6 className="name">Creator</h6>
                   <a
-                    href={`/profile/${nft_data?.user_id}`}
+                    href={`/profile/${nft_data?.collection_owner}`}
                     className="userName"
                     style={{ textDecoration: "none" }}
                   >
-                    {nft_data?.user_id.slice(0, 5) +
+                    {nft_data?.collection_owner.slice(0, 5) +
                       "..." +
-                      nft_data?.user_id.slice(38)}
+                      nft_data?.collection_owner.slice(38)}
                   </a>
                 </div>
               </div>
@@ -145,7 +146,7 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
                   </div>
                 )}
 
-                {nft_data?.isListed && nft_data?.user_id != signerAddress && (
+                {nft_data?.isListed && nft_data?.seller != signerAddress && (
                   <div className="cart-plus-minus d-flex flex-wrap align-items-center">
                     {compLoading ? (
                       <button
