@@ -10,8 +10,8 @@ import { MdOutlineWorkOutline } from "react-icons/md";
 
 
 const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, setChainID, GAMERX_CHANNEL_ADDRESS }) => {
-  console.log({chainID})
-  
+  // console.log({chainID})
+
   const router = useRouter();
   const [notificationData, setNotificationData] = useState();
   const [nullNotification, setNullNotification] = useState(true);
@@ -127,6 +127,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
         limit: 10,
       })
       .then((feeds) => {
+        console.log({ notis: feeds })
         setNotificationData(feeds);
         if (feeds[0]?.app != "RarX Marketplace") {
           setNullNotification(false);
