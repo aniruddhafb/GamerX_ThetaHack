@@ -75,7 +75,10 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
             </div>
             <div className="shop__details-content">
               <h2 className="mb-2 text-[15px] text-[#45f882]">
-                <a href={`/collection/${nft_data?.collection_id}`} style={{ textDecoration: "none" }}>
+                <a
+                  href={`/collection/${nft_data?.collection_id}`}
+                  style={{ textDecoration: "none" }}
+                >
                   {nft_data?.collection_name}
                 </a>
               </h2>
