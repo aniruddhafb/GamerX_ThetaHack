@@ -10,7 +10,8 @@ import { MdOutlineWorkOutline } from "react-icons/md";
 
 
 const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, setChainID, GAMERX_CHANNEL_ADDRESS }) => {
-
+  console.log({chainID})
+  
   const router = useRouter();
   const [notificationData, setNotificationData] = useState();
   const [nullNotification, setNullNotification] = useState(true);
