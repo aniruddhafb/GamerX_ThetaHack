@@ -84,6 +84,9 @@ const TopGamers = ({ fetch_gamers }) => {
                       profileImage={e.data.profile_image}
                     />
                   ))}
+                  {data?.length <= 0 &&
+                    <p style={{ marginTop: "52px", fontSize: "20px" }}>No Gamers Found</p>
+                  }
                 </div>
               </div>
             )}

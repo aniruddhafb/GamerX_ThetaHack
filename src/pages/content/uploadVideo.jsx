@@ -20,7 +20,6 @@ const uploadVideo = ({ upload_video }) => {
   const handle_submit = async (e) => {
     isLoading(true);
     e.preventDefault();
-    console.log({ data });
     await upload_video(data);
     isLoading(false);
     setTimeout(() => {

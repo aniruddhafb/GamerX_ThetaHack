@@ -13,7 +13,6 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
   const get_livestreams = async () => {
     setLoading(true);
     const res = await get_all_livestreams();
-    console.log({ streamres: res })
     set_data(res);
     setLoading(false);
   };
@@ -76,6 +75,9 @@ const ExploreLiveContent = ({ get_all_livestreams }) => {
                     thumbnail={e.livestream.thumbnail}
                   />
                 ))}
+                {data?.length <= 0 &&
+                  <p style={{ marginTop: "52px", fontSize: "20px" }}>No Live Streams Found</p>
+                }
               </div>
             )}
           </div>

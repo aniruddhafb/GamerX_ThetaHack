@@ -43,7 +43,6 @@ const Video = ({
 
   const get_tips = async () => {
     const tips = await fetch_video_tips();
-    console.log({ tips });
     set_tips(tips);
   };
 
@@ -51,14 +50,12 @@ const Video = ({
     isLoading(true);
     const res = await get_video_data(slug);
     set_data(res);
-    console.log({ videodata: res });
     isLoading(false);
   };
 
   useEffect(() => {
     if (!slug) return;
     video_data();
-    console.log("render");
     get_tips();
   }, [slug]);
 

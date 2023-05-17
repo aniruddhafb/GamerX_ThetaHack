@@ -13,7 +13,6 @@ const ExploreCollections = ({ get_all_collections }) => {
   const all_collections = async () => {
     isLoading(true);
     const collections = await get_all_collections();
-    console.log({ collections: collections });
     set_collections(collections);
     isLoading(false);
   };
@@ -135,6 +134,9 @@ const ExploreCollections = ({ get_all_collections }) => {
                     </div>
                   </Link>
                 ))}
+                {collections?.length <= 0 &&
+                  <p style={{ marginTop: "52px", fontSize: "20px" }}>No NFT Collections Found</p>
+                }
               </div>
             </div>
           </div>

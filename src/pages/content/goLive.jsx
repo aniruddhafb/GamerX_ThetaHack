@@ -1,5 +1,6 @@
 import Loader from "@/components/Loader";
 import Head from "next/head";
+import Link from "next/link";
 import React, { useState } from "react";
 const GoLive = ({ go_live }) => {
 
@@ -14,7 +15,6 @@ const GoLive = ({ go_live }) => {
 
   const handle_change = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
   };
   const handle_submit = async (e) => {
     isLoading(true);
@@ -54,7 +54,7 @@ const GoLive = ({ go_live }) => {
                     action="#"
                   >
                     <p className="comment-notes pb-4">
-                      Go live on gamerX in few easy steps
+                      Go live on gamerX in few easy steps, <Link style={{ textDecoration: "none" }} href="/help">click here</Link> to view the steps
                     </p>
                     <div className="row">
                       <div className="col-sm-6 relative">
@@ -101,7 +101,7 @@ const GoLive = ({ go_live }) => {
                             textTransform: "uppercase",
                           }}
                         >
-                          Stream ID*
+                          Stream ID* <Link style={{ textDecoration: "none" }} href="/help">➡</Link>
                         </span>
                       </div>
 

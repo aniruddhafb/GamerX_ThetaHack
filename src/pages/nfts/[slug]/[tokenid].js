@@ -19,7 +19,6 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
   const fetch_nft_data = async () => {
     isLoading(true);
     const res = await fetch_NFT_info(slug, tokenid);
-    console.log({ singleNFTDATA: res });
     set_nft_data(res);
     isLoading(false);
   };
