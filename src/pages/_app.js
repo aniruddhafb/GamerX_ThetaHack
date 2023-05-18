@@ -26,7 +26,7 @@ import NFTCollection from "../../artifacts/contracts/NFTCollection.sol/NFTCollec
 import Collection_Factory from "../../artifacts/contracts/CollectionFactory.sol/CollectionFactory.json";
 import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 
 // Initialize Firebase
 const firebaseConfig = {
