@@ -148,16 +148,13 @@ export default function App({ Component, pageProps }) {
   };
 
   const tip_video = async (video_id, tip_amount, recipient) => {
-    console.log({ video_id, tip_amount, recipient });
     try {
       const contract = marketplace();
       const db = polybase();
       const res = await contract.tip_creator(video_id, recipient, {
         value: ethers.utils.parseEther(tip_amount),
       });
-      console.log(res);
       const tip_res = await contract.tips(video_id);
-      console.log({ tip_res });
       const db_tip = await db
         .collection("Tip")
         .create([
@@ -166,7 +163,6 @@ export default function App({ Component, pageProps }) {
           ethers.utils.parseEther(tip_amount).toString(),
           db.collection("Video").record(video_id),
         ]);
-      console.log({ db_tip });
     } catch (error) {
       console.log(error.message);
     }
@@ -178,7 +174,6 @@ export default function App({ Component, pageProps }) {
       .collection("Tip")
       .where("videoId", "==", video_id)
       .get();
-    console.log({ tips: res.data });
     return res.data;
   };
 
@@ -199,7 +194,6 @@ export default function App({ Component, pageProps }) {
       const network = await provider.getNetwork();
 
       gamerX.on("TokenCreated", async (ipfsURL, tokenId) => {
-        // console.log({ ipfsURL, tokenId });
         const db = polybase();
         const res = await db
           .collection("NFT")
@@ -393,7 +387,6 @@ export default function App({ Component, pageProps }) {
       .where("stream_id", "==", stream_id)
       .get();
 
-    console.log(res.data[0].data.id);
     const end_stream = await db
       .collection("LiveStream")
       .record(res.data[0].data.id)
@@ -414,7 +407,6 @@ export default function App({ Component, pageProps }) {
     for (const e of res.data) {
       let obj = {};
       const owner = await db.collection("User").record(e.data.owner.id).get();
-      console.log({ owner });
       obj = { owner: owner.data, livestream: e.data };
       livestreams.push(obj);
     }
@@ -464,7 +456,6 @@ export default function App({ Component, pageProps }) {
   };
 
   const get_user_videos = async (signerAddress) => {
-    console.log({ signerAddress });
     const db = polybase();
     const res = await db
       .collection("Video")
@@ -473,7 +464,6 @@ export default function App({ Component, pageProps }) {
         id: signerAddress,
       })
       .get();
-    console.log({ res });
     let videos = [];
     for (const e of res.data) {
       let obj = {};
@@ -502,8 +492,6 @@ export default function App({ Component, pageProps }) {
       .call("post_comment", [
         db.collection("Comment").record(upload_comment.data.id),
       ]);
-
-    console.log({ save_comment });
   };
 
   const fetch_videos = async () => {
@@ -562,7 +550,6 @@ export default function App({ Component, pageProps }) {
         allCollections.push(data);
       });
       return allCollections;
-      console.log({ allCollections });
     } catch (error) {
       console.log(error.message);
     }
@@ -702,7 +689,6 @@ export default function App({ Component, pageProps }) {
   };
 
   const is_following = async (user_id) => {
-    console.log({ user_id });
     if (!user_id) return;
     const db = polybase();
     const res = await db
@@ -842,12 +828,26 @@ export default function App({ Component, pageProps }) {
         data.role,
         data.requirements,
       ]);
-    console.log(res.data);
   };
 
   const get_all_jobs = async () => {
     const db = polybase();
     const res = await db.collection("Job").get();
+    return res.data;
+  };
+
+  const get_posted_jobs = async (user_id) => {
+    console.log({ user_id });
+    if (!user_id) return;
+    const db = polybase();
+    const res = await db
+      .collection("Job")
+      .where("owner", "==", {
+        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
+        id: user_id,
+      })
+      .get();
+    console.log(res.data);
     return res.data;
   };
 
@@ -873,7 +873,6 @@ export default function App({ Component, pageProps }) {
 
   // execute sales
   const executeSale = async (tokenId, collection_address, listing_price) => {
-    console.log({ tokenId, collection_address, listing_price });
     const db = polybase();
 
     const res = await db
@@ -918,7 +917,6 @@ export default function App({ Component, pageProps }) {
   };
 
   const fetch_superchats = async (video_id) => {
-    console.log({ video_id });
     if (!video_id) return;
     const db = polybase();
     const res = await db
@@ -986,6 +984,7 @@ export default function App({ Component, pageProps }) {
       />
       <Component
         {...pageProps}
+        get_posted_jobs={get_posted_jobs}
         is_following={is_following}
         fetch_superchats={fetch_superchats}
         send_superchat={send_superchat}

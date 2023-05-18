@@ -10,6 +10,7 @@ import LiveVideoCard from "@/components/cards/LiveVideoCard";
 import Head from "next/head";
 import * as PushAPI from "@pushprotocol/restapi";
 import { Chat } from "@pushprotocol/uiweb";
+import JobCard from "@/components/cards/JobCard";
 
 const GamerProfile = ({
   get_gamer,
@@ -19,6 +20,7 @@ const GamerProfile = ({
   get_user_livestream,
   toggle_follow,
   is_following,
+  get_posted_jobs,
 }) => {
   const theme = {
     btnColorPrimary: "#198754",
@@ -42,11 +44,14 @@ const GamerProfile = ({
 
   const [isFollowing, set_is_following] = useState(false);
 
+  const [posted_jobs, set_jobs] = useState([]);
+
   const fetch_gamer = async () => {
     isLoading(true);
     const res = await get_gamer(slug);
     set_data(res);
     check_is_following(res.id);
+    get_jobs(res.id);
     isLoading(false);
   };
 
@@ -72,6 +77,11 @@ const GamerProfile = ({
   const get_nfts = async () => {
     const res = await fetch_nfts_from_user_wallet(signerAddress);
     set_user_nfts(res);
+  };
+
+  const get_jobs = async (user_id) => {
+    const res = await get_posted_jobs(user_id);
+    set_jobs(res);
   };
 
   const get_videos = async () => {
@@ -446,6 +456,17 @@ const GamerProfile = ({
                 </h3>
                 <div className="row justify-content-center">
                   {/* loop jobs here */}
+                  {posted_jobs?.map((e) => (
+                    <JobCard
+                      key={e.data.id}
+                      company_logo={e.data.company_logo}
+                      job_role={e.data.job_role}
+                      min_salary={e.data.min_salary}
+                      max_salary={e.data.max_salary}
+                      job_type={e.data.job_type}
+                      dataID={e.data.id}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
