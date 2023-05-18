@@ -34,6 +34,7 @@ const LiveStream = ({
 
   const [data, set_data] = useState();
   const [videoData, setVideoData] = useState([]);
+  const [superLoading, isSuperLoading] = useState(false);
   const [loading, isLoading] = useState(false);
   const [streamStatusLoading, isStreamStatusLoading] = useState(false);
   const [messages, set_messages] = useState([]);
@@ -82,6 +83,7 @@ const LiveStream = ({
   };
 
   const make_superchat = async () => {
+    isSuperLoading(true);
     await send_superchat(
       data?.stream_data.id,
       data?.owner.id,
@@ -89,10 +91,11 @@ const LiveStream = ({
       superchat_data.message
     );
     set_superchats([...superchats, superchat_data.message]);
+    isSuperLoading(false);
     const notify = () =>
       toast(
         <div>
-          <div>{}</div>
+          <div>{ }</div>
           <div className="font-bold text-green-600">
             {superchat_data.message}
           </div>
@@ -125,7 +128,6 @@ const LiveStream = ({
       })
       .onSnapshot(
         async (newDoc) => {
-          console.log({ newDoc });
 
           let superchats = [];
           for (const e of newDoc.data) {
@@ -148,13 +150,11 @@ const LiveStream = ({
           console.log(err);
         }
       );
-
-    console.log({ chats });
   };
 
   const get_superchats = async (video_id) => {
     const res = await fetch_superchats(video_id);
-    // set_superchats(res);
+    set_superchats(res);
   };
 
   useEffect(() => {
@@ -226,57 +226,7 @@ const LiveStream = ({
                     ></iframe>
                   )}
                 </div>
-                {superchats
-                  .map((e, index) => (
-                    <div key={index} className="latest-comments">
-                      <ul className="list-wrap">
-                        <li>
-                          <div className="comments-box">
-                            <div className="comments-avatar">
-                              {e.tipper_profile_image ? (
-                                <Image
-                                  src={e.tipper_profile_image.replace(
-                                    "ipfs://",
-                                    "https://gateway.ipfscdn.io/ipfs/"
-                                  )}
-                                  alt="img"
-                                  width={100}
-                                  height={100}
-                                  className="h-[100px] w-[100px]"
-                                />
-                              ) : (
-                                <Image
-                                  src={`../../nft_avatar01.png`}
-                                  alt="img"
-                                  width={100}
-                                  height={100}
-                                  className="h-[100px] w-[100px]"
-                                />
-                              )}
-                            </div>
-                            <div className="comments-text">
-                              <div className="avatar-name">
-                                <Link
-                                  href={`/profile/${e.tipper}`}
-                                  style={{ textDecoration: "none" }}
-                                >
-                                  <h6 className="name">{e.tipper}</h6>
-                                </Link>
-                                <span
-                                  className="date text-white"
-                                  style={{ fontSize: "13px" }}
-                                >
-                                  {e.amount} TSOL
-                                </span>
-                              </div>
-                              <p>{e.message}</p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  ))
-                  .reverse()}
+
                 <div className="blog-post-content blog-details-content">
                   <div className="blog-post-meta">
                     <ul className="list-wrap">
@@ -383,37 +333,62 @@ const LiveStream = ({
               </div>
 
               {/* fetch superchats  */}
-              {/* <div className="comments-wrap">
+              <div className="comments-wrap">
                 <h4 className="comments-wrap-title">
-                  {data?.comments?.length} Comments
+                  {superchats?.length} Superchats
                 </h4>
-                {superchats?.map((e, index) => {
-                  // const date = new Date(parseInt(e.comment.data?.date));
-                  // const year = date.getFullYear(); // returns the year (e.g. 2023)
-                  // const month = date.getMonth(); // returns the month (0-11; 0=January, 1=February, etc.)
-                  // const day = date.getDate();
-
-                  // const time = `${day}/${month}/${year}`;
-                  return (
+                {superchats
+                  .map((e, index) => (
                     <div key={index} className="latest-comments">
                       <ul className="list-wrap">
                         <li>
-                          <div className="comments-text">
-                            <div className="avatar-name">
-                              <Link
-                                href={`/profile/${e.tipper}`}
-                                style={{ textDecoration: "none" }}
-                              >
-                                <h6 className="name">{e.tipper}</h6>
-                              </Link>
+                          <div className="comments-box">
+                            <div className="comments-avatar">
+                              {e.tipper_profile_image ? (
+                                <Image
+                                  src={e.tipper_profile_image.replace(
+                                    "ipfs://",
+                                    "https://gateway.ipfscdn.io/ipfs/"
+                                  )}
+                                  alt="img"
+                                  width={100}
+                                  height={100}
+                                  className="h-[100px] w-[100px]"
+                                />
+                              ) : (
+                                <Image
+                                  src={`../../nft_avatar01.png`}
+                                  alt="img"
+                                  width={100}
+                                  height={100}
+                                  className="h-[100px] w-[100px]"
+                                />
+                              )}
+                            </div>
+                            <div className="comments-text">
+                              <div className="avatar-name">
+                                <Link
+                                  href={`/profile/${e.tipper}`}
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  <h6 className="name">{e.tipper}</h6>
+                                </Link>
+                                <span
+                                  className="date text-white"
+                                  style={{ fontSize: "13px" }}
+                                >
+                                  {e.amount} TSOL
+                                </span>
+                              </div>
+                              <p>{e.message}</p>
                             </div>
                           </div>
                         </li>
                       </ul>
                     </div>
-                  );
-                })}
-              </div> */}
+                  ))
+                  .reverse()}
+              </div>
 
               {/* post superchat  */}
               <div className="comment-respond">
@@ -446,7 +421,7 @@ const LiveStream = ({
                       required
                     ></textarea>
                   </div>
-                  {loading ? (
+                  {superLoading ? (
                     <button type="button" className="flex">
                       Sending
                       <svg
@@ -492,9 +467,8 @@ const LiveStream = ({
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
-                            e.user === signerAddress && "ml-auto justify-end"
-                          }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
+                            }`}
                         >
                           {/* <Image
                             // src={e.profile_image?.replace(
@@ -515,9 +489,8 @@ const LiveStream = ({
                               {e.user.slice(0, 5) + "..." + e.user.slice(38)}
                             </Link>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
-                                e.user === signerAddress && "bg-green-600"
-                              }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
+                                }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>
@@ -525,8 +498,6 @@ const LiveStream = ({
                         </div>
                       );
                     })}
-
-                    {/* current user comment  */}
                   </div>
 
                   <div
