@@ -9,8 +9,8 @@ import * as PushAPI from "@pushprotocol/restapi";
 import { MdOutlineWorkOutline } from "react-icons/md";
 
 
-const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, setChainID, GAMERX_CHANNEL_ADDRESS }) => {
-  // console.log({chainID})
+const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, setChainID, GAMERX_CHANNEL_ADDRESS, user_data }) => {
+  console.log({ userdata: user_data })
 
   const router = useRouter();
   const [notificationData, setNotificationData] = useState();
@@ -527,13 +527,26 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                     className="flex items-center text-sm text-gray-600 transition-colors duration-300 transform ml-[-20px]"
                                     style={{ textDecoration: "none" }}
                                   >
-                                    <Image
-                                      className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9 mb-3"
-                                      src="../../dislogo.png"
-                                      alt="jane avatar"
-                                      height={100}
-                                      width={100}
-                                    />
+                                    {user_data?.profile_image ?
+                                      <Image
+                                        className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9 mb-3"
+                                        src={user_data?.profile_image.replace(
+                                          "ipfs://",
+                                          "https://gateway.ipfscdn.io/ipfs/"
+                                        )}
+                                        alt="jane avatar"
+                                        height={100}
+                                        width={100}
+                                      />
+                                      :
+                                      <Image
+                                        className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9 mb-3"
+                                        src="../../dislogo.png"
+                                        alt="jane avatar"
+                                        height={100}
+                                        width={100}
+                                      />
+                                    }
                                     <div className="mx-1">
                                       <span
                                         className="max-w-[30px] overflow-hidden text-ellipsis"
