@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { v4 as uuidv4 } from "uuid";
-import * as PushAPI from "@pushprotocol/restapi";
+// import * as PushAPI from "@pushprotocol/restapi";
 
 //firebase
 import { initializeApp } from "firebase/app";
@@ -884,31 +884,31 @@ export default function App({ Component, pageProps }) {
   };
 
   // sending nft list notification
-  const sendNFTListNoti = async ({ tokenId, signer_address }) => {
-    const signer = new ethers.Wallet(
-      `${process.env.NEXT_PUBLIC_PRIVATE_KEY}`
-    );
-    try {
-      const apiResponse = await PushAPI.payloads.sendNotification({
-        signer,
-        type: 3,
-        identityType: 2,
-        notification: {
-          title: `Your NFT with token ID ${tokenId} is listed for sale on GamerX`,
-          body: `Congratulations, you have successfully listed your NFT for sale`,
-        },
-        payload: {
-          title: `Your NFT with token ID ${tokenId} is listed for sale on GamerX`,
-          body: `Congratulations, you have successfully listed your NFT for sale`,
-        },
-        recipients: `eip155:80001:${signer_address}`,
-        channel: `eip155:80001:${GAMERX_CHANNEL_ADDRESS}`,
-        env: "staging",
-      });
-    } catch (err) {
-      console.error("Error: ", err);
-    }
-  };
+  // const sendNFTListNoti = async ({ tokenId, signer_address }) => {
+  //   const signer = new ethers.Wallet(
+  //     `${process.env.NEXT_PUBLIC_PRIVATE_KEY}`
+  //   );
+  //   try {
+  //     const apiResponse = await PushAPI.payloads.sendNotification({
+  //       signer,
+  //       type: 3,
+  //       identityType: 2,
+  //       notification: {
+  //         title: `Your NFT with token ID ${tokenId} is listed for sale on GamerX`,
+  //         body: `Congratulations, you have successfully listed your NFT for sale`,
+  //       },
+  //       payload: {
+  //         title: `Your NFT with token ID ${tokenId} is listed for sale on GamerX`,
+  //         body: `Congratulations, you have successfully listed your NFT for sale`,
+  //       },
+  //       recipients: `eip155:80001:${signer_address}`,
+  //       channel: `eip155:80001:${GAMERX_CHANNEL_ADDRESS}`,
+  //       env: "staging",
+  //     });
+  //   } catch (err) {
+  //     console.error("Error: ", err);
+  //   }
+  // };
 
   useEffect(() => {
     connect_wallet();
