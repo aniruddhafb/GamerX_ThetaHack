@@ -242,6 +242,9 @@ const Video = ({
                             TFUEL Tokens
                           </span>
                         ))}
+                        {tips?.length <= 0 &&
+                          <p>No tips found</p>
+                        }
                       </div>
                     </div>
 

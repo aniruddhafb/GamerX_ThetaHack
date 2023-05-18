@@ -374,10 +374,10 @@ const LiveStream = ({
                                   <h6 className="name">{e.tipper}</h6>
                                 </Link>
                                 <span
-                                  className="date text-white"
+                                  className="date text-[#faa706]"
                                   style={{ fontSize: "13px" }}
                                 >
-                                  {e.amount} TSOL
+                                  {e.amount} TFUEL
                                 </span>
                               </div>
                               <p>{e.message}</p>

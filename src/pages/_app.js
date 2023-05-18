@@ -982,6 +982,7 @@ export default function App({ Component, pageProps }) {
         signer_bal={format_signer_bal}
         chainID={current_chainId}
         setChainID={set_current_chainId}
+        user_data={user_data}
         GAMERX_CHANNEL_ADDRESS={GAMERX_CHANNEL_ADDRESS}
       />
       <Component
