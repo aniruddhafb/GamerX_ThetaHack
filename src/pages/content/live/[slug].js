@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { MdSend } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import { ethers } from "ethers";
 import {
   addDoc,
   collection,
@@ -24,6 +26,8 @@ const LiveStream = ({
   get_user_data,
   end_livestream,
   send_superchat,
+  fetch_superchats,
+  polybase,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -39,16 +43,18 @@ const LiveStream = ({
     message: "",
     can_show: false,
   });
+  const [superchats, set_superchats] = useState([]);
   const messagesRef = collection(db, "messages");
 
   const stream_video = async () => {
     isLoading(true);
     const res = await get_liveStream_data(slug);
-    console.log({ res });
     set_data(res);
     const videoRes = await fetch_videos();
     setVideoData(videoRes);
     isLoading(false);
+    get_superchats(res?.stream_data.id);
+    listen_superchat(res?.stream_data.id);
   };
 
   const send_message = async () => {
@@ -77,12 +83,78 @@ const LiveStream = ({
 
   const make_superchat = async () => {
     await send_superchat(
-      slug,
+      data?.stream_data.id,
       data?.owner.id,
       superchat_data.token,
       superchat_data.message
     );
-    set_superchat_data({ ...superchat_data, can_show: true });
+    set_superchats([...superchats, superchat_data.message]);
+    const notify = () =>
+      toast(
+        <div>
+          <div>{}</div>
+          <div className="font-bold text-green-600">
+            {superchat_data.message}
+          </div>
+        </div>,
+        {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+
+    notify();
+    get_superchats(data?.stream_data.id);
+  };
+
+  const listen_superchat = async (video_id) => {
+    if (!video_id) return;
+    const db = polybase();
+    let chats = [];
+    const res = db
+      .collection("Superchat")
+      .where("live_stream", "==", {
+        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/LiveStream`,
+        id: video_id,
+      })
+      .onSnapshot(
+        async (newDoc) => {
+          console.log({ newDoc });
+
+          let superchats = [];
+          for (const e of newDoc.data) {
+            let obj = {};
+            obj.amount = ethers.utils.formatEther(e.data.amount).toString();
+            obj.tipper = e.data.tipper.id;
+            obj.message = e.data.message;
+            const owner = await db
+              .collection("User")
+              .record(e.data.tipper.id)
+              .get();
+            obj.tipper_username = owner.data.username;
+            obj.tipper_bio = owner.data.bio;
+            obj.tipper_profile_image = owner.data.profile_image;
+            superchats.push(obj);
+          }
+          set_superchats(superchats);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
+    console.log({ chats });
+  };
+
+  const get_superchats = async (video_id) => {
+    const res = await fetch_superchats(video_id);
+    // set_superchats(res);
   };
 
   useEffect(() => {
@@ -125,7 +197,19 @@ const LiveStream = ({
             <div className="blog-post-wrapper mr-4">
               {/* blog main section  */}
               <div className="blog-post-item">
-                <div className="blog-post-thumb">
+                <div className="blog-post-thumb relative h-full w-full">
+                  <ToastContainer
+                    position="top-left"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                  />
                   {data?.stream_data?.isActive ? (
                     <iframe
                       width="100%"
@@ -142,6 +226,57 @@ const LiveStream = ({
                     ></iframe>
                   )}
                 </div>
+                {superchats
+                  .map((e, index) => (
+                    <div key={index} className="latest-comments">
+                      <ul className="list-wrap">
+                        <li>
+                          <div className="comments-box">
+                            <div className="comments-avatar">
+                              {e.tipper_profile_image ? (
+                                <Image
+                                  src={e.tipper_profile_image.replace(
+                                    "ipfs://",
+                                    "https://gateway.ipfscdn.io/ipfs/"
+                                  )}
+                                  alt="img"
+                                  width={100}
+                                  height={100}
+                                  className="h-[100px] w-[100px]"
+                                />
+                              ) : (
+                                <Image
+                                  src={`../../nft_avatar01.png`}
+                                  alt="img"
+                                  width={100}
+                                  height={100}
+                                  className="h-[100px] w-[100px]"
+                                />
+                              )}
+                            </div>
+                            <div className="comments-text">
+                              <div className="avatar-name">
+                                <Link
+                                  href={`/profile/${e.tipper}`}
+                                  style={{ textDecoration: "none" }}
+                                >
+                                  <h6 className="name">{e.tipper}</h6>
+                                </Link>
+                                <span
+                                  className="date text-white"
+                                  style={{ fontSize: "13px" }}
+                                >
+                                  {e.amount} TSOL
+                                </span>
+                              </div>
+                              <p>{e.message}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  ))
+                  .reverse()}
                 <div className="blog-post-content blog-details-content">
                   <div className="blog-post-meta">
                     <ul className="list-wrap">
@@ -252,55 +387,30 @@ const LiveStream = ({
                 <h4 className="comments-wrap-title">
                   {data?.comments?.length} Comments
                 </h4>
-                {super.map((e, index) => {
-                  const date = new Date(parseInt(e.comment.data?.date));
-                  const year = date.getFullYear(); // returns the year (e.g. 2023)
-                  const month = date.getMonth(); // returns the month (0-11; 0=January, 1=February, etc.)
-                  const day = date.getDate();
+                {superchats?.map((e, index) => {
+                  // const date = new Date(parseInt(e.comment.data?.date));
+                  // const year = date.getFullYear(); // returns the year (e.g. 2023)
+                  // const month = date.getMonth(); // returns the month (0-11; 0=January, 1=February, etc.)
+                  // const day = date.getDate();
 
-                  const time = `${day}/${month}/${year}`;
+                  // const time = `${day}/${month}/${year}`;
                   return (
-                    e.owner && (
-                      <div key={index} className="latest-comments">
-                        <ul className="list-wrap">
-                          <li>
-                            <div className="comments-box">
-                              <div className="comments-avatar">
-                                <Image
-                                  src={e.owner.data?.profile_image.replace(
-                                    "ipfs://",
-                                    "https://gateway.ipfscdn.io/ipfs/"
-                                  )}
-                                  alt="img"
-                                  width={100}
-                                  height={100}
-                                  className="h-[100px] w-[100px]"
-                                />
-                              </div>
-                              <div className="comments-text">
-                                <div className="avatar-name">
-                                  <Link
-                                    href={`/profile/${e.comment.data?.owner.id}`}
-                                    style={{ textDecoration: "none" }}
-                                  >
-                                    <h6 className="name">
-                                      {e.owner.data?.username}
-                                    </h6>
-                                  </Link>
-                                  <span
-                                    className="date text-white"
-                                    style={{ fontSize: "13px" }}
-                                  >
-                                    {time}
-                                  </span>
-                                </div>
-                                <p>{e.comment.data?.comment_data}</p>
-                              </div>
+                    <div key={index} className="latest-comments">
+                      <ul className="list-wrap">
+                        <li>
+                          <div className="comments-text">
+                            <div className="avatar-name">
+                              <Link
+                                href={`/profile/${e.tipper}`}
+                                style={{ textDecoration: "none" }}
+                              >
+                                <h6 className="name">{e.tipper}</h6>
+                              </Link>
                             </div>
-                          </li>
-                        </ul>
-                      </div>
-                    )
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   );
                 })}
               </div> */}

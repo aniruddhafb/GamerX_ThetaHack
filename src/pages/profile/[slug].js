@@ -18,6 +18,7 @@ const GamerProfile = ({
   get_user_videos,
   get_user_livestream,
   toggle_follow,
+  is_following,
 }) => {
   const theme = {
     btnColorPrimary: "#198754",
@@ -45,7 +46,14 @@ const GamerProfile = ({
     isLoading(true);
     const res = await get_gamer(slug);
     set_data(res);
+    check_is_following(res.id);
     isLoading(false);
+  };
+
+  const check_is_following = async (user_id) => {
+    if (!user_id) return;
+    const follow_status = await is_following(user_id);
+    set_is_following(follow_status);
   };
 
   const handle_follow = async () => {
@@ -156,14 +164,17 @@ const GamerProfile = ({
                           </li>
                         </ol>
                       </nav>
-                      {slug &&
+                      {slug && (
                         <p className="mt-[8px] text-wheat text-[15px]">
-                          {slug.slice(0, 5) +
-                            "..." +
-                            slug.slice(38)}
+                          {slug.slice(0, 5) + "..." + slug.slice(38)}
                         </p>
-                      }
-                      <p className="mt-[-10px] text-[18px]"><span>{data?.followings?.length} Followers</span>  <span style={{ marginLeft: "12px" }}>{data?.followers?.length} Following</span></p>
+                      )}
+                      <p className="mt-[-10px] text-[18px]">
+                        <span>{data?.followings?.length} Followers</span>{" "}
+                        <span style={{ marginLeft: "12px" }}>
+                          {data?.followers?.length} Following
+                        </span>
+                      </p>
                       {data.id !== signerAddress && (
                         <button
                           onClick={handle_follow}
@@ -264,8 +275,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(true)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                NFTs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -287,8 +299,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                videos && "border-b-green-500"
+              }`}
             >
               <h4>Videos</h4>
               <></>
@@ -301,8 +314,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                lives && "border-b-green-500"
+              }`}
             >
               <h4>Live Streams</h4>
             </div>
@@ -314,8 +328,9 @@ const GamerProfile = ({
                 showJobs(true),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                jobs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -374,8 +389,9 @@ const GamerProfile = ({
                       const d = new Date();
                       let time;
                       if (e.video.upload_date) {
-                        time = `${d.getDate(e.video.upload_date)}/${d.getMonth(e.video.upload_date) + 1
-                          }/${d.getFullYear(e.video.upload_date)}`;
+                        time = `${d.getDate(e.video.upload_date)}/${
+                          d.getMonth(e.video.upload_date) + 1
+                        }/${d.getFullYear(e.video.upload_date)}`;
                       }
                       return (
                         <VideoCard

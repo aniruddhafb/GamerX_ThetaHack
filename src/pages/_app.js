@@ -26,6 +26,8 @@ import NFTCollection from "../../artifacts/contracts/NFTCollection.sol/NFTCollec
 import Collection_Factory from "../../artifacts/contracts/CollectionFactory.sol/CollectionFactory.json";
 import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
+import "react-toastify/dist/ReactToastify.css";
+
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASEAPIKEY,
@@ -699,6 +701,19 @@ export default function App({ Component, pageProps }) {
     return { user: res.data, signer: res2.data };
   };
 
+  const is_following = async (user_id) => {
+    console.log({ user_id });
+    if (!user_id) return;
+    const db = polybase();
+    const res = await db
+      .collection("User")
+      .record(signerAddress)
+      .call("is_following", [db.collection("User").record(user_id)]);
+    const follow_status = res.data.is_following;
+
+    return follow_status;
+  };
+
   //FETCHES NFTS BY USER FROM POLYBASE
   const fetch_nfts_from_user_wallet = async (signerAddress) => {
     try {
@@ -884,23 +899,51 @@ export default function App({ Component, pageProps }) {
   };
 
   const send_superchat = async (video_id, recipient, amount, message) => {
-    // console.log({ video_id, recipient, amount, message, signerAddress });
-    // const contract = marketplace();
-    // const res = await contract.tip_creator(video_id, recipient, {
-    //   value: ethers.utils.parseEther(amount),
-    // });
+    const contract = marketplace();
+    const res = await contract.tip_creator(video_id, recipient, {
+      value: ethers.utils.parseEther(amount),
+    });
     const db = polybase();
     const db_res = await db
       .collection("Superchat")
       .create([
         uuidv4(),
-        db.collection("Video").record(video_id),
+        db.collection("LiveStream").record(video_id),
         db.collection("User").record(signerAddress),
         message,
+        ethers.utils.parseEther(amount).toString(),
       ]);
 
-    console.log(db_res.data);
     return db_res.data;
+  };
+
+  const fetch_superchats = async (video_id) => {
+    console.log({ video_id });
+    if (!video_id) return;
+    const db = polybase();
+    const res = await db
+      .collection("Superchat")
+      .where("live_stream", "==", {
+        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/LiveStream`,
+        id: video_id,
+      })
+      .get();
+
+    let superchats = [];
+    for (const e of res.data) {
+      let obj = {};
+      obj.amount = ethers.utils.formatEther(e.data.amount).toString();
+      obj.tipper = e.data.tipper.id;
+      obj.message = e.data.message;
+      const owner = await db.collection("User").record(e.data.tipper.id).get();
+      obj.tipper_username = owner.data.username;
+      obj.tipper_bio = owner.data.bio;
+      obj.tipper_profile_image = owner.data.profile_image;
+
+      superchats.push(obj);
+    }
+
+    return superchats;
   };
 
   // const sendNFTListNoti = async ({ tokenId, signer_address }) => {
@@ -943,6 +986,8 @@ export default function App({ Component, pageProps }) {
       />
       <Component
         {...pageProps}
+        is_following={is_following}
+        fetch_superchats={fetch_superchats}
         send_superchat={send_superchat}
         apply_to_job={apply_to_job}
         get_job_byId={get_job_byId}
@@ -985,4 +1030,4 @@ export default function App({ Component, pageProps }) {
       <Footer />
     </>
   );
-};
+}
