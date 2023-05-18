@@ -65,6 +65,7 @@ export default function App({ Component, pageProps }) {
     // delete_users("0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861");
     // delete_video("video_y4wtagafu2vvy1tzascigwca3k");
     // create_user();
+    // create_default_collection();
 
     try {
       if (window.ethereum == null) {
@@ -142,8 +143,6 @@ export default function App({ Component, pageProps }) {
         "GamerX",
         "GamerX",
         "GamerX is a platform for gamer",
-        "Theta Chain Image",
-        "365",
       ]);
   };
 
@@ -169,10 +168,14 @@ export default function App({ Component, pageProps }) {
   };
 
   const fetch_video_tips = async (video_id) => {
+    console.log({ video_id });
     const db = polybase();
     const res = await db
       .collection("Tip")
-      .where("videoId", "==", video_id)
+      .where("videoId", "==", {
+        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/Video`,
+        id: video_id,
+      })
       .get();
     return res.data;
   };
