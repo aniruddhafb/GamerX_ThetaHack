@@ -23,10 +23,7 @@ const TopGamers = ({ fetch_gamers }) => {
     <section className="shop-area" id="pageBG">
       <Head>
         <title>Explore Gamers - GamerX</title>
-        <meta
-          name="description"
-          content="About GamerX"
-        />
+        <meta name="description" content="About GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
@@ -74,19 +71,25 @@ const TopGamers = ({ fetch_gamers }) => {
               >
                 {/* loop here  */}
                 <div className="grid grid-cols-3 justify-center w-full">
-                  {data.map((e, index) => (
-                    <ProfileCard
-                      key={index}
-                      coverImage={e.data.cover_image}
-                      gamerBio={e.data.bio}
-                      gamerID={e.data.id}
-                      gamerName={e.data.username}
-                      profileImage={e.data.profile_image}
-                    />
-                  ))}
-                  {data?.length <= 0 &&
-                    <p style={{ marginTop: "52px", fontSize: "20px" }}>No Gamers Found</p>
-                  }
+                  {data.map(
+                    (e, index) =>
+                      e.data.cover_image &&
+                      e.data.profile_image && (
+                        <ProfileCard
+                          key={index}
+                          coverImage={e.data.cover_image}
+                          gamerBio={e.data.bio}
+                          gamerID={e.data.id}
+                          gamerName={e.data.username}
+                          profileImage={e.data.profile_image}
+                        />
+                      )
+                  )}
+                  {data?.length <= 0 && (
+                    <p style={{ marginTop: "52px", fontSize: "20px" }}>
+                      No Gamers Found
+                    </p>
+                  )}
                 </div>
               </div>
             )}

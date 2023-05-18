@@ -23,6 +23,7 @@ const LiveStream = ({
   fetch_videos,
   get_user_data,
   end_livestream,
+  send_superchat,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -33,11 +34,17 @@ const LiveStream = ({
   const [streamStatusLoading, isStreamStatusLoading] = useState(false);
   const [messages, set_messages] = useState([]);
   const [new_message, set_message_data] = useState("");
+  const [superchat_data, set_superchat_data] = useState({
+    token: "",
+    message: "",
+    can_show: false,
+  });
   const messagesRef = collection(db, "messages");
 
   const stream_video = async () => {
     isLoading(true);
     const res = await get_liveStream_data(slug);
+    console.log({ res });
     set_data(res);
     const videoRes = await fetch_videos();
     setVideoData(videoRes);
@@ -66,6 +73,16 @@ const LiveStream = ({
     await end_livestream(slug);
     isStreamStatusLoading(false);
     router.reload();
+  };
+
+  const make_superchat = async () => {
+    await send_superchat(
+      slug,
+      data?.owner.id,
+      superchat_data.token,
+      superchat_data.message
+    );
+    set_superchat_data({ ...superchat_data, can_show: true });
   };
 
   useEffect(() => {
@@ -143,25 +160,20 @@ const LiveStream = ({
                     </ul>
                   </div>
                   {data?.owner.id === signerAddress &&
-                    (streamStatusLoading ?
-                      <button
-                        className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8"
-                      >
+                    (streamStatusLoading ? (
+                      <button className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8">
                         Ending Stream
                       </button>
-                      :
+                    ) : (
                       <button
                         onClick={end_stream}
                         className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8"
                       >
-                        {data?.stream_data?.isActive ?
-                          "End Live Stream"
-                          :
-                          "You Have Ended This Stream"
-                        }
+                        {data?.stream_data?.isActive
+                          ? "End Live Stream"
+                          : "You Have Ended This Stream"}
                       </button>
-                    )
-                  }
+                    ))}
                   <h2 className="title">{data?.stream_data.title}</h2>
                   <p>{data?.stream_data.description}</p>
                   <div className="blog-details-bottom">
@@ -238,9 +250,9 @@ const LiveStream = ({
               {/* fetch superchats  */}
               {/* <div className="comments-wrap">
                 <h4 className="comments-wrap-title">
-                  {data?.comments.length} Comments
+                  {data?.comments?.length} Comments
                 </h4>
-                {data?.comments.map((e, index) => {
+                {super.map((e, index) => {
                   const date = new Date(parseInt(e.comment.data?.date));
                   const year = date.getFullYear(); // returns the year (e.g. 2023)
                   const month = date.getMonth(); // returns the month (0-11; 0=January, 1=February, etc.)
@@ -303,11 +315,22 @@ const LiveStream = ({
                       type="number"
                       name="superchatAmount"
                       step="any"
+                      onChange={(e) =>
+                        set_superchat_data({
+                          ...superchat_data,
+                          token: e.target.value,
+                        })
+                      }
                       required
                     />
                     <textarea
                       name="message"
-                      // onChange={(e) => set_comment(e.target.value)}
+                      onChange={(e) =>
+                        set_superchat_data({
+                          ...superchat_data,
+                          message: e.target.value,
+                        })
+                      }
                       placeholder="Write a Comment *"
                       spellCheck="false"
                       required
@@ -334,7 +357,9 @@ const LiveStream = ({
                       </svg>
                     </button>
                   ) : (
-                    <button type="submit">Send Superchat </button>
+                    <button onClick={make_superchat} type="submit">
+                      Send Superchat{" "}
+                    </button>
                   )}
                 </div>
               </div>
@@ -357,8 +382,9 @@ const LiveStream = ({
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
-                            }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
+                            e.user === signerAddress && "ml-auto justify-end"
+                          }`}
                         >
                           {/* <Image
                             // src={e.profile_image?.replace(
@@ -379,8 +405,9 @@ const LiveStream = ({
                               {e.user.slice(0, 5) + "..." + e.user.slice(38)}
                             </Link>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
-                                }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
+                                e.user === signerAddress && "bg-green-600"
+                              }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>
