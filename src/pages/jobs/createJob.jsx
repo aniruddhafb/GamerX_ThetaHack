@@ -27,11 +27,10 @@ const CreateJob = ({ create_job }) => {
   const handle_submit = async (e) => {
     isLoading(true);
     e.preventDefault();
-    await create_job(data);
+    // await create_job(data);
+    console.log(data);
     isLoading(false);
-    setTimeout(() => {
-      router.push(`/jobs/postedJobs`);
-    }, 1000);
+    // router.replace(`/jobs/postedJobs`);
   };
 
   return (
@@ -144,7 +143,7 @@ const CreateJob = ({ create_job }) => {
                         style={{ marginTop: "20px" }}
                       >
                         <div className="form-grp">
-                          <select onChange={handle_change} name="jobType">
+                          <select onChange={handle_change} name="type">
                             <option value="Remote" className="bg-gray-800">
                               Remote
                             </option>
@@ -241,10 +240,7 @@ const CreateJob = ({ create_job }) => {
                             >
                               Marketing Head
                             </option>
-                            <option
-                              value="NFT Artist"
-                              className="bg-gray-800"
-                            >
+                            <option value="NFT Artist" className="bg-gray-800">
                               NFT Artist
                             </option>
                             <option

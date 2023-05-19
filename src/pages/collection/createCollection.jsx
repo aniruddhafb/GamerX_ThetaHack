@@ -4,7 +4,6 @@ import { Router, useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
 const CreateCollection = ({ create_collection }) => {
-
   const router = useRouter();
   const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
@@ -23,27 +22,24 @@ const CreateCollection = ({ create_collection }) => {
     e.preventDefault();
     await create_collection(data);
     isLoading(false);
-    setTimeout(() => {
-      router.push(`/collection/exploreCollections`);
-    }, 1000);
+    // setTimeout(() => {
+    router.replace(`/collection/exploreCollections`);
+    // }, 1000);
   };
 
   return (
     <div id="pageBG">
       <Head>
         <title>Create NFT Collection - GamerX</title>
-        <meta
-          name="description"
-          content="About GamerX"
-        />
+        <meta name="description" content="About GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      {loading ?
+      {loading ? (
         <div className="pt-[300px] pb-[300px]" id="pageBG">
           <Loader />
         </div>
-        :
+      ) : (
         <section className="blog-area blog-details-area">
           <div className="container">
             <div className="row justify-content-center">
@@ -179,7 +175,7 @@ const CreateCollection = ({ create_collection }) => {
             </div>
           </div>
         </section>
-      }
+      )}
     </div>
   );
 };
