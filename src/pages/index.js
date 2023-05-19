@@ -109,41 +109,39 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
           <Image src={coin3} alt="shape" />
           <Image src={coin4} alt="shape" />
         </div>
-        <div className="slider__brand-wrap">
-          <div className="container custom-container">
-            <ul className="slider__brand-list list-wrap">
-              <li style={{ marginTop: "30px" }}>
-                <h2 style={{ fontSize: "12px" }}>Powered By</h2>
-                <Link
-                  href="https://thetatoken.org/"
-                  target="_blank"
+        <div className="container custom-container">
+          <ul className="slider__brand-list list-wrap">
+            <li className="customPowered">
+              <h2 style={{ fontSize: "12px" }}>Powered By</h2>
+              <Link
+                href="https://thetatoken.org/"
+                target="_blank"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src={thetalogo}
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    height: "23px",
+                    width: "25px",
                   }}
-                >
-                  <Image
-                    src={thetalogo}
-                    style={{
-                      height: "23px",
-                      width: "25px",
-                    }}
-                    alt="brand"
-                  />
-                  <Image
-                    src={thetaText}
-                    style={{
-                      height: "38px",
-                      width: "110px",
-                      filter: "invert(1)",
-                    }}
-                    alt="brand"
-                  />
-                </Link>
-              </li>
-            </ul>
-          </div>
+                  alt="brand"
+                />
+                <Image
+                  src={thetaText}
+                  style={{
+                    height: "38px",
+                    width: "110px",
+                    filter: "invert(1)",
+                  }}
+                  alt="brand"
+                />
+              </Link>
+            </li>
+          </ul>
         </div>
       </section>
 
