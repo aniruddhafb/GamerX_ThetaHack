@@ -89,7 +89,7 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                         href="#!"
                         style={{ textDecoration: "none", color: "#68fb9a" }}
                       >
-                        {job?.min_salary}
+                        {job?.min_salary}$
                       </a>
                     </li>
                     <li>
@@ -98,7 +98,7 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                         href="#!"
                         style={{ textDecoration: "none", color: "#68fb9a" }}
                       >
-                        {job?.max_salary}
+                        {job?.max_salary}$
                       </a>
                     </li>
                   </ul>
@@ -269,7 +269,7 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                                 </Link>
                               </h5>
                               <div className="flex justify-center align-middle">
-                                <span className="price">{e.data.max_salary}</span>
+                                <span className="price">{e.data.max_salary}$</span>
                                 <span className="ml-[6px] text-[white] text-[15px]">
                                   {e.data.job_role}
                                 </span>

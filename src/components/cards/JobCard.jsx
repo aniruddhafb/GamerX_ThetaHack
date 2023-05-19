@@ -44,10 +44,9 @@ const JobCard = ({ company_logo, job_role, min_salary, max_salary, job_type, dat
                 </div>
                 <div className="tournament__list-prize">
                     <h6 className="title">Payout</h6>
-                    <i className="fas fa-trophy"></i>
-                    <span>{min_salary}</span>
+                    <span>{min_salary}$</span>
                     <span>-</span>
-                    <span>{max_salary}</span>
+                    <span>{max_salary}$</span>
                 </div>
                 <div className="tournament__list-time">
                     <h6 className="title">Work Type</h6>

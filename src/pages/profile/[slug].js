@@ -63,7 +63,6 @@ const GamerProfile = ({
 
   const handle_follow = async () => {
     isLoading(true);
-
     const res = await toggle_follow(slug);
     res.user.followers.map((e) => {
       if (e.id === signerAddress) {
@@ -285,9 +284,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(true)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                NFTs && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"
+                }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -309,9 +307,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                videos && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"
+                }`}
             >
               <h4>Videos</h4>
               <></>
@@ -324,9 +321,8 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                lives && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"
+                }`}
             >
               <h4>Live Streams</h4>
             </div>
@@ -338,9 +334,8 @@ const GamerProfile = ({
                 showJobs(true),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
-                jobs && "border-b-green-500"
-              }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"
+                }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -388,7 +383,7 @@ const GamerProfile = ({
           {videos && (
             <div className=" flex justify-center align-middle">
               <div className="container mt-12 mb-12">
-                {!user_videos.length && (
+                {!user_videos?.length && (
                   <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
                     No Content Found!
                   </h3>
@@ -399,9 +394,8 @@ const GamerProfile = ({
                       const d = new Date();
                       let time;
                       if (e.video.upload_date) {
-                        time = `${d.getDate(e.video.upload_date)}/${
-                          d.getMonth(e.video.upload_date) + 1
-                        }/${d.getFullYear(e.video.upload_date)}`;
+                        time = `${d.getDate(e.video.upload_date)}/${d.getMonth(e.video.upload_date) + 1
+                          }/${d.getFullYear(e.video.upload_date)}`;
                       }
                       return (
                         <VideoCard
@@ -424,7 +418,7 @@ const GamerProfile = ({
           {lives && (
             <div className=" flex justify-center align-middle">
               <div className="container mt-12 mb-12">
-                {!livestream.length && (
+                {!livestream?.length && (
                   <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
                     No Live Streams!
                   </h3>
@@ -451,23 +445,22 @@ const GamerProfile = ({
           {jobs && (
             <div className=" flex justify-center align-middle">
               <div className="container mt-12 mb-12">
-                <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
-                  No Jobs Found!
-                </h3>
-                <div className="row justify-content-center">
-                  {/* loop jobs here */}
-                  {posted_jobs?.map((e) => (
-                    <JobCard
-                      key={e.data.id}
-                      company_logo={e.data.company_logo}
-                      job_role={e.data.job_role}
-                      min_salary={e.data.min_salary}
-                      max_salary={e.data.max_salary}
-                      job_type={e.data.job_type}
-                      dataID={e.data.id}
-                    />
-                  ))}
-                </div>
+                {posted_jobs?.length <= 0 && (
+                  <h3 className="mt-16 mb-16" style={{ textAlign: "center" }}>
+                    No Jobs Found!
+                  </h3>
+                )}
+                {posted_jobs?.map((e) => (
+                  <JobCard
+                    key={e.data.id}
+                    company_logo={e.data.company_logo}
+                    job_role={e.data.job_role}
+                    min_salary={e.data.min_salary}
+                    max_salary={e.data.max_salary}
+                    job_type={e.data.job_type}
+                    dataID={e.data.id}
+                  />
+                ))}
               </div>
             </div>
           )}
