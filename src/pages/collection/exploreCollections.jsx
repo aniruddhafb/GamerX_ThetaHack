@@ -14,6 +14,7 @@ const ExploreCollections = ({ get_all_collections }) => {
     isLoading(true);
     const collections = await get_all_collections();
     set_collections(collections);
+    console.log({ coll: collections })
     isLoading(false);
   };
 
@@ -73,7 +74,7 @@ const ExploreCollections = ({ get_all_collections }) => {
                         <div className="trendingNft__item-image relative">
                           <a href="#">
                             <Image
-                              src={e.logo.replace(
+                              src={e.coverImage.replace(
                                 "ipfs://",
                                 "https://gateway.ipfscdn.io/ipfs/"
                               )}

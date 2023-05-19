@@ -14,7 +14,7 @@ const NftCard = ({ nftName, nftImage, nftDesc, isListed, nftPrice, nftCollection
                         )}
                         height={100}
                         width={100}
-                        style={{ height: "180px", width: "auto" }}
+                        style={{ height: "170px", width: "100%" }}
                         alt="img" />
                 </Link>
                 <div className="trendingNft__item-top mt-2">
