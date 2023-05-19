@@ -889,6 +889,7 @@ export default function App({ Component, pageProps }) {
 
   // lsit nft for sale
   const list_nft = async (tokenId, price, collection_address) => {
+    console.log({ tokenId, price, collection_address });
     const collection_contract = gamerX_collection(collection_address, signer);
     try {
       const txnApproval = await collection_contract.setApprovalForAll(
@@ -919,7 +920,7 @@ export default function App({ Component, pageProps }) {
             db.collection("User").record(marketplace_address),
           ]);
         sendNFTListNoti(tokenId, price);
-        // router.reload();
+        router.reload();
       }
     } catch (error) {
       console.log(error.message);

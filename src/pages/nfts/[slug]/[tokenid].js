@@ -247,9 +247,7 @@ const NftPage = ({ fetch_NFT_info, list_nft, signerAddress, executeSale }) => {
                             </button>
                           ) : (
                             <button
-                              onClick={() =>
-                                sell_nft(tokenid, listing_price, slug)
-                              }
+                              onClick={() => sell_nft(tokenid, slug)}
                               className="bg-[#68fb9a] text-[black] font-semibold hover:text-black py-[5px] px-4 border border-blue-500 hover:border-transparent rounded mt-2 mb-2"
                             >
                               List NFT
