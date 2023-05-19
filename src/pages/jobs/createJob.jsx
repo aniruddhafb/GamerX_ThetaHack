@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
 
-const CreateJob = ({ create_job }) => {
+const CreateJob = ({ create_job, get_user_data, signerAddress }) => {
   const router = useRouter();
   const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
@@ -27,10 +27,12 @@ const CreateJob = ({ create_job }) => {
   const handle_submit = async (e) => {
     isLoading(true);
     e.preventDefault();
-    // await create_job(data);
-    console.log(data);
+    const res = await get_user_data(signerAddress);
+    if (!res.username)
+      return alert("Please Create Your Profile To Upload Video");
+    await create_job(data);
     isLoading(false);
-    // router.replace(`/jobs/postedJobs`);
+    router.replace(`/jobs/postedJobs`);
   };
 
   return (

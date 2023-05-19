@@ -2,8 +2,7 @@ import Loader from "@/components/Loader";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useState } from "react";
-const GoLive = ({ go_live }) => {
-
+const GoLive = ({ go_live, get_user_data, signerAddress }) => {
   const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
     thumbnail: "",
@@ -19,10 +18,13 @@ const GoLive = ({ go_live }) => {
   const handle_submit = async (e) => {
     isLoading(true);
     e.preventDefault();
+    const res = await get_user_data(signerAddress);
+    if (!res.username)
+      return alert("Please Create Your Profile To Upload Video");
     await go_live(data);
     isLoading(false);
     // setTimeout(() => {
-    //   router.push(`/content/live/exploreLiveContent`);
+    router.replace(`/content/live/exploreLiveContent`);
     // }, 1000);
   };
 
@@ -30,18 +32,15 @@ const GoLive = ({ go_live }) => {
     <div id="pageBG">
       <Head>
         <title>Go Live - GamerX</title>
-        <meta
-          name="description"
-          content="Go Live On GamerX"
-        />
+        <meta name="description" content="Go Live On GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      {loading ?
+      {loading ? (
         <div className="pt-[300px] pb-[300px]" id="pageBG">
           <Loader />
         </div>
-        :
+      ) : (
         <section className="blog-area blog-details-area">
           <div className="container">
             <div className="row justify-content-center">
@@ -54,7 +53,11 @@ const GoLive = ({ go_live }) => {
                     action="#"
                   >
                     <p className="comment-notes pb-4">
-                      Go live on gamerX in few easy steps, <Link style={{ textDecoration: "none" }} href="/help">click here</Link> to view the steps
+                      Go live on gamerX in few easy steps,{" "}
+                      <Link style={{ textDecoration: "none" }} href="/help">
+                        click here
+                      </Link>{" "}
+                      to view the steps
                     </p>
                     <div className="row">
                       <div className="col-sm-6 relative">
@@ -62,7 +65,10 @@ const GoLive = ({ go_live }) => {
                           <input
                             name="thumbnail"
                             onChange={(e) =>
-                              set_data({ ...data, thumbnail: e.target.files[0] })
+                              set_data({
+                                ...data,
+                                thumbnail: e.target.files[0],
+                              })
                             }
                             type="file"
                             required
@@ -101,7 +107,10 @@ const GoLive = ({ go_live }) => {
                             textTransform: "uppercase",
                           }}
                         >
-                          Stream ID* <Link style={{ textDecoration: "none" }} href="/help">➡</Link>
+                          Stream ID*{" "}
+                          <Link style={{ textDecoration: "none" }} href="/help">
+                            ➡
+                          </Link>
                         </span>
                       </div>
 
@@ -199,7 +208,7 @@ const GoLive = ({ go_live }) => {
             </div>
           </div>
         </section>
-      }
+      )}
     </div>
   );
 };

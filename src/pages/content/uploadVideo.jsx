@@ -3,7 +3,8 @@ import axios from "axios";
 import Loader from "@/components/Loader";
 import Head from "next/head";
 import { useRouter } from "next/router";
-const uploadVideo = ({ upload_video }) => {
+
+const uploadVideo = ({ upload_video, get_user_data, signerAddress }) => {
   const router = useRouter();
   const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
@@ -20,11 +21,12 @@ const uploadVideo = ({ upload_video }) => {
   const handle_submit = async (e) => {
     isLoading(true);
     e.preventDefault();
+    const res = await get_user_data(signerAddress);
+    if (!res.username)
+      return alert("Please Create Your Profile To Upload Video");
     await upload_video(data);
     isLoading(false);
-    // setTimeout(() => {
     router.replace(`/content/videos/exploreContent`);
-    // }, 1000);
   };
 
   return (
