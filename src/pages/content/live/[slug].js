@@ -83,6 +83,7 @@ const LiveStream = ({
   };
 
   const make_superchat = async () => {
+    if (superchat_data.token < 0) return alert("Please input a valid number");
     isSuperLoading(true);
     await send_superchat(
       data?.stream_data.id,
@@ -95,7 +96,7 @@ const LiveStream = ({
     const notify = () =>
       toast(
         <div>
-          <div>{ }</div>
+          <div>{}</div>
           <div className="font-bold text-green-600">
             {superchat_data.message}
           </div>
@@ -128,7 +129,6 @@ const LiveStream = ({
       })
       .onSnapshot(
         async (newDoc) => {
-
           let superchats = [];
           for (const e of newDoc.data) {
             let obj = {};
@@ -400,6 +400,7 @@ const LiveStream = ({
                       type="number"
                       name="superchatAmount"
                       step="any"
+                      min={"0"}
                       onChange={(e) =>
                         set_superchat_data({
                           ...superchat_data,
@@ -467,8 +468,9 @@ const LiveStream = ({
                       return (
                         <div
                           key={e.id}
-                          className={`flex w-full mt-2 space-x-3 max-w-xs ${e.user === signerAddress && "ml-auto justify-end"
-                            }`}
+                          className={`flex w-full mt-2 space-x-3 max-w-xs ${
+                            e.user === signerAddress && "ml-auto justify-end"
+                          }`}
                         >
                           {/* <Image
                             // src={e.profile_image?.replace(
@@ -489,8 +491,9 @@ const LiveStream = ({
                               {e.user.slice(0, 5) + "..." + e.user.slice(38)}
                             </Link>
                             <div
-                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${e.user === signerAddress && "bg-green-600"
-                                }`}
+                              className={`bg-gray-300 p-3 rounded-r-lg rounded-bl-lg ${
+                                e.user === signerAddress && "bg-green-600"
+                              }`}
                             >
                               <p className="text-sm text-black">{e.text}</p>
                             </div>

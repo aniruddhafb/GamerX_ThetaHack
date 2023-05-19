@@ -61,6 +61,7 @@ const uploadVideo = ({ upload_video }) => {
                         <div className="form-grp">
                           <input
                             name="file"
+                            accept="video/mp4,video/x-m4v,video/*"
                             onChange={(e) =>
                               set_data({ ...data, file: e.target.files[0] })
                             }

@@ -65,6 +65,7 @@ export default function App({ Component, pageProps }) {
     // delete_users("0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861");
     // delete_video("video_y4wtagafu2vvy1tzascigwca3k");
     // create_user();
+    // create_default_collection();
 
     try {
       if (window.ethereum == null) {
@@ -142,8 +143,6 @@ export default function App({ Component, pageProps }) {
         "GamerX",
         "GamerX",
         "GamerX is a platform for gamer",
-        "Theta Chain Image",
-        "365",
       ]);
   };
 
@@ -169,22 +168,33 @@ export default function App({ Component, pageProps }) {
   };
 
   const fetch_video_tips = async (video_id) => {
-    const db = polybase();
-    const res = await db
-      .collection("Tip")
-      .where("videoId", "==", video_id)
-      .get();
-    return res.data;
+    try {
+      const db = polybase();
+      const res = await db
+        .collection("Tip")
+        .where("videoId", "==", {
+          collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/Video`,
+          id: video_id,
+        })
+        .get();
+      return res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const gamerX_collection = (collection_address, signer) => {
     if (!collection_address) return;
-    const collection_contract = new ethers.Contract(
-      collection_address,
-      NFTCollection.abi,
-      signer
-    );
-    return collection_contract;
+    try {
+      const collection_contract = new ethers.Contract(
+        collection_address,
+        NFTCollection.abi,
+        signer
+      );
+      return collection_contract;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const create_token = async (_tokenURI) => {
@@ -283,230 +293,282 @@ export default function App({ Component, pageProps }) {
 
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
   const update_profile = async (data) => {
-    let ipfs_cover = data.cover_image ? data.cover_image : "";
-    let ipfs_profile = data.profile_image ? data.profile_image : "";
-    if (typeof data.cover_image === "object") {
-      ipfs_cover = await storage.upload(data.cover_image);
-    }
-    if (typeof data.profile_image === "object") {
-      ipfs_profile = await storage.upload(data.profile_image);
-    }
+    try {
+      let ipfs_cover = data.cover_image ? data.cover_image : "";
+      let ipfs_profile = data.profile_image ? data.profile_image : "";
+      if (typeof data.cover_image === "object") {
+        ipfs_cover = await storage.upload(data.cover_image);
+      }
+      if (typeof data.profile_image === "object") {
+        ipfs_profile = await storage.upload(data.profile_image);
+      }
 
-    const signer_address = await signer.getAddress();
-    const db = polybase();
-    const res = await db
-      .collection("User")
-      .record(signer_address)
-      .call("update_profile", [
-        data.username,
-        data.bio,
-        data.email,
-        [data.instagram || "", data.twitter || "", data.link || ""],
-        ipfs_cover,
-        ipfs_profile,
-        data.role,
-        data.favourite_game,
-      ]);
+      const signer_address = await signer.getAddress();
+      const db = polybase();
+      const res = await db
+        .collection("User")
+        .record(signer_address)
+        .call("update_profile", [
+          data.username,
+          data.bio,
+          data.email,
+          [data.instagram || "", data.twitter || "", data.link || ""],
+          ipfs_cover,
+          ipfs_profile,
+          data.role,
+          data.favourite_game,
+        ]);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_user_data = async (signer_address) => {
-    const db = polybase();
-    const res = await db.collection("User").record(signer_address).get();
-    set_user_data(res.data);
-    return res.data;
+    try {
+      const db = polybase();
+      const res = await db.collection("User").record(signer_address).get();
+      set_user_data(res.data);
+      return res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_video_data = async (id) => {
-    const db = polybase();
-    const res = await db.collection("Video").where("id", "==", id).get();
-    const res4 = await axios({
-      url: `https://api.thetavideoapi.com/video/${id}`,
-      method: "GET",
-      headers: {
-        "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
-        "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
-      },
-    });
+    try {
+      const db = polybase();
+      const res = await db.collection("Video").where("id", "==", id).get();
+      const res4 = await axios({
+        url: `https://api.thetavideoapi.com/video/${id}`,
+        method: "GET",
+        headers: {
+          "x-tva-sa-id": process.env.NEXT_PUBLIC_THETA_ID,
+          "x-tva-sa-secret": process.env.NEXT_PUBLIC_THETA_SECRET,
+        },
+      });
 
-    // res4.data.body.videos[0].id
-    const polybase_video = await db
-      .collection("Video")
-      .record(res4.data.body.videos[0].id)
-      .get();
-
-    const video_owner = await db
-      .collection("User")
-      .record(polybase_video.data.owner.id)
-      .get();
-
-    let comments = [];
-    for (const e of res.data[0].data.comments) {
-      const comment = await db.collection("Comment").record(e.id).get();
-      const owner = await db
-        .collection("User")
-        .record(comment.data.owner.id)
+      // res4.data.body.videos[0].id
+      const polybase_video = await db
+        .collection("Video")
+        .record(res4.data.body.videos[0].id)
         .get();
-      comments.push({ owner, comment });
+
+      const video_owner = await db
+        .collection("User")
+        .record(polybase_video.data.owner.id)
+        .get();
+
+      let comments = [];
+      for (const e of res.data[0].data.comments) {
+        const comment = await db.collection("Comment").record(e.id).get();
+        const owner = await db
+          .collection("User")
+          .record(comment.data.owner.id)
+          .get();
+        comments.push({ owner, comment });
+      }
+      let obj = {
+        ...res.data[0].data,
+        ...res4.data.body.videos[0],
+        comments,
+        owner: video_owner.data,
+      };
+      return obj;
+    } catch (error) {
+      alert(error.message);
     }
-    let obj = {
-      ...res.data[0].data,
-      ...res4.data.body.videos[0],
-      comments,
-      owner: video_owner.data,
-    };
-    return obj;
   };
 
   const go_live = async (data) => {
-    const db = polybase();
-    const thumbnail_ipfs = await storage.upload(data.thumbnail);
-    const res = await db
-      .collection("LiveStream")
-      .create([
-        uuidv4(),
-        thumbnail_ipfs,
-        data.stream_id,
-        data.title,
-        data.description,
-        db.collection("User").record(signerAddress),
-        Date.now().toString(),
-        data.tag,
-      ]);
-    router.push(`/content/live/${res.data.stream_id}`);
+    try {
+      const db = polybase();
+      const thumbnail_ipfs = await storage.upload(data.thumbnail);
+      const res = await db
+        .collection("LiveStream")
+        .create([
+          uuidv4(),
+          thumbnail_ipfs,
+          data.stream_id,
+          data.title,
+          data.description,
+          db.collection("User").record(signerAddress),
+          Date.now().toString(),
+          data.tag,
+        ]);
+      router.push(`/content/live/${res.data.stream_id}`);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const end_livestream = async (stream_id) => {
-    const db = polybase();
-    const res = await db
-      .collection("LiveStream")
-      .where("stream_id", "==", stream_id)
-      .get();
+    try {
+      const db = polybase();
+      const res = await db
+        .collection("LiveStream")
+        .where("stream_id", "==", stream_id)
+        .get();
 
-    const end_stream = await db
-      .collection("LiveStream")
-      .record(res.data[0].data.id)
-      .call("deactivate_livestream");
+      const end_stream = await db
+        .collection("LiveStream")
+        .record(res.data[0].data.id)
+        .call("deactivate_livestream");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_user_livestream = async () => {
-    const db = polybase();
-    const res = await db
-      .collection("LiveStream")
-      .where("owner", "==", {
-        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
-        id: signerAddress,
-      })
-      .get();
+    try {
+      const db = polybase();
+      const res = await db
+        .collection("LiveStream")
+        .where("owner", "==", {
+          collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
+          id: signerAddress,
+        })
+        .get();
 
-    const livestreams = [];
-    for (const e of res.data) {
-      let obj = {};
-      const owner = await db.collection("User").record(e.data.owner.id).get();
-      obj = { owner: owner.data, livestream: e.data };
-      livestreams.push(obj);
+      const livestreams = [];
+      for (const e of res.data) {
+        let obj = {};
+        const owner = await db.collection("User").record(e.data.owner.id).get();
+        obj = { owner: owner.data, livestream: e.data };
+        livestreams.push(obj);
+      }
+
+      return livestreams;
+    } catch (error) {
+      alert(error.message);
     }
-
-    return livestreams;
   };
 
   const get_liveStream_data = async (stream_id) => {
-    const db = polybase();
-    const res = await db
-      .collection("LiveStream")
-      .where("stream_id", "==", stream_id)
-      .get();
-    const owner = await db
-      .collection("User")
-      .record(res.data[0].data.owner.id)
-      .get();
-    let obj = { owner: owner.data, stream_data: res.data[0].data };
-    return obj;
+    try {
+      const db = polybase();
+      const res = await db
+        .collection("LiveStream")
+        .where("stream_id", "==", stream_id)
+        .get();
+      const owner = await db
+        .collection("User")
+        .record(res.data[0].data.owner.id)
+        .get();
+      let obj = { owner: owner.data, stream_data: res.data[0].data };
+      return obj;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_all_livestreams = async () => {
-    const db = polybase();
-    const res = await db.collection("LiveStream").get();
-    const livestreams = [];
-    for (const e of res.data) {
-      let obj = {};
-      // if (e.data.isActive) {
-      const owner = await db.collection("User").record(e.data.owner.id).get();
-      obj = { owner, livestream: e.data };
-      livestreams.push(obj);
-      // }
+    try {
+      const db = polybase();
+      const res = await db.collection("LiveStream").get();
+      const livestreams = [];
+      for (const e of res.data) {
+        let obj = {};
+        // if (e.data.isActive) {
+        const owner = await db.collection("User").record(e.data.owner.id).get();
+        obj = { owner, livestream: e.data };
+        livestreams.push(obj);
+        // }
+      }
+      return livestreams;
+    } catch (error) {
+      alert(error.message);
     }
-    return livestreams;
   };
 
   const fetch_gamers = async () => {
-    const db = polybase();
-    const res = await db.collection("User").get();
-    return res.data;
+    try {
+      const db = polybase();
+      const res = await db.collection("User").get();
+      return res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_gamer = async (userId) => {
-    const db = polybase();
-    const res = await db.collection("User").record(userId).get();
-    return res.data;
+    try {
+      const db = polybase();
+      const res = await db.collection("User").record(userId).get();
+      return res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_user_videos = async (signerAddress) => {
-    const db = polybase();
-    const res = await db
-      .collection("Video")
-      .where("owner", "==", {
-        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
-        id: signerAddress,
-      })
-      .get();
-    let videos = [];
-    for (const e of res.data) {
-      let obj = {};
-      let owner = await db.collection("User").record(e.data.owner.id).get();
-      obj = { owner: owner.data, video: e.data };
-      videos.push(obj);
+    try {
+      const db = polybase();
+      const res = await db
+        .collection("Video")
+        .where("owner", "==", {
+          collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
+          id: signerAddress,
+        })
+        .get();
+      let videos = [];
+      for (const e of res.data) {
+        let obj = {};
+        let owner = await db.collection("User").record(e.data.owner.id).get();
+        obj = { owner: owner.data, video: e.data };
+        videos.push(obj);
+      }
+      return videos;
+    } catch (error) {
+      alert(error.message);
     }
-    return videos;
   };
 
   const post_comment = async (video_id, comment) => {
-    const db = polybase();
-    const signer_address = await signer.getAddress();
-    const upload_comment = await db
-      .collection("Comment")
-      .create([
-        uuidv4(),
-        comment,
-        Date.now().toString(),
-        db.collection("User").record(signer_address),
-      ]);
+    try {
+      const db = polybase();
+      const signer_address = await signer.getAddress();
+      const upload_comment = await db
+        .collection("Comment")
+        .create([
+          uuidv4(),
+          comment,
+          Date.now().toString(),
+          db.collection("User").record(signer_address),
+        ]);
 
-    const save_comment = await db
-      .collection("Video")
-      .record(video_id)
-      .call("post_comment", [
-        db.collection("Comment").record(upload_comment.data.id),
-      ]);
+      const save_comment = await db
+        .collection("Video")
+        .record(video_id)
+        .call("post_comment", [
+          db.collection("Comment").record(upload_comment.data.id),
+        ]);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const fetch_videos = async () => {
-    const db = polybase();
-    const res = await db.collection("Video").get();
-    const videos = [];
-    for (const e of res.data) {
-      let obj = {};
-      const owner = await db.collection("User").record(e.data.owner.id).get();
-      if (owner) {
-        obj = { owner: { ...owner.data }, video: e.data };
-        videos.push(obj);
+    try {
+      const db = polybase();
+      const res = await db.collection("Video").get();
+      const videos = [];
+      for (const e of res.data) {
+        let obj = {};
+        const owner = await db.collection("User").record(e.data.owner.id).get();
+        if (owner) {
+          obj = { owner: { ...owner.data }, video: e.data };
+          videos.push(obj);
+        }
       }
+      return videos;
+    } catch (error) {
+      alert(error.message);
     }
-    return videos;
   };
 
   const fetch_all_nfts = async () => {
@@ -536,7 +598,7 @@ export default function App({ Component, pageProps }) {
       }
       return nfts;
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
@@ -551,19 +613,23 @@ export default function App({ Component, pageProps }) {
       });
       return allCollections;
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
   // deploy collections
   const collection_contract_factory = (signer) => {
-    const collection_factory = new ethers.Contract(
-      default_collection_factory,
-      Collection_Factory.abi,
-      signer
-    );
+    try {
+      const collection_factory = new ethers.Contract(
+        default_collection_factory,
+        Collection_Factory.abi,
+        signer
+      );
 
-    return collection_factory;
+      return collection_factory;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const fetch_NFT_info = async (collection_address, tokenId) => {
@@ -612,7 +678,7 @@ export default function App({ Component, pageProps }) {
       obj.ipfsData = parsed_nft.data;
       return obj;
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
@@ -669,35 +735,43 @@ export default function App({ Component, pageProps }) {
       const my_collections = await collection.getMyCollections();
       return my_collections;
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
   const toggle_follow = async (userId) => {
-    const db = polybase();
-    const res = await db
-      .collection("User")
-      .record(userId)
-      .call("handle_unfollow", [db.collection("User").record(signerAddress)]);
+    try {
+      const db = polybase();
+      const res = await db
+        .collection("User")
+        .record(userId)
+        .call("handle_unfollow", [db.collection("User").record(signerAddress)]);
 
-    const res2 = await db
-      .collection("User")
-      .record(signerAddress)
-      .call("handle_follow", [db.collection("User").record(userId)]);
+      const res2 = await db
+        .collection("User")
+        .record(signerAddress)
+        .call("handle_follow", [db.collection("User").record(userId)]);
 
-    return { user: res.data, signer: res2.data };
+      return { user: res.data, signer: res2.data };
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const is_following = async (user_id) => {
-    if (!user_id) return;
-    const db = polybase();
-    const res = await db
-      .collection("User")
-      .record(signerAddress)
-      .call("is_following", [db.collection("User").record(user_id)]);
-    const follow_status = res.data.is_following;
+    try {
+      if (!user_id) return;
+      const db = polybase();
+      const res = await db
+        .collection("User")
+        .record(signerAddress)
+        .call("is_following", [db.collection("User").record(user_id)]);
+      const follow_status = res.data.is_following;
 
-    return follow_status;
+      return follow_status;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   //FETCHES NFTS BY USER FROM POLYBASE
@@ -729,7 +803,7 @@ export default function App({ Component, pageProps }) {
       }
       return nfts;
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
@@ -804,82 +878,101 @@ export default function App({ Component, pageProps }) {
         // router.reload();
       }
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
   const create_job = async (data) => {
-    const db = polybase();
-    const logo_url = await storage.upload(data.logo);
-    const res = await db
-      .collection("Job")
-      .create([
-        uuidv4(),
-        db.collection("User").record(signerAddress),
-        logo_url,
-        data.name,
-        data.location,
-        data.type,
-        data.duration,
-        data.title,
-        data.description,
-        data.min_salary,
-        data.max_salary,
-        data.role,
-        data.requirements,
-      ]);
+    try {
+      const db = polybase();
+      const logo_url = await storage.upload(data.logo);
+      const res = await db
+        .collection("Job")
+        .create([
+          uuidv4(),
+          db.collection("User").record(signerAddress),
+          logo_url,
+          data.name,
+          data.location,
+          data.type,
+          data.duration,
+          data.title,
+          data.description,
+          data.min_salary,
+          data.max_salary,
+          data.role,
+          data.requirements,
+        ]);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_all_jobs = async () => {
-    const db = polybase();
-    const res = await db.collection("Job").get();
-    return res.data;
+    try {
+      const db = polybase();
+      const res = await db.collection("Job").get();
+      return res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_posted_jobs = async (user_id) => {
-    console.log({ user_id });
-    if (!user_id) return;
-    const db = polybase();
-    const res = await db
-      .collection("Job")
-      .where("owner", "==", {
-        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
-        id: user_id,
-      })
-      .get();
-    console.log(res.data);
-    return res.data;
+    try {
+      if (!user_id) return;
+      const db = polybase();
+      const res = await db
+        .collection("Job")
+        .where("owner", "==", {
+          collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
+          id: user_id,
+        })
+        .get();
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const get_job_byId = async (id) => {
     const db = polybase();
-    const res = await db.collection("Job").record(id).get();
-    return res.data;
+    try {
+      const res = await db.collection("Job").record(id).get();
+      return res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const apply_to_job = async (job_id, data) => {
-    const resume = await storage.upload(data.resume);
-    const db = polybase();
-    const res = await db
-      .collection("ApplyJob")
-      .create([
-        uuidv4(),
-        db.collection("Job").record(job_id),
-        data.name,
-        data.email,
-        resume,
-      ]);
+    try {
+      const resume = await storage.upload(data.resume);
+      const db = polybase();
+      const res = await db
+        .collection("ApplyJob")
+        .create([
+          uuidv4(),
+          db.collection("Job").record(job_id),
+          data.name,
+          data.email,
+          resume,
+        ]);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   // execute sales
   const executeSale = async (tokenId, collection_address, listing_price) => {
     const db = polybase();
 
-    const res = await db
-      .collection("NFT")
-      .record(`${collection_address}/${tokenId}`)
-      .get();
     try {
+      const res = await db
+        .collection("NFT")
+        .record(`${collection_address}/${tokenId}`)
+        .get();
       const contract = marketplace();
       const txn = await contract.executeSale(tokenId, collection_address, {
         value: ethers.utils.parseEther(listing_price),
@@ -893,55 +986,66 @@ export default function App({ Component, pageProps }) {
       }
       // sendNFTSaleNoti(tokenId, listing_price);
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
   const send_superchat = async (video_id, recipient, amount, message) => {
-    const contract = marketplace();
-    const res = await contract.tip_creator(video_id, recipient, {
-      value: ethers.utils.parseEther(amount),
-    });
-    const db = polybase();
-    const db_res = await db
-      .collection("Superchat")
-      .create([
-        uuidv4(),
-        db.collection("LiveStream").record(video_id),
-        db.collection("User").record(signerAddress),
-        message,
-        ethers.utils.parseEther(amount).toString(),
-      ]);
+    try {
+      const contract = marketplace();
+      const res = await contract.tip_creator(video_id, recipient, {
+        value: ethers.utils.parseEther(amount),
+      });
+      const db = polybase();
+      const db_res = await db
+        .collection("Superchat")
+        .create([
+          uuidv4(),
+          db.collection("LiveStream").record(video_id),
+          db.collection("User").record(signerAddress),
+          message,
+          ethers.utils.parseEther(amount).toString(),
+        ]);
 
-    return db_res.data;
+      return db_res.data;
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const fetch_superchats = async (video_id) => {
-    if (!video_id) return;
-    const db = polybase();
-    const res = await db
-      .collection("Superchat")
-      .where("live_stream", "==", {
-        collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/LiveStream`,
-        id: video_id,
-      })
-      .get();
+    try {
+      if (!video_id) return;
+      const db = polybase();
+      const res = await db
+        .collection("Superchat")
+        .where("live_stream", "==", {
+          collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/LiveStream`,
+          id: video_id,
+        })
+        .get();
 
-    let superchats = [];
-    for (const e of res.data) {
-      let obj = {};
-      obj.amount = ethers.utils.formatEther(e.data.amount).toString();
-      obj.tipper = e.data.tipper.id;
-      obj.message = e.data.message;
-      const owner = await db.collection("User").record(e.data.tipper.id).get();
-      obj.tipper_username = owner.data.username;
-      obj.tipper_bio = owner.data.bio;
-      obj.tipper_profile_image = owner.data.profile_image;
+      let superchats = [];
+      for (const e of res.data) {
+        let obj = {};
+        obj.amount = ethers.utils.formatEther(e.data.amount).toString();
+        obj.tipper = e.data.tipper.id;
+        obj.message = e.data.message;
+        const owner = await db
+          .collection("User")
+          .record(e.data.tipper.id)
+          .get();
+        obj.tipper_username = owner.data.username;
+        obj.tipper_bio = owner.data.bio;
+        obj.tipper_profile_image = owner.data.profile_image;
 
-      superchats.push(obj);
+        superchats.push(obj);
+      }
+
+      return superchats;
+    } catch (error) {
+      alert(error.message);
     }
-
-    return superchats;
   };
 
   // const sendNFTListNoti = async ({ tokenId, signer_address }) => {

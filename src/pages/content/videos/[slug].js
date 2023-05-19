@@ -42,7 +42,8 @@ const Video = ({
   };
 
   const get_tips = async () => {
-    const tips = await fetch_video_tips();
+    const tips = await fetch_video_tips(slug);
+    console.log({ tips });
     set_tips(tips);
   };
 
@@ -129,18 +130,22 @@ const Video = ({
                       </ul>
                     </div>
 
-                    <h2 className="title" style={{ marginTop: "25px" }}>{data?.name}</h2>
+                    <h2 className="title" style={{ marginTop: "25px" }}>
+                      {data?.name}
+                    </h2>
                     <p>{data?.description}</p>
 
                     <div
                       style={{
                         borderTop: "2px solid #19222b",
                         paddingTop: "25px",
-                        position: 'relative'
+                        position: "relative",
                       }}
                     >
                       {/* tip video  */}
-                      <div style={{ position: "absolute", right: "0", top: "2px" }}>
+                      <div
+                        style={{ position: "absolute", right: "0", top: "2px" }}
+                      >
                         {!showTip ? (
                           <button
                             onClick={() => isShowTip(true)}
@@ -171,6 +176,7 @@ const Video = ({
                                 className="block w-[250px] rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                                 placeholder="0.00"
                                 type="number"
+                                min="0"
                                 name="tip"
                                 id="tip"
                                 step="any"
@@ -214,7 +220,11 @@ const Video = ({
 
                       <h4
                         className="title"
-                        style={{ fontSize: "16px", display: "flex", marginTop: "20px" }}
+                        style={{
+                          fontSize: "16px",
+                          display: "flex",
+                          marginTop: "20px",
+                        }}
                       >
                         Tipping History
                         <Image
@@ -303,7 +313,7 @@ const Video = ({
                             <li>
                               <div className="comments-box">
                                 <div className="comments-avatar">
-                                  {e.owner.data?.profile_image ?
+                                  {e.owner.data?.profile_image ? (
                                     <Image
                                       src={e.owner.data?.profile_image.replace(
                                         "ipfs://",
@@ -314,7 +324,7 @@ const Video = ({
                                       height={100}
                                       className="h-[100px] w-[100px]"
                                     />
-                                    :
+                                  ) : (
                                     <Image
                                       src={`../../nft_avatar01.png`}
                                       alt="img"
@@ -322,7 +332,7 @@ const Video = ({
                                       height={100}
                                       className="h-[100px] w-[100px]"
                                     />
-                                  }
+                                  )}
                                 </div>
                                 <div className="comments-text">
                                   <div className="avatar-name">

@@ -52,9 +52,7 @@ const CreateNFT = ({
     isLoading(true);
     await create_token(data);
     isLoading(false);
-    setTimeout(() => {
-      router.push(`/nfts/exploreNFTs`);
-    }, 1000);
+    router.replace(`/nfts/exploreNFTs`);
   };
 
   useEffect(() => {
