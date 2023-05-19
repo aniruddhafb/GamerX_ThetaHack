@@ -42,9 +42,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const default_nft_collection = "0x6E3249530dd3791Eafc61e320ebCef04116714cb";
-const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
-const marketplace_address = "0x29dB031d70B16837e8a0C922603A918C35cCF95A";
+// const default_nft_collection = "0x6E3249530dd3791Eafc61e320ebCef04116714cb";
+// const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
+// const marketplace_address = "0x29dB031d70B16837e8a0C922603A918C35cCF95A";
+
+const default_nft_collection = "0xfB87CdA044f5beA0Fa3d5e90a4bedAac3b16C27E";
+const default_collection_factory = "0xF9c046594033659b03496019C8A2e446c1faC0b6";
+const marketplace_address = "0xF71e0aB0223228aa84E9Ed6006f76c84C759B182";
 
 export default function App({ Component, pageProps }) {
   const GAMERX_CHANNEL_ADDRESS = "0x392021135a39786167d85a4BFDAa791fea7877Db";
@@ -64,7 +68,7 @@ export default function App({ Component, pageProps }) {
   const connect_wallet = async () => {
     // delete_users("0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861");
     // delete_video("video_y4wtagafu2vvy1tzascigwca3k");
-    // create_user();
+    create_user();
     // create_default_collection();
 
     try {
@@ -114,7 +118,7 @@ export default function App({ Component, pageProps }) {
     const db = polybase();
     const res = await db
       .collection("User")
-      .create([marketplace_address, "", "", "", "", "", [], ""]);
+      .create([default_nft_collection, "", "", "", "", "", [], ""]);
     // console.log(res.data);
   };
 

@@ -199,9 +199,9 @@ const GamerProfile = ({
                         </p>
                       )}
                       <p className="mt-[-10px] text-[18px]">
-                        <span>{data?.followings?.length} Followers</span>{" "}
+                        <span>{data?.followers?.length} Followers</span>{" "}
                         <span style={{ marginLeft: "12px" }}>
-                          {data?.followers?.length} Following
+                          {data?.followings?.length} Following
                         </span>
                       </p>
                       {data.id !== signerAddress && (
@@ -304,8 +304,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(true)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${NFTs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                NFTs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -327,8 +328,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${videos && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                videos && "border-b-green-500"
+              }`}
             >
               <h4>Videos</h4>
               <></>
@@ -341,8 +343,9 @@ const GamerProfile = ({
                 showJobs(false),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${lives && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                lives && "border-b-green-500"
+              }`}
             >
               <h4>Live Streams</h4>
             </div>
@@ -354,8 +357,9 @@ const GamerProfile = ({
                 showJobs(true),
                 showNFTs(false)
               )}
-              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${jobs && "border-b-green-500"
-                }`}
+              className={`flex px-12 py-1 border-2 border-transparent hover:border-b-green-500 ${
+                jobs && "border-b-green-500"
+              }`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -414,8 +418,9 @@ const GamerProfile = ({
                       const d = new Date();
                       let time;
                       if (e.video.upload_date) {
-                        time = `${d.getDate(e.video.upload_date)}/${d.getMonth(e.video.upload_date) + 1
-                          }/${d.getFullYear(e.video.upload_date)}`;
+                        time = `${d.getDate(e.video.upload_date)}/${
+                          d.getMonth(e.video.upload_date) + 1
+                        }/${d.getFullYear(e.video.upload_date)}`;
                       }
                       return (
                         <VideoCard
