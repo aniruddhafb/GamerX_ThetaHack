@@ -178,6 +178,7 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                       className="tournament__details-form-btn"
                       fdprocessedid="zi62r"
                       type="submit"
+                      style={{ backgroundColor: "#fd7e14" }}
                     >
                       Apply
                     </button>

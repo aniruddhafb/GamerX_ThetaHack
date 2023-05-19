@@ -119,11 +119,11 @@ const CollectionPage = ({ fetch_collection_data, polybase }) => {
           {/* <!-- Banner IMG--> */}
           <div className="relative mt-24" id="pageBG">
             <Image
-              // src={collection.coverImage?.replace(
-              //     "ipfs://",
-              //     "https://gateway.ipfscdn.io/ipfs/"
-              // )}
-              src="../../nftCard1.jpg"
+              src={collection_data?.coverImage?.replace(
+                "ipfs://",
+                "https://gateway.ipfscdn.io/ipfs/"
+              )}
+              // src="../../nftCard1.jpg"
               width={100}
               height={100}
               alt="banner"

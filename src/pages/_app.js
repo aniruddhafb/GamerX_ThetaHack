@@ -191,7 +191,7 @@ export default function App({ Component, pageProps }) {
       return res.data;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -206,7 +206,7 @@ export default function App({ Component, pageProps }) {
       return collection_contract;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -307,7 +307,7 @@ export default function App({ Component, pageProps }) {
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -339,7 +339,7 @@ export default function App({ Component, pageProps }) {
         ]);
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -351,7 +351,7 @@ export default function App({ Component, pageProps }) {
       return res.data;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -397,7 +397,7 @@ export default function App({ Component, pageProps }) {
       return obj;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -420,7 +420,7 @@ export default function App({ Component, pageProps }) {
       router.push(`/content/live/${res.data.stream_id}`);
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -438,7 +438,7 @@ export default function App({ Component, pageProps }) {
         .call("deactivate_livestream");
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -465,7 +465,7 @@ export default function App({ Component, pageProps }) {
     } catch (error) {
       console.log(error.message);
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -487,7 +487,6 @@ export default function App({ Component, pageProps }) {
       return obj;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
     }
   };
 
@@ -507,7 +506,6 @@ export default function App({ Component, pageProps }) {
       return livestreams;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
     }
   };
 
@@ -518,7 +516,7 @@ export default function App({ Component, pageProps }) {
       return res.data;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -528,7 +526,6 @@ export default function App({ Component, pageProps }) {
       const res = await db.collection("User").record(userId).get();
       return res.data;
     } catch (error) {
-      console.log(error.message);
       console.log(error.message);
     }
   };
@@ -555,7 +552,7 @@ export default function App({ Component, pageProps }) {
       return videos;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -580,7 +577,7 @@ export default function App({ Component, pageProps }) {
         ]);
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -600,7 +597,7 @@ export default function App({ Component, pageProps }) {
       return videos;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -632,7 +629,7 @@ export default function App({ Component, pageProps }) {
       return nfts;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -648,7 +645,7 @@ export default function App({ Component, pageProps }) {
       return allCollections;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -664,7 +661,7 @@ export default function App({ Component, pageProps }) {
       return collection_factory;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -715,7 +712,7 @@ export default function App({ Component, pageProps }) {
       return obj;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -762,7 +759,7 @@ export default function App({ Component, pageProps }) {
       // sendCollectionNoti({ collectionName: data.name });
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -774,7 +771,7 @@ export default function App({ Component, pageProps }) {
       return my_collections;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -794,7 +791,7 @@ export default function App({ Component, pageProps }) {
       return { user: res.data, signer: res2.data };
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -811,7 +808,7 @@ export default function App({ Component, pageProps }) {
       return follow_status;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -846,7 +843,7 @@ export default function App({ Component, pageProps }) {
     } catch (error) {
       console.log(error.message);
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -874,7 +871,7 @@ export default function App({ Component, pageProps }) {
       return res;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -924,7 +921,7 @@ export default function App({ Component, pageProps }) {
       }
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -951,7 +948,7 @@ export default function App({ Component, pageProps }) {
         ]);
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -962,7 +959,7 @@ export default function App({ Component, pageProps }) {
       return res.data;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -980,7 +977,7 @@ export default function App({ Component, pageProps }) {
       return res.data;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -991,7 +988,7 @@ export default function App({ Component, pageProps }) {
       return res.data;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -1010,7 +1007,7 @@ export default function App({ Component, pageProps }) {
         ]);
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -1037,7 +1034,7 @@ export default function App({ Component, pageProps }) {
       // sendNFTSaleNoti(tokenId, listing_price);
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -1061,7 +1058,7 @@ export default function App({ Component, pageProps }) {
       return db_res.data;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
@@ -1097,7 +1094,7 @@ export default function App({ Component, pageProps }) {
       return superchats;
     } catch (error) {
       console.log(error.message);
-      alert(error.message);
+
     }
   };
 
