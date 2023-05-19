@@ -68,6 +68,29 @@
   color: #e5e5e5;
 }
 
+.customPowered {
+  margin-top: -240px;
+}
+
+@media only screen and (max-width: 1403px) {
+  .customPowered {
+    margin-top: -140px;
+  }
+}
+
+@media only screen and (max-width: 1208px) {
+  .customPowered {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 987px) {
+  .customPowered {
+    display: block;
+    margin-top: 30px;
+  }
+}
+
 @media only screen and (max-width: 1403px) {
   .networkCustom {
     margin-left: 10px;
