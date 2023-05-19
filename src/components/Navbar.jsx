@@ -501,24 +501,42 @@ const Navbar = ({
                       <div className="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                         <ul className="navigation">
                           <li className="menu-item-has-children">
-                            <div
-                              className="bg-slate-700 p-[10px] rounded-[50%] cursor-pointer border-1 border-green-400"
-                              onClick={() => (
-                                SetShowNotifications(false),
-                                setShowProfileDrop(!showProfileDrop)
-                              )}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width="24"
-                                height="24"
-                                className="h-4 w-4 fill-jacarta-700 transition-colors group-hover:fill-white group-focus:fill-white dark:fill-white"
+                            {user_data?.profile_image ?
+                              <Image
+                                onClick={() => (
+                                  SetShowNotifications(false),
+                                  setShowProfileDrop(!showProfileDrop)
+                                )}
+                                className="h-10 w-10 fill-jacarta-700 transition-colors group-hover:fill-white group-focus:fill-white dark:fill-white "
+                                src={user_data?.profile_image.replace(
+                                  "ipfs://",
+                                  "https://gateway.ipfscdn.io/ipfs/"
+                                )}
+                                alt="jane avatar"
+                                height={100}
+                                width={100}
+                                style={{ borderRadius: "50%", cursor: "pointer", border: "1px solid gray" }}
+                              />
+                              :
+                              <div
+                                className="bg-slate-700 p-[10px] rounded-[50%] cursor-pointer border-1 border-green-400"
+                                onClick={() => (
+                                  SetShowNotifications(false),
+                                  setShowProfileDrop(!showProfileDrop)
+                                )}
                               >
-                                <path fill="none" d="M0 0h24v24H0z" />
-                                <path d="M11 14.062V20h2v-5.938c3.946.492 7 3.858 7 7.938H4a8.001 8.001 0 0 1 7-7.938zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6z" />
-                              </svg>
-                            </div>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="24"
+                                  height="24"
+                                  className="h-4 w-4 fill-jacarta-700 transition-colors group-hover:fill-white group-focus:fill-white dark:fill-white"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path d="M11 14.062V20h2v-5.938c3.946.492 7 3.858 7 7.938H4a8.001 8.001 0 0 1 7-7.938zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6z" />
+                                </svg>
+                              </div>
+                            }
                             {showProfileDrop && (
                               <ul
                                 className="sub-menu"

@@ -287,7 +287,7 @@ const CreateJob = ({ create_job }) => {
                       >
                         <div className="form-grp">
                           <input
-                            type="text"
+                            type="number"
                             name="min_salary"
                             onChange={handle_change}
                             placeholder="Amount in $"
@@ -312,7 +312,7 @@ const CreateJob = ({ create_job }) => {
                       >
                         <div className="form-grp">
                           <input
-                            type="text"
+                            type="number"
                             name="max_salary"
                             onChange={handle_change}
                             placeholder="Amount in $"
