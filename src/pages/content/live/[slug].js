@@ -60,14 +60,14 @@ const LiveStream = ({
 
   const send_message = async () => {
     if (new_message.trim() == "") return;
+    set_message_data("");
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     await addDoc(messagesRef, {
       text: new_message,
       createdAt: serverTimestamp(),
       user: signerAddress,
       room: slug,
     });
-
-    set_message_data("");
   };
 
   const user_info = async (user_id) => {
@@ -338,7 +338,7 @@ const LiveStream = ({
                   {superchats?.length} Superchats
                 </h4>
                 {superchats
-                  .map((e, index) => (
+                  ?.map((e, index) => (
                     <div key={index} className="latest-comments">
                       <ul className="list-wrap">
                         <li>
@@ -511,6 +511,7 @@ const LiveStream = ({
                       onChange={(e) => set_message_data(e.target.value)}
                       className="flex items-center h-10 w-full rounded px-3 text-sm text-[black]"
                       type="text"
+                      value={new_message}
                       placeholder="Say something…"
                     />
                     <div

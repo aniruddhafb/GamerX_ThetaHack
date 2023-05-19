@@ -114,7 +114,7 @@ export default function App({ Component, pageProps }) {
     const db = polybase();
     const res = await db
       .collection("User")
-      .create([default_nft_collection, "", "", "", "", "", [], ""]);
+      .create([marketplace_address, "", "", "", "", "", [], ""]);
     // console.log(res.data);
   };
 
@@ -179,6 +179,7 @@ export default function App({ Component, pageProps }) {
         .get();
       return res.data;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -193,6 +194,7 @@ export default function App({ Component, pageProps }) {
       );
       return collection_contract;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -293,6 +295,7 @@ export default function App({ Component, pageProps }) {
 
       router.push(`/content/videos/${res3.data.body.videos[0].id}`);
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -324,6 +327,7 @@ export default function App({ Component, pageProps }) {
           data.favourite_game,
         ]);
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -335,6 +339,7 @@ export default function App({ Component, pageProps }) {
       set_user_data(res.data);
       return res.data;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -380,6 +385,7 @@ export default function App({ Component, pageProps }) {
       };
       return obj;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -402,6 +408,7 @@ export default function App({ Component, pageProps }) {
         ]);
       router.push(`/content/live/${res.data.stream_id}`);
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -419,18 +426,19 @@ export default function App({ Component, pageProps }) {
         .record(res.data[0].data.id)
         .call("deactivate_livestream");
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
 
-  const get_user_livestream = async () => {
+  const get_user_livestream = async (user_id) => {
     try {
       const db = polybase();
       const res = await db
         .collection("LiveStream")
         .where("owner", "==", {
           collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
-          id: signerAddress,
+          id: user_id,
         })
         .get();
 
@@ -444,24 +452,25 @@ export default function App({ Component, pageProps }) {
 
       return livestreams;
     } catch (error) {
+      console.log(error.message);
+      console.log(error.message);
       alert(error.message);
     }
   };
 
   const get_liveStream_data = async (stream_id) => {
+    console.log({ stream_id });
     try {
       const db = polybase();
-      const res = await db
-        .collection("LiveStream")
-        .where("stream_id", "==", stream_id)
-        .get();
-      const owner = await db
-        .collection("User")
-        .record(res.data[0].data.owner.id)
-        .get();
-      let obj = { owner: owner.data, stream_data: res.data[0].data };
+      const res = await db.collection("LiveStream").record(stream_id).get();
+      // .where("stream_id", "==", stream_id)
+      console.log({ res });
+      if (!res.data) return;
+      const owner = await db.collection("User").record(res.data.owner.id).get();
+      let obj = { owner: owner.data, stream_data: res.data };
       return obj;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -481,6 +490,7 @@ export default function App({ Component, pageProps }) {
       }
       return livestreams;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -491,6 +501,7 @@ export default function App({ Component, pageProps }) {
       const res = await db.collection("User").get();
       return res.data;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -501,22 +512,25 @@ export default function App({ Component, pageProps }) {
       const res = await db.collection("User").record(userId).get();
       return res.data;
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
+      console.log(error.message);
     }
   };
 
-  const get_user_videos = async (signerAddress) => {
+  const get_user_videos = async (user_id) => {
+    if (!user_id) return;
     try {
       const db = polybase();
       const res = await db
         .collection("Video")
         .where("owner", "==", {
           collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
-          id: signerAddress,
+          id: user_id,
         })
         .get();
       let videos = [];
       for (const e of res.data) {
+        console.log(e);
         let obj = {};
         let owner = await db.collection("User").record(e.data.owner.id).get();
         obj = { owner: owner.data, video: e.data };
@@ -524,6 +538,7 @@ export default function App({ Component, pageProps }) {
       }
       return videos;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -548,6 +563,7 @@ export default function App({ Component, pageProps }) {
           db.collection("Comment").record(upload_comment.data.id),
         ]);
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -567,6 +583,7 @@ export default function App({ Component, pageProps }) {
       }
       return videos;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -598,6 +615,7 @@ export default function App({ Component, pageProps }) {
       }
       return nfts;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -613,6 +631,7 @@ export default function App({ Component, pageProps }) {
       });
       return allCollections;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -628,6 +647,7 @@ export default function App({ Component, pageProps }) {
 
       return collection_factory;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -678,6 +698,7 @@ export default function App({ Component, pageProps }) {
       obj.ipfsData = parsed_nft.data;
       return obj;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -724,6 +745,7 @@ export default function App({ Component, pageProps }) {
       await txn.wait();
       // sendCollectionNoti({ collectionName: data.name });
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -735,6 +757,7 @@ export default function App({ Component, pageProps }) {
       const my_collections = await collection.getMyCollections();
       return my_collections;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -754,13 +777,14 @@ export default function App({ Component, pageProps }) {
 
       return { user: res.data, signer: res2.data };
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
 
   const is_following = async (user_id) => {
+    if (!signerAddress) return;
     try {
-      if (!user_id) return;
       const db = polybase();
       const res = await db
         .collection("User")
@@ -770,21 +794,22 @@ export default function App({ Component, pageProps }) {
 
       return follow_status;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
 
   //FETCHES NFTS BY USER FROM POLYBASE
-  const fetch_nfts_from_user_wallet = async (signerAddress) => {
+  const fetch_nfts_from_user_wallet = async (user_id) => {
     try {
-      // if (!signer_address) return;
+      if (!user_id) return;
       let nfts = [];
       const db = polybase();
       const res = await db
         .collection("NFT")
         .where("owner", "==", {
           collectionId: `${process.env.NEXT_PUBLIC_NAMESPACE}/User`,
-          id: signerAddress,
+          id: user_id,
         })
         .get();
 
@@ -803,6 +828,8 @@ export default function App({ Component, pageProps }) {
       }
       return nfts;
     } catch (error) {
+      console.log(error.message);
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -830,6 +857,7 @@ export default function App({ Component, pageProps }) {
         .get();
       return res;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -878,6 +906,7 @@ export default function App({ Component, pageProps }) {
         // router.reload();
       }
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -904,6 +933,7 @@ export default function App({ Component, pageProps }) {
           data.requirements,
         ]);
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -914,6 +944,7 @@ export default function App({ Component, pageProps }) {
       const res = await db.collection("Job").get();
       return res.data;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -929,9 +960,9 @@ export default function App({ Component, pageProps }) {
           id: user_id,
         })
         .get();
-      console.log(res.data);
       return res.data;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -942,6 +973,7 @@ export default function App({ Component, pageProps }) {
       const res = await db.collection("Job").record(id).get();
       return res.data;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -960,6 +992,7 @@ export default function App({ Component, pageProps }) {
           resume,
         ]);
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -986,6 +1019,7 @@ export default function App({ Component, pageProps }) {
       }
       // sendNFTSaleNoti(tokenId, listing_price);
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -1009,6 +1043,7 @@ export default function App({ Component, pageProps }) {
 
       return db_res.data;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };
@@ -1044,6 +1079,7 @@ export default function App({ Component, pageProps }) {
 
       return superchats;
     } catch (error) {
+      console.log(error.message);
       alert(error.message);
     }
   };

@@ -31,7 +31,20 @@ const GamerProfile = ({
 
   const router = useRouter();
   const { slug } = router.query;
-  const [data, set_data] = useState([]);
+  const [data, set_data] = useState({
+    bio: "",
+    cover_image: "",
+    email: "",
+    favourite_game: "",
+    followers: [],
+    followings: [],
+    id: "",
+    is_following: false,
+    profile_image: "",
+    role: "",
+    socials: [],
+    username: "",
+  });
   const [loading, isLoading] = useState(false);
   const [NFTs, showNFTs] = useState(true);
   const [videos, showVideos] = useState(false);
@@ -49,10 +62,14 @@ const GamerProfile = ({
   const fetch_gamer = async () => {
     isLoading(true);
     const res = await get_gamer(slug);
-    set_data(res);
+    console.log({ res });
+    set_data({ ...res });
     check_is_following(res.id);
-    get_jobs(res.id);
     isLoading(false);
+    get_jobs(res.id);
+    get_nfts(res.id);
+    get_videos(res.id);
+    get_livestream(res.id);
   };
 
   const check_is_following = async (user_id) => {
@@ -73,8 +90,9 @@ const GamerProfile = ({
     });
     fetch_gamer();
   };
-  const get_nfts = async () => {
-    const res = await fetch_nfts_from_user_wallet(signerAddress);
+  const get_nfts = async (user_id) => {
+    console.log({ user_id: user_id });
+    const res = await fetch_nfts_from_user_wallet(user_id);
     set_user_nfts(res);
   };
 
@@ -83,22 +101,24 @@ const GamerProfile = ({
     set_jobs(res);
   };
 
-  const get_videos = async () => {
-    const res = await get_user_videos(signerAddress);
+  const get_videos = async (user_id) => {
+    const res = await get_user_videos(user_id);
     set_user_videos(res);
   };
 
-  const get_livestream = async () => {
-    const res = await get_user_livestream();
+  const get_livestream = async (user_id) => {
+    const res = await get_user_livestream(user_id);
     set_livestream(res);
   };
 
-  useEffect(() => {
-    if (!slug && !signerAddress) return;
+  const fetch_data = async () => {
     fetch_gamer();
-    get_nfts();
-    get_videos();
-    get_livestream();
+    // get_livestream();
+  };
+
+  useEffect(() => {
+    if (!slug) return;
+    fetch_data();
   }, [slug, signerAddress]);
 
   return (

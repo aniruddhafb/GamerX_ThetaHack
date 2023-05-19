@@ -8,10 +8,16 @@ import { useRouter } from "next/router";
 import * as PushAPI from "@pushprotocol/restapi";
 import { MdOutlineWorkOutline } from "react-icons/md";
 
-
-const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, setChainID, GAMERX_CHANNEL_ADDRESS, user_data }) => {
-  console.log({ userdata: user_data })
-
+const Navbar = ({
+  connect_wallet,
+  signer,
+  signerAddress,
+  signer_bal,
+  chainID,
+  setChainID,
+  GAMERX_CHANNEL_ADDRESS,
+  user_data,
+}) => {
   const router = useRouter();
   const [notificationData, setNotificationData] = useState();
   const [nullNotification, setNullNotification] = useState(true);
@@ -127,7 +133,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
         limit: 10,
       })
       .then((feeds) => {
-        console.log({ notis: feeds })
+        console.log({ notis: feeds });
         setNotificationData(feeds);
         if (feeds[0]?.app != "RarX Marketplace") {
           setNullNotification(false);
@@ -545,7 +551,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                     className="flex items-center text-sm text-gray-600 transition-colors duration-300 transform ml-[-20px]"
                                     style={{ textDecoration: "none" }}
                                   >
-                                    {user_data?.profile_image ?
+                                    {user_data?.profile_image ? (
                                       <Image
                                         className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9 mb-3"
                                         src={user_data?.profile_image.replace(
@@ -556,7 +562,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                         height={100}
                                         width={100}
                                       />
-                                      :
+                                    ) : (
                                       <Image
                                         className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9 mb-3"
                                         src="../../dislogo.png"
@@ -564,7 +570,7 @@ const Navbar = ({ connect_wallet, signer, signerAddress, signer_bal, chainID, se
                                         height={100}
                                         width={100}
                                       />
-                                    }
+                                    )}
                                     <div className="mx-1">
                                       <span
                                         className="max-w-[30px] overflow-hidden text-ellipsis"
