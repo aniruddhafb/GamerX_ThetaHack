@@ -22,8 +22,11 @@ const uploadVideo = ({ upload_video, get_user_data, signerAddress }) => {
     isLoading(true);
     e.preventDefault();
     const res = await get_user_data(signerAddress);
-    if (!res.username)
-      return alert("Please Create Your Profile To Upload Video");
+    if (!res.username) {
+      alert("Please Create Your Profile To Upload Video");
+      router.push(`/profile/editGamerProfile`);
+      return;
+    }
     await upload_video(data);
     isLoading(false);
     router.replace(`/content/videos/exploreContent`);

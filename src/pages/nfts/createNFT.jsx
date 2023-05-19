@@ -52,10 +52,12 @@ const CreateNFT = ({
   const handle_submit = async (e) => {
     e.preventDefault();
     isLoading(true);
-
     const res = await get_user_data(signerAddress);
-    if (!res.username)
-      return alert("Please Create Your Profile To Upload Video");
+    if (!res.username) {
+      alert("Please Create Your Profile To Create NFT");
+      router.push(`/profile/editGamerProfile`);
+      return;
+    }
     await create_token(data);
     isLoading(false);
     router.replace(`/nfts/exploreNFTs`);

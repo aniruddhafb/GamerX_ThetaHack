@@ -2,6 +2,8 @@ import Loader from "@/components/Loader";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from "next/router";
+
 const GoLive = ({ go_live, get_user_data, signerAddress }) => {
   const [loading, isLoading] = useState(false);
   const [data, set_data] = useState({
@@ -12,6 +14,8 @@ const GoLive = ({ go_live, get_user_data, signerAddress }) => {
     tag: "Gameplay",
   });
 
+  const router = useRouter();
+
   const handle_change = (e) => {
     set_data({ ...data, [e.target.name]: e.target.value });
   };
@@ -19,8 +23,11 @@ const GoLive = ({ go_live, get_user_data, signerAddress }) => {
     isLoading(true);
     e.preventDefault();
     const res = await get_user_data(signerAddress);
-    if (!res.username)
-      return alert("Please Create Your Profile To Upload Video");
+    if (!res.username) {
+      alert("Please Create Your Profile To Go Live");
+      router.push(`/profile/editGamerProfile`);
+      return;
+    }
     await go_live(data);
     isLoading(false);
     // setTimeout(() => {
