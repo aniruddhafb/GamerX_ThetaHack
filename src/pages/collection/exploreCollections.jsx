@@ -80,7 +80,7 @@ const ExploreCollections = ({ get_all_collections }) => {
                               height={100}
                               width={100}
                               className="mt-[60px]"
-                              style={{ height: "150px" }}
+                              style={{ height: "150px", width: "250px" }}
                               alt="img"
                             />
                           </a>
