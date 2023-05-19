@@ -9,6 +9,8 @@ const CreateNFT = ({
   create_token,
   get_my_collections,
   signer,
+  get_user_data,
+  signerAddress,
 }) => {
   const router = useRouter();
   const [loading, isLoading] = useState(false);
@@ -50,6 +52,12 @@ const CreateNFT = ({
   const handle_submit = async (e) => {
     e.preventDefault();
     isLoading(true);
+    const res = await get_user_data(signerAddress);
+    if (!res.username) {
+      alert("Please Create Your Profile To Create NFT");
+      router.push(`/profile/editGamerProfile`);
+      return;
+    }
     await create_token(data);
     isLoading(false);
     router.replace(`/nfts/exploreNFTs`);
