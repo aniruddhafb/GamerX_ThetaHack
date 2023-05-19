@@ -68,8 +68,9 @@ export default function App({ Component, pageProps }) {
   const connect_wallet = async () => {
     // delete_users("0x7671A05D4e947A7E991a8e2A92EEd7A3a9b9A861");
     // delete_video("video_y4wtagafu2vvy1tzascigwca3k");
-    create_user();
+    // create_user();
     // create_default_collection();
+    // delete_job("ab56227a-ef81-49c1-ad4e-d5ceb3b8eeba");
 
     try {
       if (window.ethereum == null) {
@@ -131,6 +132,12 @@ export default function App({ Component, pageProps }) {
   const delete_users = async (address) => {
     const db = polybase();
     const res = await db.collection("User").record(address).call("del");
+    // console.log({ res });
+  };
+
+  const delete_job = async (job_id) => {
+    const db = polybase();
+    const res = await db.collection("Job").record(job_id).call("del");
     // console.log({ res });
   };
 
@@ -466,11 +473,16 @@ export default function App({ Component, pageProps }) {
     console.log({ stream_id });
     try {
       const db = polybase();
-      const res = await db.collection("LiveStream").record(stream_id).get();
-      // .where("stream_id", "==", stream_id)
+      const res = await db
+        .collection("LiveStream")
+        .where("stream_id", "==", stream_id)
+        .get();
       console.log({ res });
       if (!res.data) return;
-      const owner = await db.collection("User").record(res.data.owner.id).get();
+      const owner = await db
+        .collection("User")
+        .record(res.data[0].data.owner.id)
+        .get();
       let obj = { owner: owner.data, stream_data: res.data };
       return obj;
     } catch (error) {

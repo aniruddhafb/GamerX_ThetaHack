@@ -232,7 +232,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
               <div className="flex flex-wrap justify-around align-middle">
                 {gamers_data.map(
                   (e, index) =>
-                    index < 6 &&
+                    // index < 6 &&
                     e.data.cover_image &&
                     e.data.profile_image && (
                       <ProfileCard

@@ -50,6 +50,7 @@ const LiveStream = ({
   const stream_video = async () => {
     isLoading(true);
     const res = await get_liveStream_data(slug);
+    console.log({ res });
     set_data(res);
     const videoRes = await fetch_videos();
     setVideoData(videoRes);
@@ -61,7 +62,6 @@ const LiveStream = ({
   const send_message = async () => {
     if (new_message.trim() == "") return;
     set_message_data("");
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     await addDoc(messagesRef, {
       text: new_message,
       createdAt: serverTimestamp(),
@@ -254,7 +254,7 @@ const LiveStream = ({
                         onClick={end_stream}
                         className=" hover:bg-[#198754] text-[#68fb9a] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-8 mb-8"
                       >
-                        {data?.stream_data?.isActive
+                        {data?.stream_data[0]?.data.isActive
                           ? "End Live Stream"
                           : "You Have Ended This Stream"}
                       </button>
