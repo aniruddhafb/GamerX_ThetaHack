@@ -12,6 +12,8 @@ const Video = ({
   post_comment,
   tip_video,
   fetch_video_tips,
+  get_user_data,
+  signerAddress,
 }) => {
   const router = useRouter();
   const { slug } = router.query;
@@ -29,6 +31,13 @@ const Video = ({
     e.preventDefault();
     isCompLoad(true);
     e.preventDefault();
+    const res = await get_user_data(signerAddress);
+
+    if (!res.username) {
+      alert("Please Create Your Profile To Post Comment");
+      router.push(`/profile/editGamerProfile`);
+      return;
+    }
     await post_comment(slug, comment);
     await video_data();
     isCompLoad(false);
@@ -252,9 +261,7 @@ const Video = ({
                             TFUEL Tokens
                           </span>
                         ))}
-                        {tips?.length <= 0 &&
-                          <p>No tips found</p>
-                        }
+                        {tips?.length <= 0 && <p>No tips found</p>}
                       </div>
                     </div>
 
