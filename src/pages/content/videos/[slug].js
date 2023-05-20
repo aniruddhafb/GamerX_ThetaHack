@@ -116,9 +116,9 @@ const Video = ({
                       <ul className="list-wrap" style={{ color: "white" }}>
                         <li>
                           By
-                          <a href="#" style={{ textDecoration: "none" }}>
+                          <Link href={`/profile/${data?.owner.id}`} style={{ textDecoration: "none" }}>
                             {data?.owner.username}
-                          </a>
+                          </Link>
                         </li>
                         <li>
                           <i className="far fa-calendar-alt"></i> {time}

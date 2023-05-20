@@ -63,7 +63,11 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
         <link rel="icon" href="/favicon.png" />
       </Head>
       {/* hero section  */}
-      <section className="slider__area slider__bg" id="HeroMain">
+      <section className="relative slider__area slider__bg" id="HeroMain">
+        {/* <div className="absolute top-[100px] bg-[#1b232b] w-[100%] py-[5px]">
+          <h3 style={{ textTransform: "none", textAlign: "center", fontSize: "22px" }}>This Website Is Under Beta Version</h3>
+        </div> */}
+
         <div className="slider-activee">
           <div className="single-slider">
             <div className="container custom-container">
