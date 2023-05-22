@@ -7,7 +7,7 @@ const ProfileCard = ({ gamerID, coverImage, profileImage, gamerName, gamerBio })
         <Link
             className="team__item relative"
             href={`/profile/${gamerID}`}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", margin: "25px" }}
         >
             <div>
                 <Image

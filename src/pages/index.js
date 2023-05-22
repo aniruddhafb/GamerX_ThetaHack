@@ -14,8 +14,12 @@ import ProfileCard from "@/components/cards/ProfileCard";
 import Loader from "@/components/Loader";
 import NftCard from "@/components/cards/NftCard";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
-export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
+
+export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts, setChainID, chainID, signer }) {
+
+  const router = useRouter();
   const [videos, set_videos] = useState([]);
   const [gamers_data, set_gamers_data] = useState([]);
   const [nfts, set_nfts] = useState([]);
@@ -23,6 +27,15 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
   const [videoLoading, setVideoLoading] = useState(false);
   const [gamerLoading, setGamerLoading] = useState(false);
   const [nftLoading, setNftLoading] = useState(false);
+
+  const chainSwitchReload = async () => {
+    try {
+      setChainID();
+      router.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const get_all_videos = async () => {
     setVideoLoading(true);
@@ -45,6 +58,41 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
     setNftLoading(false);
   };
 
+  // switch chain
+  const switchThetaChain = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x16d" }],
+      });
+      chainSwitchReload();
+    } catch (error) {
+      if (error.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x16d",
+                chainName: "Theta",
+                nativeCurrency: {
+                  name: "Theta",
+                  symbol: "TFUEL",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://testnet-explorer.thetatoken.org/"],
+                rpcUrls: ["https://eth-rpc-api-testnet.thetatoken.org/rpc"],
+              },
+            ],
+          });
+          chainSwitchReload();
+        } catch (addError) {
+          console.error(addError);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     get_all_videos();
     get_gamers();
@@ -64,9 +112,12 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts }) {
       </Head>
       {/* hero section  */}
       <section className="relative slider__area slider__bg" id="HeroMain">
-        {/* <div className="absolute top-[100px] bg-[#1b232b] w-[100%] py-[5px]">
-          <h3 style={{ textTransform: "none", textAlign: "center", fontSize: "22px" }}>This Website Is Under Beta Version</h3>
-        </div> */}
+
+        {chainID != 365 && signer &&
+          <div className="absolute top-[100px] bg-[#198754] w-[100%] py-[5px]">
+            <h3 style={{ textTransform: "none", textAlign: "center", fontSize: "19px" }}>Currently we only support Theta Network, <span onClick={() => switchThetaChain()} style={{ cursor: "pointer", color: "#040608", fontWeight: "bolder" }}>Click here</span> to switch for Theta Testnet</h3>
+          </div>
+        }
 
         <div className="slider-activee">
           <div className="single-slider">

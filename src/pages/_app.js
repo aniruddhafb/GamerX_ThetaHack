@@ -1139,6 +1139,8 @@ export default function App({ Component, pageProps }) {
       />
       <Component
         {...pageProps}
+        chainID={current_chainId}
+        setChainID={set_current_chainId}
         get_posted_jobs={get_posted_jobs}
         is_following={is_following}
         fetch_superchats={fetch_superchats}

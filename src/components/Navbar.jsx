@@ -149,6 +149,7 @@ const Navbar = ({
     setShowProfileDrop(false);
     setNavDrop(false);
     SetShowNotifications(false);
+    setShowMobileNav(false);
   }, [router.pathname]);
 
   return (
@@ -323,7 +324,6 @@ const Navbar = ({
                             <p className="pl-2 pr-2 mt-1 font-bold ">
                               Theta Testnet
                             </p>
-                            <BsChevronDown className="h-3 w-3 2xl:h-3 2xl:w-3 mt-[10px] text-blue-400" />
                           </>
                         )}
 
@@ -336,7 +336,6 @@ const Navbar = ({
                             >
                               Unsupported Chain
                             </p>
-                            <BsChevronDown className="h-3 w-3 2xl:h-3 2xl:w-3 mt-[10px] text-blue-400" />
                           </>
                         )}
                       </div>
@@ -774,16 +773,25 @@ const Navbar = ({
                           Watch Live
                         </Link>
                       </li>
-                      <li className="menu-item-has-children">
-                        <Link
-                          href="/nfts/exploreNFTs"
-                          style={{ textDecoration: "none", display: "flex" }}
-                        >
-                          Explore
+                      <li>
+                        <Link href="/nfts/exploreNFTs" style={{ textDecoration: "none" }}>
+                          Explore NFTs
                         </Link>
-                        <div className="dropdown-btn">
-                          <span className="plus-line"></span>
-                        </div>
+                      </li>
+                      <li>
+                        <Link href="/collection/exploreCollections" style={{ textDecoration: "none" }}>
+                          Explore Collections
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/content/videos/exploreContent" style={{ textDecoration: "none" }}>
+                          Explore Videos
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/jobs/postedJobs" style={{ textDecoration: "none" }}>
+                          Posted Jobs
+                        </Link>
                       </li>
                       <li>
                         <Link href="/about" style={{ textDecoration: "none" }}>

@@ -70,7 +70,7 @@ const TopGamers = ({ fetch_gamers }) => {
                 style={{ display: "flex", flexWrap: "wrap" }}
               >
                 {/* loop here  */}
-                <div className="grid grid-cols-3 justify-center w-full">
+                <div className="flex flex-wrap justify-center align-middle">
                   {data.map(
                     (e, index) =>
                       e.data.cover_image &&
