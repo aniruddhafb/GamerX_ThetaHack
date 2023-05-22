@@ -84,6 +84,14 @@ const LiveStream = ({
 
   const make_superchat = async () => {
     if (superchat_data.token < 0) return alert("Please input a valid number");
+
+    const res = await get_user_data(signerAddress);
+
+    if (!res.username) {
+      alert("Please Create Your Profile To Send Superchat");
+      router.push(`/profile/editGamerProfile`);
+      return;
+    }
     isSuperLoading(true);
     await send_superchat(
       data?.stream_data.id,
