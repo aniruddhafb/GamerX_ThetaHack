@@ -37,7 +37,7 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
   const get_jobs = async () => {
     isLoading(true);
     const jobs = await get_all_jobs();
-    console.log({ jobslist: jobs })
+    console.log({ jobslist: jobs });
     set_jobs(jobs);
     isLoading(false);
   };
@@ -76,7 +76,10 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                   <ul className="list-wrap" style={{ color: "white" }}>
                     <li>
                       Posted By
-                      <Link href={`/profile/${job?.owner?.id}`} style={{ textDecoration: "none" }}>
+                      <Link
+                        href={`/profile/${job?.owner?.id}`}
+                        style={{ textDecoration: "none" }}
+                      >
                         {job?.company_name}
                       </Link>
                     </li>
@@ -89,7 +92,7 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                         href="#!"
                         style={{ textDecoration: "none", color: "#68fb9a" }}
                       >
-                        {job?.min_salary}$
+                        ${job?.min_salary}
                       </a>
                     </li>
                     <li>
@@ -98,13 +101,15 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                         href="#!"
                         style={{ textDecoration: "none", color: "#68fb9a" }}
                       >
-                        {job?.max_salary}$
+                        ${job?.max_salary}
                       </a>
                     </li>
                   </ul>
                 </div>
 
-                <p style={{ marginBottom: "15px" }}>Hiring for the role of {job?.job_role}</p>
+                <p style={{ marginBottom: "15px" }}>
+                  Hiring for the role of {job?.job_role}
+                </p>
 
                 {/* job description  */}
                 <h4 className="tournament__details-form-title mt-2">
@@ -119,7 +124,9 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                 <p style={{ marginBottom: "35px" }}>{job?.requirements}</p>
 
                 {/* job company Info  */}
-                <h4 className="tournament__details-form-title">Important Info</h4>
+                <h4 className="tournament__details-form-title">
+                  Important Info
+                </h4>
                 <div className="blog-post-meta">
                   <ul
                     className="list-wrap"
@@ -147,7 +154,9 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                     onSubmit={handle_submit}
                     action="tournament-details.html#"
                   >
-                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>Your Name</label>
+                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>
+                      Your Name
+                    </label>
                     <input
                       type="text"
                       onChange={(e) =>
@@ -156,7 +165,9 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                       placeholder="Full Name *"
                       required
                     />
-                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>Your Email</label>
+                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>
+                      Your Email
+                    </label>
                     <input
                       type="email"
                       onChange={(e) =>
@@ -165,7 +176,9 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                       placeholder="Vaild Email *"
                       required
                     />
-                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>Your Resume</label>
+                    <label htmlFor="resume" style={{ marginLeft: "6px" }}>
+                      Your Resume
+                    </label>
                     <input
                       type="file"
                       onChange={(e) =>
@@ -249,7 +262,11 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                       {jobs?.map((e) => (
                         <div className="trending__matches-item" key={e.data.id}>
                           <div className="trending__matches-thumb">
-                            <Link href={e.data.id} target="_blank" style={{ textDecoration: "none" }}>
+                            <Link
+                              href={e.data.id}
+                              target="_blank"
+                              style={{ textDecoration: "none" }}
+                            >
                               <Image
                                 src={e.data.company_logo.replace(
                                   "ipfs://",
@@ -258,33 +275,42 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
                                 height={100}
                                 width={100}
                                 alt="img"
-                                style={{ height: "60px", width: '100%' }}
+                                style={{ height: "60px", width: "100%" }}
                               />
                             </Link>
                           </div>
                           <div className="trending__matches-content">
                             <div className="info">
                               <h5 className="title">
-                                <Link href={e.data.id} target="_blank" style={{ textDecoration: "none" }}>
+                                <Link
+                                  href={e.data.id}
+                                  target="_blank"
+                                  style={{ textDecoration: "none" }}
+                                >
                                   {e.data.title}
                                 </Link>
                               </h5>
                               <div className="flex justify-center align-middle">
-                                <span className="price">{e.data.max_salary}$</span>
+                                <span className="price">
+                                  ${e.data.max_salary}
+                                </span>
                                 <span className="ml-[6px] text-[white] text-[15px]">
                                   {e.data.job_role}
                                 </span>
                               </div>
                             </div>
                             <div className="play">
-                              <Link href={e.data.id} target="_blank" className="popup-video">
+                              <Link
+                                href={e.data.id}
+                                target="_blank"
+                                className="popup-video"
+                              >
                                 <i className="far fa-play-circle"></i>
                               </Link>
                             </div>
                           </div>
                         </div>
                       ))}
-
                     </div>
                   </div>
                 </div>
@@ -293,7 +319,6 @@ const JobID = ({ get_job_byId, apply_to_job, get_all_jobs }) => {
           </div>
         </div>
       )}
-
     </section>
   );
 };
