@@ -60,6 +60,7 @@ const LiveStream = ({
   };
 
   const send_message = async () => {
+    console.log({ new_message });
     if (new_message.trim() == "") return;
     set_message_data("");
     await addDoc(messagesRef, {
@@ -94,7 +95,7 @@ const LiveStream = ({
     }
     isSuperLoading(true);
     await send_superchat(
-      data?.stream_data.id,
+      data?.stream_data[0].data.id,
       data?.owner.id,
       superchat_data.token,
       superchat_data.message
@@ -104,7 +105,7 @@ const LiveStream = ({
     const notify = () =>
       toast(
         <div>
-          <div>{}</div>
+          <div>{} </div>
           <div className="font-bold text-green-600">
             {superchat_data.message}
           </div>
@@ -122,7 +123,7 @@ const LiveStream = ({
       );
 
     notify();
-    get_superchats(data?.stream_data.id);
+    get_superchats(data?.stream_data[0].data.id);
   };
 
   const listen_superchat = async (video_id) => {
@@ -190,7 +191,7 @@ const LiveStream = ({
   return (
     <section className="blog-area blog-details-area" id="pageBG">
       <Head>
-        <title>{data?.stream_data.title} - GamerX</title>
+        <title>{data?.stream_data[0].data.title} - GamerX</title>
         <meta name="description" content="About GamerX" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
@@ -218,7 +219,7 @@ const LiveStream = ({
                     pauseOnHover
                     theme="dark"
                   />
-                  {data?.stream_data?.isActive ? (
+                  {data?.stream_data[0].data.isActive ? (
                     <iframe
                       width="100%"
                       height="500px"
@@ -267,8 +268,8 @@ const LiveStream = ({
                           : "You Have Ended This Stream"}
                       </button>
                     ))}
-                  <h2 className="title">{data?.stream_data.title}</h2>
-                  <p>{data?.stream_data.description}</p>
+                  <h2 className="title">{data?.stream_data[0].data.title}</h2>
+                  <p>{data?.stream_data[0].data.description}</p>
                   <div className="blog-details-bottom">
                     <div className="row">
                       <div className="col-xl-6 col-md-7">
