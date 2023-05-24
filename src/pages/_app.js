@@ -42,10 +42,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// const default_nft_collection = "0x6E3249530dd3791Eafc61e320ebCef04116714cb";
-// const default_collection_factory = "0xFCc8CD91A7d33fbD484c2170dc000D9aae27CC87";
-// const marketplace_address = "0x29dB031d70B16837e8a0C922603A918C35cCF95A";
-
 const default_nft_collection = "0xfB87CdA044f5beA0Fa3d5e90a4bedAac3b16C27E";
 const default_collection_factory = "0xF9c046594033659b03496019C8A2e446c1faC0b6";
 const marketplace_address = "0xF71e0aB0223228aa84E9Ed6006f76c84C759B182";
