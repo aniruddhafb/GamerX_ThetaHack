@@ -405,7 +405,7 @@ const CreateNFT = ({
                                       value={data.properties[index].type}
                                       name="type"
                                       type="text"
-                                      className="h-12 w-full border border-r-0 border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 bg-transparent p-2"
+                                      className="text-white h-12 w-full border border-r-0 border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 bg-transparent p-2"
                                       placeholder="Type"
                                     />
                                   </div>
@@ -418,7 +418,7 @@ const CreateNFT = ({
                                       value={data.properties[index].value}
                                       name="value"
                                       type="text"
-                                      className="h-12 w-full rounded-r-lg border border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 bg-transparent p-2"
+                                      className="text-white h-12 w-full rounded-r-lg border border-jacarta-100 focus:ring-inset focus:ring-accent dark:border-jacarta-600 dark:bg-jacarta-700 bg-transparent p-2"
                                       placeholder="Value"
                                     />
                                   </div>
