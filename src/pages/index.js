@@ -113,11 +113,11 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts, setCh
       {/* hero section  */}
       <section className="relative slider__area slider__bg" id="HeroMain">
 
-        {chainID != 365 && signer &&
+        {/* {chainID != 365 && signer &&
           <div className="absolute top-[100px] bg-[#198754] w-[100%] py-[5px]">
             <h3 style={{ textTransform: "none", textAlign: "center", fontSize: "19px" }}>Currently we only support Theta Network, <span onClick={() => switchThetaChain()} style={{ cursor: "pointer", color: "#040608", fontWeight: "bolder" }}>Click here</span> to switch for Theta Testnet</h3>
           </div>
-        }
+        } */}
 
         <div className="slider-activee">
           <div className="single-slider">
@@ -128,8 +128,8 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts, setCh
                     <h6 className="sub-title">Gamerx.Space</h6>
                     <h2 className="title">Here Gamers Live!!</h2>
                     <p style={{ fontSize: "15px" }}>
-                      Connect with other gamers 🎮 <br /> Launch your NFT
-                      Collections on Theta 🎨 <br />
+                      Connect with other gamers 🎮 <br /> Launch your own NFT
+                      Collections 🎨 <br />
                       Get incentivize for sharing your gaming content 💰
                     </p>
                     <div className="slider__btn">
@@ -164,7 +164,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts, setCh
           <Image src={coin3} alt="shape" />
           <Image src={coin4} alt="shape" />
         </div>
-        <div className="container custom-container">
+        {/* <div className="container custom-container">
           <ul className="slider__brand-list list-wrap">
             <li className="customPowered">
               <h2 style={{ fontSize: "12px" }}>Powered By</h2>
@@ -197,7 +197,7 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts, setCh
               </Link>
             </li>
           </ul>
-        </div>
+        </div> */}
       </section>
 
       {/* videos section  */}
@@ -460,6 +460,12 @@ export default function Home({ fetch_videos, fetch_gamers, fetch_all_nfts, setCh
                           </li>
                           <li className="text-gray-400 ready style2 active">
                             Introduced create NFT collections feature
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Introduce profile subscriptions
+                          </li>
+                          <li className="text-gray-400 ready style2">
+                            Introduce profile NFTs
                           </li>
                           <li className="text-gray-400 ready style2">
                             Introduce create gaming job feature

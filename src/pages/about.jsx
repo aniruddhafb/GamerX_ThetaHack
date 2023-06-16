@@ -3,7 +3,12 @@ import Image from 'next/image'
 
 import mask1 from "../../public/mask_img01.jpg"
 import mask2 from "../../public/mask_img02.jpg"
-import demIMG from "../../public/services_img02.jpg"
+
+import push from "../../public/tech/push.png"
+import superfluid from "../../public/tech/superfluid.png"
+import lens from "../../public/tech/lens.jpg"
+import theta from "../../public/tech/theta.png"
+import polybase from "../../public/tech/polybase.jpeg"
 
 import ani from "../../public/ani.jpg"
 import shravan from "../../public/srhavan.jpeg"
@@ -22,6 +27,7 @@ const about = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.png" />
             </Head>
+
             {/* intro  */}
             <section className="about__area-three section-pt-130 section-pb-130 ">
                 <div className="container mt-12">
@@ -266,6 +272,85 @@ const about = () => {
                     </div>
                 </div>
             </section>
+
+            {/* tech  */}
+            <section className="team__area team-bg section-pt-130 section-pb-100" id='pageBG'>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-xl-6 col-lg-7 col-md-10">
+                            <div className="section__title text-center mb-60">
+                                <h3 className="title">INTEGRATED TECHNOLOGIES</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 py-8 sm:grid-cols-5 text-center">
+                        <a href="https://www.superfluid.finance/" target="_blank" className="flex flex-col justify-center" style={{ textDecoration: "none" }}>
+                            <Image
+                                src={superfluid}
+                                alt="superfluid"
+                                className="h-[150px] w-[150px] m-6 self-center"
+                                height={100}
+                                width={100}
+                                style={{ borderRadius: "50%" }}
+                            />
+                            <h3 className="font-display text-md text-jacarta-700 dark:text-white">
+                                Superfluid
+                            </h3>
+                        </a>
+                        <a href="https://www.lens.xyz/" target="_blank" className="flex flex-col justify-center mt-4" style={{ textDecoration: "none" }}>
+                            <Image
+                                src={lens}
+                                alt="lens"
+                                className="h-[120px]  w-[120px] m-6 self-center"
+                                height={100}
+                                width={100}
+                                style={{ borderRadius: "50%" }}
+                            />
+                            <h3 className="font-display text-md text-jacarta-700 dark:text-white">
+                                Lens Protocol
+                            </h3>
+                        </a>
+                        <a href="https://push.org/" target="_blank" className="flex flex-col justify-center" style={{ textDecoration: "none" }}>
+                            <Image
+                                src={push}
+                                alt="push"
+                                className="h-[150px]  w-[150px] m-6 self-center"
+                                height={100}
+                                width={100}
+                            />
+                            <h3 className="font-display text-md text-jacarta-700 dark:text-white">
+                                Push Protocol
+                            </h3>
+                        </a>
+                        <a href="https://thetatoken.org" target="_blank" className="flex flex-col justify-center mt-4" style={{ textDecoration: "none" }}>
+                            <Image
+                                src={theta}
+                                alt="theta"
+                                className="h-[120px]  w-[120px] m-6 self-center"
+                                height={100}
+                                width={100}
+                            />
+                            <h3 className="font-display text-md text-jacarta-700 dark:text-white">
+                                Theta Video
+                            </h3>
+                        </a>
+                        <a href="https://polybase.xyz" target="_blank" className="flex flex-col justify-center mt-4" style={{ textDecoration: "none" }}>
+                            <Image
+                                src={polybase}
+                                alt="theta"
+                                className="h-[120px]  w-[120px] m-6 self-center"
+                                height={100}
+                                width={100}
+                                style={{ borderRadius: "50%" }}
+                            />
+                            <h3 className="font-display text-md text-jacarta-700 dark:text-white">
+                                polybase
+                            </h3>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
         </>
     )
 }
