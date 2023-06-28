@@ -1,6 +1,4 @@
-## Introduction to GamerX
-
-![logo](https://github.com/aniruddhafb/GamerX_ThetaHack/assets/84976203/e5665374-c72b-4f71-9fa2-1e5ce834556b)
+## Introduction to Rarfinite
 
 GamerX is a platform which is build by gamers for gamers.
 Connect with other gamers, generate revenue by sharing content and live streaming, launch your official NFT collections, post your jobs or get other jobs done, etc.
